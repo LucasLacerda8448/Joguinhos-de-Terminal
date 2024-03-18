@@ -21,6 +21,8 @@ def Bisseccao(a, b, max, e):
             x = (a + b)/ 2
             return x
         print("O intervalo atual é [%f, %f]" %(a, b))
+    print("O intervalo final é [%f, %f]" %(a, b))
+    return x
 
 def main():
     print("MÉTODO DA BISSECÇÃO")
