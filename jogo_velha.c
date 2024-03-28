@@ -4,7 +4,7 @@
 #define l 3
 
 int main() {
-  int i, j, f = 0;
+  int i, j, p1, p2, f = 0, f2 = 0;
   char m[c][l], e, v;
 
   printf("JOGO DA VELHA\n");
@@ -13,7 +13,7 @@ int main() {
     for (i = 0; i < 3; i++) {
         printf("    ");
         for (j = 0; j < 3; j++) {
-            m[i][j] = '#';
+            m[i][j] = '*';
             printf("%c ", m[i][j]);
         }
         printf("\n");
@@ -33,25 +33,35 @@ int main() {
         printf("Insira a posição que deseja jogar:\n");
         printf("(As posições vão de [0,0] até [2,2])\n");
         v = 'X';
-        while(1){
-            printf("-> ");
-            scanf("%d %d", &i, &j);
-            if (i > 2 || j > 2){
-                printf("Valores inválidos, insira outro valor.\n");
-            }else{
-                printf("\n");
-                break;
+        while (f2 == 0){
+            while(1){
+                printf("%c\n", m[0][0]);
+                printf("-> ");
+                scanf("%d %d", &p1, &p2);
+                if (p1 > 2 || p2 > 2){
+                    printf("Valores inválidos, insira outro valor.\n");
+                }else if(m[p1][p2] != '*'){
+                    printf("A posição inserida ja está ocupada, insira outro valor.\n");
+                }else{
+                    printf("\n");
+                    break;
+                }
             }
-        }
-        m[i][j] = v;
-        for (i = 0; i < 3; i++) {
-            printf("    ");
-            for (j = 0; j < 3; j++) {
-                printf("%c ", m[i][j]);
+            for (i = 0; i < 3; i++) {
+                printf("    ");
+                for (j = 0; j < 3; j++) {
+                    if (i == p1 && j == p2){
+                        m[i][j] = v;
+                    }else if (m[i][j] == '*'){
+                        m[i][j] = '*';
+                    }
+                    printf("%c ", m[i][j]);
+                }
+                printf("\n");
             }
             printf("\n");
+            f2 = 1;
         }
-        printf("\n"); 
     }
     f = 1;
   }
