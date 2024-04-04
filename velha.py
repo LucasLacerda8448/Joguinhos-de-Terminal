@@ -1,12 +1,7 @@
 def Verifica(j):
     c = 0
     v = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
-    m = []
-    for i in range(9):
-        m[i] = j[i]
-        if m[i] != 'X' and m[i] != 'O':
-            m[i] = '*'
-
+    m = j
     for i in range(8):
         p1 = m[v[i][0]]
         p2 = m[v[i][1]]
@@ -27,20 +22,19 @@ def main():
     print("JOGO DA VELHA")
     print()
     while True:
-        m = []
+        m = ['*', '*', '*', '*', '*', '*', '*', '*', '*']
         mi = ['0', '1', '2', '3', '4', '5', '6', '7', '8']
         p = 0
         for i in range(3):
             print("    ", end="")
             for j in range(3):
-                m.append('*')
-                print("%s ", m[p])
+                print("%s " %m[p], end="")
                 p = p + 1
             print()
         print()
 
         e = '/'
-        while e != 's' and e != 'n':
+        while 's' != e != 'n':
             print("Começar jogo? (s/n):")
             print("-> ", end="")
             e = input()
@@ -56,9 +50,9 @@ def main():
                 print("Insira a posição que deseja jogar:")
                 p = 0
                 for i in range (3):
-                    print("    ")
+                    print("    ", end="")
                     for j in range(3):
-                        print("%s ", mi[p])
+                        print("%s " %mi[p], end="")
                         p = p + 1
                     print()
                 while True:
@@ -69,6 +63,7 @@ def main():
                     elif m[p1] == 'X' or m[p1] == 'O':
                         print("A posição inserida ja está ocupada, insira outro valor.")
                     else:
+                        m[p1] = v
                         print()
                         break
 
@@ -76,48 +71,38 @@ def main():
                 for i in range(3):
                     print("    ", end="")
                     for j in range(3):
-                        if p == p1:
-                            m[p] = v
-                        print("%s ", m[p])
-                        p++;
-                    }
-                    printf("\n");
-                }
-                printf("\n");
-                r = Verifica(m);
-                if (r == 'C'){
-                    if (v == 'X'){
-                        v = 'O';
-                    }else{
-                        v = 'X';
-                    }
-                    printf("Vez do jogador %c.\n", v);
-                }else{
-                    printf("FIM DE JOGO!\n");
-                    if (r == 'X' || r == 'O'){
-                        printf("Jogador %c Venceu.\n", r);
-                    }else if (r == 'E'){
-                        printf("Empate.\n");
-                    }
-                    printf("\n");
+                        print("%s " %m[p], end="")
+                        p = p + 1
+                    print()
+                print()
+                r = Verifica(m)
+                if r == 'C':
+                    if v == 'X':
+                        v = 'O'
+                    else:
+                        v = 'X'
+                    print("Vez do jogador %s." %v)
+                else:
+                    print("FIM DE JOGO!")
+                    if r == 'X' or r == 'O':
+                        print("Jogador %s Venceu." %r)
+                    elif r == 'E':
+                        print("Empate.")
+                    print()
                     break
-                }
-            }
-            e2 = '/';
-            while (e2 != 's' && e2 != 'n'){
-                printf("Jogar novamente? (s/n):\n");
-                printf("-> ");
-                scanf("%s", &e2);
-                printf("\n");
-            }
-            if (e2 == 'n'){
-                printf("ENCERRANDO JOGO...\n");
-                f = 1;
-            }else{
-                printf("INICIANDO NOVO JOGO...\n");
-                printf("\n");
-            }
-        }
-    }
+
+            e2 = '/'
+            while 's' != e2 != 'n':
+                print("Jogar novamente? (s/n):")
+                print("-> ", end="")
+                e2 = input()
+                print()
+
+            if e2 == 'n':
+                print("ENCERRANDO JOGO...")
+                break
+            else:
+                print("INICIANDO NOVO JOGO...")
+                print()
 
 main()
