@@ -168,6 +168,7 @@ def main():
             EntregaCarta(cj, 7, 1)
             v = 1
             pc = 1
+            corM = 0
             debt = 0
             print("O jogador começa.")
             print()
@@ -179,7 +180,7 @@ def main():
                 print()
                 nj = len(cj)
                 p = 0
-                if ca[0][0] in ln or ca[0][0] == 'X' or pc == 0:
+                if ca[0][0] in ln or ca[0][0] == 'X' or pc == 0 or corM == 1:
                     for i in range(nj):
                         if ca[0][0] == cj[i][0] or ca[0][1] == cj[i][1] or cj[i][1] == 'M' or cj[i][1] == 'N':
                             p = 1
@@ -325,7 +326,8 @@ def main():
                         EntregaCarta(cj, debt, 0)
                         pc = 0
                         debt = 0
-                #elif ca[0][0] ==
+                elif corM == 0:
+                    s = 2
                 else:
                     break    
             break
