@@ -326,7 +326,7 @@ def main():
                         EntregaCarta(cj, debt, 0)
                         pc = 0
                         debt = 0
-                elif corM == 0:
+                elif ca[0][1] == 'M':
                     s = 2
                 else:
                     break    
