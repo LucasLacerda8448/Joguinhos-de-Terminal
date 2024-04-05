@@ -174,8 +174,10 @@ def TelaJogo(cc, cj, ca, pc, debt):
     nj = len(cj)
     cc2 = ['#']
     print("Cartas do Computador: (%d)" %nc)
-    #ImprimeCarta(cc2, nc)
-    ImprimeCarta(cc, nc)
+    if nc == 0 or nj == 0:
+        ImprimeCarta(cc, nc)
+    else:
+        ImprimeCarta(cc2, nc)
     print("Carta Atual:")
     print()
     print("            ", end="")
@@ -230,7 +232,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                     RemoverCarta(cj, ca, 0, 1, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
             else:
-                time.sleep(1)
+                time.sleep(1.5)
                 print("O jogador não possui uma carta disponível para jogar.")
                 print("COMPRANDO CARTA...")
                 time.sleep(1)
@@ -269,7 +271,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                         else:
                             v = 2
             else:
-                time.sleep(1)
+                time.sleep(1.5)
                 print("O jogador não possui uma carta para se defender.")
                 print("COMPRANDO CARTAS...")
                 time.sleep(1)
@@ -298,7 +300,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                         UNO = 0
                         v = 0
                 else:
-                    RemoverCarta(cj, ca, 0, 1, pc)
+                    RemoverCarta(cj, ca, cj[0], 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                     if ca[0][0] == '+4' or ca[0][0] == '////':
                         print("Você não pode finalizar com uma carta coringa!")
@@ -308,7 +310,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                     else:
                         v = 2
             else:
-                time.sleep(1)
+                time.sleep(1.5)
                 print("O jogador não possui uma carta disponível para jogar.")
                 print("COMPRANDO CARTA...")
                 time.sleep(1)
@@ -346,12 +348,12 @@ def VezComputador(cc, cj, ca, v, debt, pc):
             UNO = 0
         p = 0
         filtro2 = []
+        time.sleep(1.5)
         if pc == 0 and UNO == 0:
             for i in range(nc):
                 if ca[0][0] == cc[i][0] or ca[0][1] == cc[i][1] or cc[i][1] == 'M' or cc[i][1] == 'N':
                     filtro2.append(i)
                     p = 1
-            time.sleep(1)
             if p == 1:
                 r = random.choice(filtro2)
                 RemoverCarta(cc, ca, cc[r], 0, pc)
@@ -364,10 +366,9 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                 print("O computador não possui uma carta disponível para jogar.")
                 print("COMPRANDO CARTA...")
                 time.sleep(1)
-                EntregaCarta(cc, 1, 0)
-                #EntregaCarta(cc, 1, 1)
-                #print("1 carta comprada")
-                #print()
+                EntregaCarta(cc, 1, 1)
+                print("1 carta comprada")
+                print()
                 if cc[-1][0] == ca[0][0] or cc[-1][1] == ca[0][1] or cc[-1][1] == 'M' or cc[-1][1] == 'N':
                     RemoverCarta(cc, ca, cc[-1], 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
@@ -382,7 +383,6 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                 if ca[0][0] == cc[i][0]:
                     filtro2.append(i)
                     p = 1
-            time.sleep(1)
             if p == 1:
                 r = random.choice(filtro2)
                 RemoverCarta(cc, ca, cc[r], 0, pc)
@@ -396,27 +396,24 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                         print("Finalização com carta coringa proibida!")
                         print("COMPRANDO CARTA SUBSTITUTA...")
                         time.sleep(1)
-                        EntregaCarta(cc, 1, 0)
-                        #EntregaCarta(cc, 1, 1)
-                        #print("1 carta comprada")
-                        #print()
+                        EntregaCarta(cc, 1, 1)
+                        print("1 carta comprada")
+                        print()
                     else:
                         v = 3
             else:
                 print("O computador não possui uma carta para se defender.")
                 print("COMPRANDO CARTAS...")
                 time.sleep(1)
-                EntregaCarta(cc, debt, 0)
-                #EntregaCarta(cc, debt, 1)
-                #print("%d cartas compradas" %debt)
-                #print()
+                EntregaCarta(cc, debt, 1)
+                print("%d cartas compradas" %debt)
+                print()
                 pc = 0
                 debt = 0
                 v = 1
         elif UNO == 1:
             if ca[0][0] == cc[0][0] or ca[0][1] == cc[0][1] or cc[0][1] == 'M' or cc[0][1] == 'N':
                 p = 1
-            time.sleep(1)
             if p == 1:
                 RemoverCarta(cc, ca, cc[0], 0, pc)
                 v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
@@ -428,20 +425,18 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                     print("Finalização com carta coringa proibida!")
                     print("COMPRANDO CARTA SUBSTITUTA...")
                     time.sleep(1)
-                    EntregaCarta(cc, 1, 0)
-                    #EntregaCarta(cc, 1, 1)
-                    #print("1 carta comprada")
-                    #print()
+                    EntregaCarta(cc, 1, 1)
+                    print("1 carta comprada")
+                    print()
                 else:
                     v = 3
             else:
                 print("O computador não possui uma carta disponível para jogar.")
                 print("COMPRANDO CARTA...")
                 time.sleep(1)
-                EntregaCarta(cc, 1, 0)
-                #EntregaCarta(cc, 1, 1)
-                #print("1 carta comprada")
-                #print()
+                EntregaCarta(cc, 1, 1)
+                print("1 carta comprada")
+                print()
                 if cc[-1][0] == ca[0][0] or cc[-1][1] == ca[0][1] or cc[-1][1] == 'M' or cc[-1][1] == 'N':
                     RemoverCarta(cc, ca, cc[-1], 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
@@ -500,6 +495,7 @@ def main():
                     v, debt, pc = VezJogador(cc, cj, ca, v, debt, pc)
                 elif v == 0:
                     v, debt, pc = VezComputador(cc, cj, ca, v, debt, pc)
+            TelaJogo(cc, cj, ca, pc, debt)
             print("FIM DE JOGO!")
             if v == 2:
                 print("O Jogador Venceu.")
