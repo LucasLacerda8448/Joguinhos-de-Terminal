@@ -495,8 +495,10 @@ def main():
                     v, debt, pc = VezJogador(cc, cj, ca, v, debt, pc)
                 elif v == 0:
                     v, debt, pc = VezComputador(cc, cj, ca, v, debt, pc)
-            TelaJogo(cc, cj, ca, pc, debt)
             print("FIM DE JOGO!")
+            print()
+            TelaJogo(cc, cj, ca, pc, debt)
+            print()
             if v == 2:
                 print("O Jogador Venceu.")
             elif v == 3:
