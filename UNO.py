@@ -198,7 +198,7 @@ def main():
                             if cj[-1][0] == ca[0][0] or cj[-1][1] == ca[0][1] or cj[-1][1] == 'M' or cj[-1][1] == 'N':
                                 J2 = '/'
                                 while 's' != J2 != 'n':
-                                    print("Jogar a Carta? (s/n)")
+                                    print("[1] Jogar carta   [2] Guardar carta")
                                     print("-> ", end="")
                                     J2= input()
                                     print()
