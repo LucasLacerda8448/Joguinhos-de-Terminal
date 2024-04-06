@@ -474,9 +474,24 @@ def main():
         elif e == '2':
             print("========== INSTRUÇÕES ==========")
             print()
-            print("(digite o número ao lado da carta invés do símbolo na carta.)")
+            print("- Neste jogo de UNO algumas das cartas podem ter símbolos diferentes do habitual.")
+            print("- Aqui está uma explicação de cada uma:")
+            print("  [0-9]: Cartas númericas comuns, vão de 0 a 9;")
+            print("  [+2]: Carta +2, faz o próximo jogar comprar 2 cartas;")
+            print("  [X]: Carta de Bloqueio, bloqueia a vez do próximo jogador;")
+            print("  [+4]: Carta +4, o jogador escolhe a próxima cor a jogarem e faz o próximo jogador")
+            print("  comprar 4 cartas;")
+            print("  [////]: Carta de Troca de Cor, o jogador escolhe a próxima cor a jogarem;")
+            print("- A carta que inverte a ordem do jogo não foi implementada, pois ela teria o mesmo")
+            print("  efeito que uma carta de bloqueio;")
+            print("- Quando for escolher a próxima carta a jogar, escolha o número ao lado dela, invés do símbolo;")
+            print("- Caso o jogador esteja de UNO, ele não poderá finalizar um jogo com cartas coringa,")
+            print("  isto é, [+4] ou [////];")
             print()
         elif e == '1':
+            print("DISTRIBUINDO AS CARTAS...")
+            print()
+            time.sleep(1.2)
             cc = []
             cj = []
             ca = []
