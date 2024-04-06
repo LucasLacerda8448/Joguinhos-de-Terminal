@@ -6,7 +6,7 @@ os.system('color')
 class colors:
     red = '\033[91m'
     green = '\033[92m'
-    yellow = '\033[93m'
+    yellow = '\033[33m'
     blue = '\033[94m'
     fim = '\033[0m'
 
@@ -173,7 +173,10 @@ def TelaJogo(cc, cj, ca, pc, debt):
     nc = len(cc)
     nj = len(cj)
     cc2 = ['#']
-    print("Cartas do Computador: (%d)" %nc)
+    if nc == 1:
+        print("Cartas do Computador: " + colors.red + "(%d) UNO!" %nc + colors.fim)
+    else:
+        print("Cartas do Computador: (%d)" %nc)
     if nc == 0 or nj == 0:
         ImprimeCarta(cc, nc)
     else:
@@ -196,7 +199,10 @@ def TelaJogo(cc, cj, ca, pc, debt):
     else:
         ImprimeCarta(ca, 1)
     print()
-    print("Suas Cartas: (%d)" %nj)
+    if nj == 1:
+        print("Suas Cartas:  " + colors.red + "(%d) UNO!" %nj + colors.fim)
+    else:
+        print("Suas Cartas: (%d)" %nj)
     ImprimeCarta(cj, nj)
 
 def VezJogador(cc, cj, ca, v, debt, pc):
@@ -515,10 +521,11 @@ def main():
             TelaJogo(cc, cj, ca, pc, debt)
             print()
             if v == 2:
-                print("O Jogador Venceu.")
+                print("O JOGADOR VENCEU.")
             elif v == 3:
-                print("O Computador Venceu.")
+                print("O COMPUTADOR VENCEU.")
             print()
+            time.sleep(1)
             
             print("[1] Jogar Novamente   [2] Sair")
             if Escolha(2) == '2':
