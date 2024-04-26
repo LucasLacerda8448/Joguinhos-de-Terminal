@@ -128,14 +128,23 @@ def RemoverCarta(l, ca, ce, write, pc):
             filtro = ImprimeCarta2(l, n, ca, 0)
         while True:
             print("-> ", end="")
-            e = int(input())
-            if e not in filtro:
-                print("Número inválido.")
-            else:
-                print()
-                ca[0] = l[e]
-                l.remove(l[e])
-                break
+            e = input()
+            e2 = 0
+            for i in e:
+                if 48 <= ord(i) <= 57:
+                    e2 = 1
+                else:
+                    e2 = 0
+                    break
+            if e2 == 1:
+                e = int(e)
+                if e not in filtro:
+                    print("Número inválido.")
+                else:
+                    print()
+                    ca[0] = l[e]
+                    l.remove(l[e])
+                    break
     else:
         ca[0] = ce
         l.remove(ce)
@@ -361,7 +370,16 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                     filtro2.append(i)
                     p = 1
             if p == 1:
-                r = random.choice(filtro2)
+                r = -1
+                if len(cj) <= 3:
+                    for i in filtro2:
+                        if cc[i][0] == '+4' or cc[i][0] == '+2' or cc[i][0] == 'X':
+                            r = i
+                            break
+                    if r == -1:
+                        r = random.choice(filtro2)
+                else:
+                    r = random.choice(filtro2)
                 RemoverCarta(cc, ca, cc[r], 0, pc)
                 v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                 print("Carta jogada: ", end="")
