@@ -146,8 +146,9 @@ def RemoverCarta(l, ca, ce, write, pc):
                     l.remove(l[e])
                     break
     else:
-        ca[0] = ce
-        l.remove(ce)
+        ca[0] = l[ce]
+        l[ce] = ['A', 'A']
+        l.remove(['A', 'A'])
 
 def AnalisaCarta(ca, pc, debt, v, comp):
     if ca[0][0] != 'X':
@@ -237,7 +238,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                     if cj[-1][0] == ca[0][0] or cj[-1][1] == ca[0][1] or cj[-1][1] == 'M' or cj[-1][1] == 'N':
                         print("[1] Jogar carta   [2] Guardar carta")
                         if Escolha(2) == '1':
-                            RemoverCarta(cj, ca, cj[-1], 0, pc)
+                            RemoverCarta(cj, ca, -1, 0, pc)
                             v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                         else:
                             v = 0
@@ -255,7 +256,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                 if cj[-1][0] == ca[0][0] or cj[-1][1] == ca[0][1] or cj[-1][1] == 'M' or cj[-1][1] == 'N':
                     print("[1] Jogar carta   [2] Guardar carta")
                     if Escolha(2) == '1':
-                        RemoverCarta(cj, ca, cj[-1], 0, pc)
+                        RemoverCarta(cj, ca, -1, 0, pc)
                         v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                     else:
                         v = 0
@@ -306,7 +307,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                     if cj[-1][0] == ca[0][0] or cj[-1][1] == ca[0][1] or cj[-1][1] == 'M' or cj[-1][1] == 'N':
                         print("[1] Jogar carta   [2] Guardar carta")
                         if Escolha(2) == '1':
-                            RemoverCarta(cj, ca, cj[-1], 0, pc)
+                            RemoverCarta(cj, ca, -1, 0, pc)
                             v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                         else:
                             UNO = 0
@@ -315,7 +316,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                         UNO = 0
                         v = 0
                 else:
-                    RemoverCarta(cj, ca, cj[0], 0, pc)
+                    RemoverCarta(cj, ca, 0, 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                     if ca[0][0] == '+4' or ca[0][0] == '////':
                         print("Você não pode finalizar com uma carta coringa!")
@@ -333,7 +334,7 @@ def VezJogador(cc, cj, ca, v, debt, pc):
                 if cj[-1][0] == ca[0][0] or cj[-1][1] == ca[0][1] or cj[-1][1] == 'M' or cj[-1][1] == 'N':
                     print("[1] Jogar carta   [2] Guardar carta")
                     if Escolha(2) == '1':
-                        RemoverCarta(cj, ca, cj[-1], 0, pc)
+                        RemoverCarta(cj, ca, -1, 0, pc)
                         v, pc, debt = AnalisaCarta(ca, pc, debt, v, 0)
                     else:
                         UNO = 0
@@ -380,7 +381,7 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                         r = random.choice(filtro2)
                 else:
                     r = random.choice(filtro2)
-                RemoverCarta(cc, ca, cc[r], 0, pc)
+                RemoverCarta(cc, ca, r, 0, pc)
                 v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                 print("Carta jogada: ", end="")
                 ImprimeCarta(ca, 1)
@@ -394,7 +395,7 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                 print("1 carta comprada")
                 print()
                 if cc[-1][0] == ca[0][0] or cc[-1][1] == ca[0][1] or cc[-1][1] == 'M' or cc[-1][1] == 'N':
-                    RemoverCarta(cc, ca, cc[-1], 0, pc)
+                    RemoverCarta(cc, ca, -1, 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                     print("Carta jogada: ", end="")
                     ImprimeCarta(ca, 1)
@@ -409,7 +410,7 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                     p = 1
             if p == 1:
                 r = random.choice(filtro2)
-                RemoverCarta(cc, ca, cc[r], 0, pc)
+                RemoverCarta(cc, ca, r, 0, pc)
                 v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                 print("Carta jogada: ", end="")
                 ImprimeCarta(ca, 1)
@@ -439,7 +440,7 @@ def VezComputador(cc, cj, ca, v, debt, pc):
             if ca[0][0] == cc[0][0] or ca[0][1] == cc[0][1] or cc[0][1] == 'M' or cc[0][1] == 'N':
                 p = 1
             if p == 1:
-                RemoverCarta(cc, ca, cc[0], 0, pc)
+                RemoverCarta(cc, ca, 0, 0, pc)
                 v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                 print("Carta jogada: ", end="")
                 ImprimeCarta(ca, 1)
@@ -462,7 +463,7 @@ def VezComputador(cc, cj, ca, v, debt, pc):
                 print("1 carta comprada")
                 print()
                 if cc[-1][0] == ca[0][0] or cc[-1][1] == ca[0][1] or cc[-1][1] == 'M' or cc[-1][1] == 'N':
-                    RemoverCarta(cc, ca, cc[-1], 0, pc)
+                    RemoverCarta(cc, ca, -1, 0, pc)
                     v, pc, debt = AnalisaCarta(ca, pc, debt, v, 1)
                     print("Carta jogada: ", end="")
                     ImprimeCarta(ca, 1)
