@@ -23,21 +23,21 @@ def VerificaSequencia(s, l):
     return c, r
 
 def main():
-    print("JOGO DA SEQUÊNCIA")
+    print("------- JOGO DA SEQUÊNCIA -------")
     print()
     while True:
         print("============ OPÇÕES ============")
         print("[1] Jogar        [3] Como jogar?")
         print("[2] Instruções   [4] Sair")
         e = 0
-        while e < 1 or e > 4:
+        while '1' != e != '2' and '3' != e != '4':
             print("-> ", end="")
-            e = int(input())
-            print()
-        if e == 4:
+            e = input()
+        print()
+        if e == '4':
             print("ENCERRANDO JOGO...")
             break
-        elif e == 3:
+        elif e == '3':
             print("========== COMO JOGAR ==========")
             print()
             print("No jogo da sequência, o código irá gerar uma lista de 4 valores aleatórios, o")
@@ -49,7 +49,7 @@ def main():
             print("Esse processo irá se repetir até que o jogador acerte todos os valores da sequência")
             print("na ordem correta.")
             print()
-        elif e == 2:
+        elif e == '2':
             print("========== INSTRUÇÕES ==========")
             print()
             print("- Os valores de uma sequência sempre irão variar de 0 até 9;")
@@ -57,7 +57,7 @@ def main():
             print("- Quando for adivinhar uma sequência, sempre escreva os números separados por um")
             print("  espaço, isto é, invés de escrever '1234' escreva '1 2 3 4'.")
             print()
-        elif e == 1:
+        elif e == '1':
             s = []
             s = CriaSequencia()
             t = 1
@@ -90,5 +90,5 @@ def main():
             if e == 2:
                 print("ENCERRANDO JOGO...")
                 break
-              
+            
 main()
