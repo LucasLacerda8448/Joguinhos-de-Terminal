@@ -31,7 +31,7 @@ def Verifica(m):
         return 1
 
 def main():
-    print("JOGO DA MEMÓRIA")
+    print("-- JOGO DA MEMÓRIA --")
     print()
     while True:
         mj = []
@@ -46,16 +46,16 @@ def main():
         print()
 
         e = '/'
-        while e != 's' and e != 'n':
-            print("Começar jogo? (s/n):")
+        while '1' != e != '2':
+            print("[1] Jogar   [2] Sair")
             print("-> ", end="")
             e = input()
             print()
 
-        if e == 'n':
+        if e == '2':
             print("ENCERRANDO JOGO...")
             break
-        else:
+        elif e == '1':
             mr = []
             mr = CriaJogo()
             v = 1
@@ -149,16 +149,16 @@ def main():
                     break
 
             e2 = '/'
-            while e2 != 's' and e2 != 'n':
-                print("Jogar novamente? (s/n):")
+            while '1' != e2 != '2':
+                print("[1] Jogar Novamente   [2] Sair")
                 print("-> ", end="")
-                e2 = input()
+                e2= input()
                 print()
 
-            if e2 == 'n':
+            if e2 == '2':
                 print("ENCERRANDO JOGO...")
                 break
-            else:
+            elif e2 == '1':
                 print("INICIANDO NOVO JOGO...")
                 print()
 
