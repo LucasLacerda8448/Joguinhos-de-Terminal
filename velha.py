@@ -96,15 +96,24 @@ def Verifica(j):
 def Jogar(j, ji, si, v):
     while True:
         print("-> ", end="")
-        p1 = int(input())
-        if p1 < 0 or p1 > 8:
-            print("Valores inválidos, insira outro valor.")
-        elif j[ji][p1] == 'X' or j[ji][p1] == 'O':
-            print("A posição inserida ja está ocupada, insira outro valor.")
-        else:
-            j[ji][p1] = v
-            print()
-            break
+        p1 = input()
+        p2 = 0
+        for i in p1:
+            if 48 <= ord(i) <= 57:
+                p2 = 1
+            else:
+                p2 = 0
+                break
+        if p2 == 1:
+            p1 = int(p1)
+            if p1 < 0 or p1 > 8:
+                print("Valores inválidos, insira outro valor.")
+            elif j[ji][p1] == 'X' or j[ji][p1] == 'O':
+                print("A posição inserida ja está ocupada, insira outro valor.")
+            else:
+                j[ji][p1] = v
+                print()
+                break
     r = Verifica(j[ji])
     if r != 'C':
         si[ji] = r
@@ -151,15 +160,24 @@ def main():
                     print()
                 while True:
                     print("-> ", end="")
-                    p1 = int(input())
-                    if p1 < 0 or p1 > 8:
-                        print("Valores inválidos, insira outro valor.")
-                    elif jv[p1] == 'X' or jv[p1] == 'O':
-                        print("A posição inserida ja está ocupada, insira outro valor.")
-                    else:
-                        jv[p1] = v
-                        print()
-                        break
+                    p1 = input()
+                    p2 = 0
+                    for i in p1:
+                        if 48 <= ord(i) <= 57:
+                            p2 = 1
+                        else:
+                            p2 = 0
+                            break
+                    if p2 == 1:
+                        p1 = int(p1)
+                        if p1 < 0 or p1 > 8:
+                            print("Valores inválidos, insira outro valor.")
+                        elif jv[p1] == 'X' or jv[p1] == 'O':
+                            print("A posição inserida ja está ocupada, insira outro valor.")
+                        else:
+                            jv[p1] = v
+                            print()
+                            break
 
                 p = 0
                 for i in range(3):
@@ -200,15 +218,24 @@ def main():
                     print("Insira a posição do jogo que deseja jogar:")
                     while True:
                         print("-> ", end="")
-                        ji = int(input())
-                        if ji < 0 or ji > 8:
-                            print("Valores inválidos, insira outro valor.")
-                        elif si[ji] == 'X' or si[ji] == 'O':
-                            print("O jogo escolhido ja foi finalizado, insira outro valor.")
-                        else:
-                            print()
-                            ImprimeJogo(sjv, ji, si)
-                            break
+                        ji = input()
+                        ij = 0
+                        for i in ji:
+                            if 48 <= ord(i) <= 57:
+                                ij = 1
+                            else:
+                                ij = 0
+                                break
+                        if ij == 1:
+                            ji = int(ji)
+                            if ji < 0 or ji > 8:
+                                print("Valores inválidos, insira outro valor.")
+                            elif si[ji] == 'X' or si[ji] == 'O':
+                                print("O jogo escolhido ja foi finalizado, insira outro valor.")
+                            else:
+                                print()
+                                ImprimeJogo(sjv, ji, si)
+                                break
                 
                 print("Insira a posição que deseja jogar:")
                 p = 0
