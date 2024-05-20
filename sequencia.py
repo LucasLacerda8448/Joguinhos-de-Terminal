@@ -1,5 +1,16 @@
 import random
 
+def Escolha(n):
+    e = 0
+    l = []
+    for i in range(1, n+1):
+        l.append(str(i))
+    while e not in l:
+        print("-> ", end="")
+        e = input()
+    print()
+    return e
+
 def CriaSequencia():
     l = []
     for i in range(4):
@@ -62,12 +73,28 @@ def main():
             s = CriaSequencia()
             t = 1
             while True:
-                s1 = []
                 print("TENTATIVA Nº%d" %t)
                 print()
-                print("Insira a sequência: ", end="")
-                v1, v2, v3, v4 = map(int, input().split())
-                s1 = [v1, v2, v3, v4]
+                while True:
+                    print("Insira a sequência: ", end="")
+                    s1 = input().split()
+                    e2 = 0
+                    for i in s1:
+                        if len(i) == 1 and 48 <= ord(i) <= 57:
+                            e2 = 1
+                        else:
+                            e2 = 0
+                            break
+                    if e2 == 1:
+                        if len(s1) == 4:
+                            for i in range(4):
+                                s1[i] = int(s1[i])
+                            break
+                        else:
+                            print("Por favor insira a quantidade correta de números.")
+                    else:
+                        print("Entrada inválida")
+                        print()
                 c, p = VerificaSequencia(s, s1)
                 print()
                 print("Números acertados: %d" %c)
@@ -75,7 +102,10 @@ def main():
                 print()
                 if c == 4 and p == 0:
                     print("FIM DE JOGO!")
-                    print("Sequência correta: %d %d %d %d" %(v1, v2, v3, v4))
+                    print("Sequência correta: ", end="")
+                    for i in range(4):
+                        print("%d " %s1[i], end="")
+                    print()
                     print("Tentativas necessárias: %d" %t)
                     print()
                     break
@@ -83,11 +113,7 @@ def main():
                     t = t + 1
             print("[1] Continuar   [2] Sair")
             e = 0
-            while e < 1 or e > 2:
-                print("-> ", end="")
-                e = int(input())
-                print()
-            if e == 2:
+            if Escolha(2) == '2':
                 print("ENCERRANDO JOGO...")
                 break
             
