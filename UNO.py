@@ -1,7 +1,7 @@
 import os
 import random
 import time
-os.system('color')
+#os.system('color')
 
 class colors:
     red = '\033[91m'
@@ -143,7 +143,8 @@ def RemoverCarta(l, ca, ce, write, pc):
                 else:
                     print()
                     ca[0] = l[e]
-                    l.remove(l[e])
+                    l[e] = ['A', 'A']
+                    l.remove(['A', 'A'])
                     break
     else:
         ca[0] = l[ce]
