@@ -1,5 +1,5 @@
 import os
-os.system('color')
+#os.system('color')
 
 class colors:
     red = '\033[91m'
