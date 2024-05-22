@@ -92,6 +92,7 @@ def main():
                             break
                         else:
                             print("Por favor insira a quantidade correta de números.")
+                            print()
                     else:
                         print("Entrada inválida")
                         print()
