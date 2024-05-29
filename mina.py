@@ -141,7 +141,10 @@ def main():
                                 if 48 <= ord(p[1]) <= 52:
                                     p1 = p[0] + p[1]
                                     p1 = int(p1)
-                                    break
+                                    if p1 <= 14:
+                                        break
+                                    else:
+                                        print("Insira uma posição dentro do intervalo.")
                                 else:
                                     print("Insira uma posição dentro do intervalo.")
                             else:
