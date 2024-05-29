@@ -76,7 +76,15 @@ def main():
                 c = 1
                 print("Resultado:")
                 r = random.randint(1, l)
-                print("%d" %r, end="")
+                if r == 1 or r == l:
+                    if r == 1:
+                        print(colors.red, end="")
+                    else:
+                        print(colors.green, end="")
+                    print("%d" %r, end="")
+                    print(colors.fim, end="")
+                else:
+                    print("%d" %r, end="")
                 t += r
                 for i in range(q-1):
                     r = random.randint(1, l)
@@ -84,9 +92,17 @@ def main():
                     if i >= (19 * c):
                         c += 1
                         print(",")
+                    else:
+                        print(", ", end="")
+                    if r == 1 or r == l:
+                        if r == 1:
+                            print(colors.red, end="")
+                        else:
+                            print(colors.green, end="")
                         print("%d" %r, end="")
-                        continue
-                    print(", %d" %r, end="")
+                        print(colors.fim, end="")
+                    else:
+                        print("%d" %r, end="")
                 print()
                 print("TOTAL: %d" %t)
                 print()
