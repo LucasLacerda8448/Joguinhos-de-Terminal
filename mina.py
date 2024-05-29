@@ -1,20 +1,96 @@
 import random
 
+class colors:
+    red = '\033[91m'
+    green = '\033[92m'
+    yellow = '\033[33m'
+    blue = '\033[94m'
+    grey = '\033[90m'
+    fim = '\033[0m'
+
+def Escolha(n):
+    e = 0
+    l = []
+    for i in range(1, n+1):
+        l.append(str(i))
+    while e not in l:
+        print("-> ", end="")
+        e = input()
+    print()
+    return e
+
+def VerificaLado(pos_x, pos_y, m):
+    qb = 0
+    #dir
+    if pos_y != 17:
+        if m[pos_x][pos_y + 1] == 'X':
+            qb += 1
+    #esq
+    if pos_y != 0:
+        if m[pos_x][pos_y - 1] == 'X':
+            qb += 1
+    #up
+    if pos_x != 0:
+        if m[pos_x - 1][pos_y] == 'X':
+            qb += 1
+    #down
+    if pos_x != 14:
+        if m[pos_x + 1][pos_y] == 'X':
+            qb += 1
+    #d_esq_up
+    if pos_y != 0 and pos_x != 0:
+        if m[pos_x - 1][pos_y - 1] == 'X':
+            qb += 1
+    #d_dir_up
+    if pos_y != 17 and pos_x != 0:
+        if m[pos_x - 1][pos_y + 1] == 'X':
+            qb += 1
+    #d_esq_down
+    if pos_y != 0 and pos_x != 14:
+        if m[pos_x + 1][pos_y - 1] == 'X':
+            qb += 1
+    #d_dir_down
+    if pos_y != 17 and pos_x != 14:
+        if m[pos_x + 1][pos_y + 1] == 'X':
+            qb += 1
+
+    if qb == 0:
+        return '.'
+    else:
+        return str(qb)
+
 def CriaJogo():
     m2 = []
-
     for i in range(15):
         m2.append([])
         for j in range(18):
-            m2[i].append('#')
+            m2[i].append('.')
 
-    for i in range(40):
+    for i in range(45):
         while True:
             x = random.randint(0, 14)
             y = random.randint(0, 17)
-            if m2[x][y] == '#':
-                m2[x][y] = 'B'
+            if m2[x][y] == '.':
+                m2[x][y] = 'X'
                 break
+    
+    for i in range(15):
+        for j in range(18):
+            if m2[i][j] == '.':
+                m2[i][j] = VerificaLado(i, j, m2)
+    print("   A B C D E F G H I J K L M N O P Q R")
+    for i in range(15):
+        if i <= 9:
+            print("%d  " %i, end="")
+        else:
+            print("%d " %i, end="")
+        for j in range(18):
+            if m2[i][j] == 'X':
+                print(colors.red + "%s " %m2[i][j] + colors.fim, end="") 
+            else:
+                print("%s " %m2[i][j], end="")  
+        print()
+    print()
     return m2
 
 def Verifica(m):
@@ -32,23 +108,10 @@ def main():
     #40 bombas
     #a partir de onde ele escolher, andar 5 casas por 4 linhas, parar e pular pra proxima
     #linha se encontrar uma bomba
+    #letra depois num
     print("-- CAMPO MINADO --")
     print()
     while True:
-        mj = []
-        print("   A B C D E F G H I J K L M N O P Q R")
-        for i in range(15):
-            if i <= 9:
-                print("%d  " %i, end="")
-            else:
-                print("%d " %i, end="")
-            mj.append([])
-            for j in range(18):
-                mj[i].append('#')
-                print("%s " %mj[i][j], end="")  
-            print()
-        print()
-
         e = '/'
         while '1' != e != '2':
             print("[1] Jogar   [2] Sair")
@@ -60,109 +123,31 @@ def main():
             print("ENCERRANDO JOGO...")
             break
         elif e == '1':
+            mj = []
+            print("   A B C D E F G H I J K L M N O P Q R")
+            for i in range(15):
+                if i <= 9:
+                    print("%d  " %i, end="")
+                else:
+                    print("%d " %i, end="")
+                mj.append([])
+                for j in range(18):
+                    mj[i].append('#')
+                    print("%s " %mj[i][j], end="")  
+                print()
+            print()
             mr = []
             mr = CriaJogo()
-            v = 1
-            p1 = 0
-            p2 = 0
-            print("Jogador 1 começa.")
             while True:
-                v2 = 0
-                print("Insira a posição da primeira carta:")
-                while True:
-                    print("-> ", end="")
-                    x, y = map(int, input().split())
-                    if 0 > x or x > 3 or 0 > y or y > 3:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x][y] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
-                    else:
-                        print()
-                        break
-                print("  0 1 2 3")
-                for i in range(4):
-                    print("%d " %i, end="")
-                    for j in range(4):
-                        if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
-                        else:
-                            print("%s " %mj[i][j], end="")
-                    print()
-                print()
-                print("Insira a posição da segunda carta:")
-                while True:
-                    print("-> ", end="")
-                    x2, y2 = map(int, input().split())
-                    if 0 > x2 or x2 > 3 or 0 > y2 or y2 > 3:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x2][y2] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
-                    else:
-                        print()
-                        break
-                print("  0 1 2 3")
-                for i in range(4):
-                    print("%d " %i, end="")
-                    for j in range(4):
-                        if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
-                        elif x2 == i and y2 == j:
-                            print("%s " %mr[x2][y2], end="")
-                        else:
-                            print("%s " %mj[i][j], end="")
-                    print()
-                print()
-                if mr[x][y] == mr[x2][y2]:
-                    mj[x][y] = ' '
-                    mj[x2][y2] = ' '
-                    print("Cartas iguais!")
-                    v2 = 1
-                r = Verifica(mj)
-                if r == 0:
-                    if v2 == 1:
-                        print("Jogador %d joga mais uma vez." %v)
-                        if v == 1:
-                            p1 = p1 + 1
-                        else:
-                            p2 = p2 + 1
-                    else:
-                        if v == 1:
-                            v = 2
-                        else:
-                            v = 1
-                        print("Vez do jogador %d." %v)
-                    print()
-                    print("  0 1 2 3")
-                    for i in range(4):
-                        print("%d " %i, end="")
-                        for j in range(4):
-                            print("%s " %mj[i][j], end="")
-                        print()
-                    print()
-                elif r == 1:
-                    print("FIM DE JOGO!")
-                    if p1 > p2:
-                        p1 = p1 + 1
-                        print("Jogador 1 venceu com uma pontuação de %d pares de cartas." %p1)
-                    elif p2 > p1:
-                        p2 = p2 + 1
-                        print("Jogador 2 venceu com uma pontuação de %d pares de cartas." %p2)
-                    elif p1 == p2:
-                        print("Jogo empatado, ambos os jogadores obtiveram %d pares de cartas." %p1)
-                    print()
-                    break
-
-            e2 = '/'
-            while '1' != e2 != '2':
-                print("[1] Jogar Novamente   [2] Sair")
-                print("-> ", end="")
-                e2= input()
-                print()
-
-            if e2 == '2':
+                break
+                
+            
+            print("[1] Jogar Novamente   [2] Sair")
+            e = 0
+            if Escolha(2) == '2':
                 print("ENCERRANDO JOGO...")
                 break
-            elif e2 == '1':
+            else:
                 print("INICIANDO NOVO JOGO...")
                 print()
 
