@@ -66,7 +66,7 @@ def CriaJogo():
         for j in range(18):
             m2[i].append('.')
 
-    for i in range(45):
+    for i in range(40):
         while True:
             x = random.randint(0, 14)
             y = random.randint(0, 17)
@@ -78,19 +78,6 @@ def CriaJogo():
         for j in range(18):
             if m2[i][j] == '.':
                 m2[i][j] = VerificaLado(i, j, m2)
-    print("   A B C D E F G H I J K L M N O P Q R")
-    for i in range(15):
-        if i <= 9:
-            print("%d  " %i, end="")
-        else:
-            print("%d " %i, end="")
-        for j in range(18):
-            if m2[i][j] == 'X':
-                print(colors.red + "%s " %m2[i][j] + colors.fim, end="") 
-            else:
-                print("%s " %m2[i][j], end="")  
-        print()
-    print()
     return m2
 
 def Verifica(m):
@@ -139,6 +126,32 @@ def main():
             mr = []
             mr = CriaJogo()
             while True:
+                print("Insira a posição que deseja jogar: (letra primeiro, depois o número)")
+                while True:
+                    print("-> ", end="")
+                    p1 = input()
+                    p = []
+                    for i in range(len(p1)):
+                        p.append(p1[i])
+                    if 2 <= len(p) <= 3:
+                        if 65 <= ord(p[0]) <= 82 and 48 <= ord(p[1]) <= 57:
+                            col = p[0]
+                            p.remove(col)
+                            if len(p) == 2:
+                                if 48 <= ord(p[1]) <= 52:
+                                    p1 = p[0] + p[1]
+                                    p1 = int(p1)
+                                    break
+                                else:
+                                    print("Insira uma posição dentro do intervalo.")
+                            else:
+                                p1 = p[0]
+                                p1 = int(p1)
+                                break
+                        else:
+                            print("Insira uma posição dentro do intervalo.") 
+                    else:
+                        print("Insira a posição corretamente.")
                 break
                 
             
