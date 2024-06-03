@@ -78,9 +78,25 @@ def CriaJogo():
         for j in range(18):
             if m2[i][j] == '.':
                 m2[i][j] = VerificaLado(i, j, m2)
+    print("   A B C D E F G H I J K L M N O P Q R")
+    for i in range(15):
+        if i <= 9:
+            print("%d  " %i, end="")
+        else:
+            print("%d " %i, end="")
+        for j in range(18):
+            print("%s " %m2[i][j], end="")  
+        print()
+    print()
     return m2
 
-def Verifica(m):
+def Bandeira(col, lin, mj):
+    if mj[col][lin] == 'B':
+        mj[col][lin] = '#'
+    else:
+        mj[col][lin] = 'B'
+    
+def Verifica(col, lin, mj, mr):
     f = 1
     for i in range(4):
         for j in range(4):
@@ -137,12 +153,17 @@ def main():
                         if 65 <= ord(p[0]) <= 82 and 48 <= ord(p[1]) <= 57:
                             col = p[0]
                             p.remove(col)
+                            col = ord(col)
+                            col -= 65
                             if len(p) == 2:
                                 if 48 <= ord(p[1]) <= 52:
                                     p1 = p[0] + p[1]
                                     p1 = int(p1)
                                     if p1 <= 14:
-                                        break
+                                        if mj[col][p1] == '#' or mj[col][p1] == 'B':
+                                            break
+                                        else:
+                                            print("A posição inserida ja foi usada.")
                                     else:
                                         print("Insira uma posição dentro do intervalo.")
                                 else:
@@ -150,13 +171,27 @@ def main():
                             else:
                                 p1 = p[0]
                                 p1 = int(p1)
-                                break
+                                if mj[col][p1] == '#' or mj[col][p1] == 'B':
+                                    break
+                                else:
+                                    print("A posição inserida ja foi usada.")
                         else:
                             print("Insira uma posição dentro do intervalo.") 
                     else:
                         print("Insira a posição corretamente.")
+                print("O que deseja fazer?")
+                if mj[col][p1] == '#':
+                    print("[1] Cavar o lugar     [2] Colocar uma bandeira")
+                    if Escolha(2) == '2':
+                        Bandeira(col, p1, mj)
+                    else:
+                        d
+                else:
+                    print("[1] Tirar a bandeira   [2] Não fazer nada")
+                    if Escolha(2) == '1':
+                        Bandeira(col, p1, mj)
+                r = Verifica(col, p1, mj, mr)
                 break
-                
             
             print("[1] Jogar Novamente   [2] Sair")
             e = 0
