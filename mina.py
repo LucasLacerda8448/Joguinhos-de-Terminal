@@ -273,6 +273,7 @@ def main():
         e = '/'
         while '1' != e != '2' and e != '3':
             print("[1] Modo Curto   [2] Modo Longo")
+            print("  (12 bombas)      (40 bombas)")
             print("         [3] Sair")
             print("-> ", end="")
             e = input()
