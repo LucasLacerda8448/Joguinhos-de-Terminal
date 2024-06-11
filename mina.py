@@ -267,7 +267,7 @@ def Verifica(col, lin, mj, mr, modo):
     return f
 
 def main():
-    print("-- CAMPO MINADO --")
+    print("--------- CAMPO MINADO ---------")
     print()
     while True:
         e = '/'
