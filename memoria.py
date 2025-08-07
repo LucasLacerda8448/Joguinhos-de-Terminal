@@ -204,8 +204,8 @@ def main():
                             p2 = p2 + 1
                     print("==== FIM DE JOGO! ====")
                     print("       PLACAR:")
-                    print("   %d     X    %d" %(p1, p2))
-                    print("Jogador 1   Jogador 2")
+                    print("    %d     X     %d" %(p1, p2))
+                    print("Jogador 1    Jogador 2")
                     if p1 > p2:
                         print("VITÓRIA DO JOGADOR 1!")
                     elif p2 > p1:
@@ -303,8 +303,8 @@ def main():
                             p2 = p2 + 1
                     print("==== FIM DE JOGO! ====")
                     print("       PLACAR:")
-                    print("   %d     X    %d" %(p1, p2))
-                    print("Jogador 1   Jogador 2")
+                    print("    %d     X     %d" %(p1, p2))
+                    print("Jogador 1    Jogador 2")
                     if p1 > p2:
                         print("VITÓRIA DO JOGADOR 1!")
                     elif p2 > p1:
@@ -314,18 +314,18 @@ def main():
                     print()
                     break
 
-            e2 = '/'
-            while '1' != e2 != '2':
-                print("[1] Jogar Novamente   [2] Sair")
-                print("-> ", end="")
-                e2= input()
-                print()
+        e2 = '/'
+        while '1' != e2 != '2':
+            print("[1] Jogar Novamente   [2] Sair")
+            print("-> ", end="")
+            e2= input()
+            print()
 
-            if e2 == '2':
-                print("ENCERRANDO JOGO...")
-                break
-            elif e2 == '1':
-                print("INICIANDO NOVO JOGO...")
-                print()
+        if e2 == '2':
+            print("ENCERRANDO JOGO...")
+            break
+        elif e2 == '1':
+            print("INICIANDO NOVO JOGO...")
+            print()
 
 main()
