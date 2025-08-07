@@ -55,53 +55,50 @@ def Posicao(mj, tam):
         if tam == 4:
             if len(p) == 2:
                 if 48 <= ord(p[0]) <= 51 and 48 <= ord(p[1]) <= 51:
-                    p1 = p[0]
-                    p1 = int(p1)
-                    p.remove(col)
-                    col = ord(col)
-                    col -= 65
-                    if len(p) == 2:
-                        if 48 <= ord(p[1]) <= 52:
-                            p1 = p[0] + p[1]
-                            p1 = int(p1)
-                            if p1 <= 14:
-                                if mj[p1][col] == '#' or mj[p1][col] == 'B':
-                                    break
-                                else:
-                                    print("A posição inserida ja foi usada.")
-                            else:
-                                print("Insira uma posição dentro do intervalo.")
-                        else:
-                            print("Insira uma posição dentro do intervalo.")
+                    x = int(p[0])
+                    y = int(p[1])
+                    if mj[x][y] == '#':
+                        break
                     else:
-                        p1 = p[0]
-                        p1 = int(p1)
-                        if mj[p1][col] == '#' or mj[p1][col] == 'B':
-                            break
-                        else:
-                            print("A posição inserida ja foi usada.")
+                        print("A posição inserida já foi usada, insira outro valor.")
                 else:
-                    print("Insira uma posição dentro do intervalo.") 
+                    print("Insira uma posição dentro do intervalo.")
+            elif len(p) == 3:
+                if 48 <= ord(p[0]) <= 51 and ord(p[1]) == 32 and 48 <= ord(p[2]) <= 51:
+                    x = int(p[0])
+                    y = int(p[2])
+                    if mj[x][y] == '#':
+                        break
+                    else:
+                        print("A posição inserida já foi usada, insira outro valor.")
+                else:
+                    print("Insira uma posição dentro do intervalo.")
             else:
                 print("Insira a posição corretamente.")
         elif tam == 6:
             if len(p) == 2:
-                if 65 <= ord(p[0]) <= 75 and 48 <= ord(p[1]) <= 56:
-                    col = p[0]
-                    p.remove(col)
-                    col = ord(col)
-                    col -= 65
-                    p1 = p[0]
-                    p1 = int(p1)
-                    if mj[p1][col] == '#' or mj[p1][col] == 'B':
+                if 48 <= ord(p[0]) <= 53 and 48 <= ord(p[1]) <= 53:
+                    x = int(p[0])
+                    y = int(p[1])
+                    if mj[x][y] == '#':
                         break
                     else:
-                        print("A posição inserida ja foi usada.")
+                        print("A posição inserida já foi usada, insira outro valor.")
                 else:
-                    print("Insira uma posição dentro do intervalo.") 
+                    print("Insira uma posição dentro do intervalo.")
+            elif len(p) == 3:
+                if 48 <= ord(p[0]) <= 53 and ord(p[1]) == 32 and 48 <= ord(p[2]) <= 53:
+                    x = int(p[0])
+                    y = int(p[2])
+                    if mj[x][y] == '#':
+                        break
+                    else:
+                        print("A posição inserida já foi usada, insira outro valor.")
+                else:
+                    print("Insira uma posição dentro do intervalo.")
             else:
                 print("Insira a posição corretamente.")
-    return col, p1
+    return x, y
 
 def main():
     print("- JOGO DA MEMÓRIA -")
@@ -139,15 +136,8 @@ def main():
             while True:
                 v2 = 0
                 print("Insira a posição da primeira carta:")
-                y, x = Posicao(mj, 4)
-                while True:
-                    if 0 > x or x > 3 or 0 > y or y > 3:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x][y] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
-                    else:
-                        print()
-                        break
+                x, y = Posicao(mj, 4)
+                print()
                 print("  0 1 2 3")
                 for i in range(4):
                     print("%d " %i, end="")
@@ -160,15 +150,12 @@ def main():
                 print()
                 print("Insira a posição da segunda carta:")
                 while True:
-                    print("-> ", end="")
-                    x2, y2 = map(int, input().split())
-                    if 0 > x2 or x2 > 3 or 0 > y2 or y2 > 3:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x2][y2] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
+                    x2, y2 = Posicao(mj, 4)
+                    if x2 == x and y2 == y:
+                        print("A posição inserida já foi usada, insira outro valor.")
                     else:
-                        print()
                         break
+                print()
                 print("  0 1 2 3")
                 for i in range(4):
                     print("%d " %i, end="")
@@ -200,7 +187,8 @@ def main():
                         else:
                             v = 1
                         print("Vez do jogador %d." %v)
-                    print()
+                    print("Aperte Enter para continuar...")
+                    cont = input()
                     print("  0 1 2 3")
                     for i in range(4):
                         print("%d " %i, end="")
@@ -247,16 +235,8 @@ def main():
             while True:
                 v2 = 0
                 print("Insira a posição da primeira carta:")
-                while True:
-                    print("-> ", end="")
-                    x, y = map(int, input().split())
-                    if 0 > x or x > 5 or 0 > y or y > 5:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x][y] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
-                    else:
-                        print()
-                        break
+                x, y = Posicao(mj, 6)
+                print()
                 print("  0 1 2 3 4 5")
                 for i in range(6):
                     print("%d " %i, end="")
@@ -269,15 +249,12 @@ def main():
                 print()
                 print("Insira a posição da segunda carta:")
                 while True:
-                    print("-> ", end="")
-                    x2, y2 = map(int, input().split())
-                    if 0 > x2 or x2 > 5 or 0 > y2 or y2 > 5:
-                        print("Valores inválidos, insira outro valor.")
-                    elif mj[x2][y2] != '#':
-                        print("A posição inserida ja foi usada, insira outro valor.")
+                    x2, y2 = Posicao(mj, 6)
+                    if x2 == x and y2 == y:
+                        print("A posição inserida já foi usada, insira outro valor.")
                     else:
-                        print()
                         break
+                print()
                 print("  0 1 2 3 4 5")
                 for i in range(6):
                     print("%d " %i, end="")
@@ -309,7 +286,8 @@ def main():
                         else:
                             v = 1
                         print("Vez do jogador %d." %v)
-                    print()
+                    print("Aperte Enter para continuar...")
+                    cont = input()
                     print("  0 1 2 3 4 5")
                     for i in range(6):
                         print("%d " %i, end="")
