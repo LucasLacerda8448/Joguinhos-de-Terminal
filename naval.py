@@ -40,74 +40,98 @@ def Posicao(jg, f, v):
                 if jg[p1][col] == '*':
                     reg = p1 + 1
                     reg2 = col + 1
-                    if f == '1':
+                    if f == 1:
                         if v == 0:
-                            for i in range(4):
-                                if jg[p1][reg2] == '*':
-                                    reg2 += 1
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
+                            if (reg2 + 3) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(4):
+                                    if jg[p1][reg2] == '*':
+                                        reg2 += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
                             if (reg2 - col) == 5:
                                 break
                         else:
-                            for i in range(4):
-                                if jg[reg][col] == '*':
-                                    reg += 1
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
+                            if (reg + 3) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(4):
+                                    if jg[reg][col] == '*':
+                                        reg += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
                             if (reg - p1) == 5:
                                 break 
-                    elif f == '2':
+                    elif f == 2:
                         if v == 0:
-                            for i in range(3):
-                                if jg[p1][reg2] == '*':
-                                    reg2 += 1
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
+                            if (reg2 + 2) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(3):
+                                    if jg[p1][reg2] == '*':
+                                        reg2 += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
                             if (reg2 - col) == 4:
                                 break
                         else:
-                            for i in range(3):
-                                if jg[reg][col] == '*':
-                                    reg += 1
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
+                            if (reg + 2) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(3):
+                                    if jg[reg][col] == '*':
+                                        reg += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
                             if (reg - p1) == 4:
                                 break 
-                    elif f == '3':
+                    elif f == 3:
                         if v == 0:
-                            for i in range(2):
-                                if jg[p1][reg2] == '*':
-                                    reg2 += 1
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
+                            if (reg2 + 1) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(2):
+                                    if jg[p1][reg2] == '*':
+                                        reg2 += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
                             if (reg2 - col) == 3:
                                 break
                         else:
-                            for i in range(2):
-                                if jg[reg][col] == '*':
-                                    reg += 1
+                            if (reg + 1) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(2):
+                                    if jg[reg][col] == '*':
+                                        reg += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
+                            if (reg - p1) == 3:
+                                break  
+                    elif f == 4:
+                        if v == 0:
+                            if reg2 > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                if jg[p1][reg2] == '*':
+                                    break
                                 else:
                                     print("A unidade escolhida não cabe no espaço escolhido.")
-                                    break
-                            if (reg - p1) == 3:
-                                break 
-                    elif f == '4':
-                        if v == 0:
-                            if jg[p1][reg2] == '*':
-                                break
-                            else:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
                         else:
-                            if jg[reg][col] == '*':
-                                break
-                            else:
+                            if reg > 9:
                                 print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                if jg[reg][col] == '*':
+                                    break
+                                else:
+                                    print("A unidade escolhida não cabe no espaço escolhido.")
                     else:
                         break
                 else:
@@ -120,49 +144,52 @@ def Posicao(jg, f, v):
 
 def Posicionar(pf):
     lista = [1, 1, 2, 3, 4]
-    for i in range(11):
-        v = 0
+    for r in range(11):
         c = 0
         print("  A B C D E F G H I J")
         for i in range(10):
             print("%d " %i, end="")
             for j in range(10):
-                print("%s " %pf[i][j], end="")
+                if pf[i][j] == 'O':
+                    print(colors.green + "O " + colors.fim, end="")
+                else:
+                    print("%s " %pf[i][j], end="")
             print()
         print()
         print("Frota:")
         if lista[0] == 0:
-            print(colors.grey + "[1] %dx Porta-avião (X X X X X)" %lista[0], end="")
+            print(colors.grey + "[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
         else:
-            print("[1] %dx Porta-avião (X X X X X)" %lista[0], end="")
+            print("[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
         if lista[3] == 0:
-            print(colors.grey + "    [4] %dx Navios Comuns (X X)" %lista[3] + colors.fim) 
+            print(colors.grey + "    [4] %dx Navios Comuns (O O)" %lista[3] + colors.fim) 
         else:
-            print(colors.fim + "    [4] %dx Navios Comuns (X X)" %lista[3])
+            print(colors.fim + "    [4] %dx Navios Comuns (O O)" %lista[3])
 
         if lista[1] == 0:
-            print(colors.grey + "[2] %dx Navio-tanque (X X X X)" %lista[1], end="")
+            print(colors.grey + "[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
         else:
-            print("[2] %dx Navio-tanque (X X X X)" %lista[1], end="")
+            print("[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
         if lista[4] == 0:
-            print(colors.grey + "     [5] %dx Submarinos (X)" %lista[4] + colors.fim) 
+            print(colors.grey + "     [5] %dx Submarinos (O)" %lista[4] + colors.fim) 
         else:
-            print(colors.fim + "     [5] %dx Submarinos (X)" %lista[4]) 
+            print(colors.fim + "     [5] %dx Submarinos (O)" %lista[4]) 
 
         if lista[2] == 0:
-            print(colors.grey + "[3] %dx Contratorpedeiros (X X X)" %lista[2] + colors.fim)
+            print(colors.grey + "[3] %dx Contratorpedeiros (O O O)" %lista[2] + colors.fim)
         else:
-            print("[3] %dx Contratorpedeiros (X X X)" %lista[2])
+            print("[3] %dx Contratorpedeiros (O O O)" %lista[2])
         print()
         print("Selecione qual unidade posicionar")
         while True:
-            fe = Escolha(5)
+            fe = int(Escolha(5))
             if lista[fe-1] == 0:
                 print("Você não possui mais esta unidade para posicionar, escolha outra")
             else:
                 lista[fe-1] -= 1
                 break
         while True:
+            v = 0
             print("Como deseja posicionar sua unidade?")
             print("[1] Verticalmente  [2] Horizontalmente")
             if Escolha(2) == '1':
@@ -177,14 +204,17 @@ def Posicionar(pf):
                 print("%d " %i, end="")
                 for j in range(10):
                     if i == x and j == y:
-                        print(colors.yellow + "X " + colors.fim, end="")
+                        print(colors.yellow + "O " + colors.fim, end="")
                         c -= 1
                         if v == 0 and c != 0:
                             y += 1
                         elif v == 1 and c != 0:
                             x += 1
                     else:
-                        print("%s " %pf[i][j], end="")
+                        if pf[i][j] == 'O':
+                            print(colors.green + "O " + colors.fim, end="")
+                        else:
+                            print("%s " %pf[i][j], end="")
                 print()
             print()
             print("A posição escolhida esta correta?")
@@ -194,14 +224,53 @@ def Posicionar(pf):
                 for i in range(10):
                     for j in range(10):
                         if i == lin and j == col:
-                            pf[lin][col] = 'X'
+                            pf[lin][col] = 'O'
                             c -= 1
                             if v == 0 and c != 0:
                                 col += 1
                             elif v == 1 and c != 0:
                                 lin += 1
                 break
-    
+    for i in range(20):
+        print()
+
+def Posicao2(jg):
+    while True:
+        print("-> ", end="")
+        p1 = input()
+        p = []
+        for i in range(len(p1)):
+            p.append(p1[i])
+        if len(p) == 2:
+            if 65 <= ord(p[0]) <= 74 and 48 <= ord(p[1]) <= 57:
+                col = p[0]
+                p.remove(col)
+                col = ord(col) - 65
+                p1 = int(p[0])
+                if jg[p1][col] == '#':
+                    break
+                else:
+                    print("A coordenada inserida não pode ser usada.")
+            else:
+                print("Insira uma coordenada dentro do intervalo.") 
+        else:
+            print("Insira a coordenada corretamente.")
+    print()
+    return col, p1
+
+def Verifica(jg):
+    r = 0
+    for i in range(10):
+        for j in range(10):
+            if jg[i][j] == 'O':
+                r = 1
+                break
+        if r == 1:
+            break
+    if r == 1:
+        return 'C'
+    return 'F'
+
 
 def main():
     print("------ BATALHA NAVAL ------")
@@ -217,19 +286,17 @@ def main():
         elif e == '2':
             print("========== INSTRUÇÕES ==========")
             print()
-            print("- Neste jogo de UNO algumas das cartas podem ter símbolos diferentes do habitual.")
-            print("- Aqui está uma explicação de cada uma:")
-            print("  [0-9]: Cartas númericas comuns, vão de 0 a 9;")
-            print("  [+2]: Carta +2, faz o próximo jogar comprar 2 cartas;")
-            print("  [X]: Carta de Bloqueio, bloqueia a vez do próximo jogador;")
-            print("  [+4]: Carta +4, o jogador escolhe a próxima cor a jogarem e faz o próximo jogador")
-            print("  comprar 4 cartas;")
-            print("  [////]: Carta de Troca de Cor, o jogador escolhe a próxima cor a jogarem;")
-            print("- A carta que inverte a ordem do jogo não foi implementada, pois ela teria o mesmo")
-            print("  efeito que uma carta de bloqueio;")
-            print("- Quando for escolher a próxima carta a jogar, escolha o número ao lado dela, invés do símbolo;")
-            print("- Caso o jogador esteja de UNO, ele não poderá finalizar um jogo com cartas coringa,")
-            print("  isto é, [+4] ou [////];")
+            print("- Batalha Naval é um jogo onde ambos os jogadores deverão posicionar suas frotas navais em diferentes")
+            print("  coordenadas, e após isso cada um deverá adivinhar onde o outro jogador posicionou sua frota. Ganha quem")
+            print("  encontrar todas as frotas do outro jogador.")
+            print("- Para começar, o jogador será apresentado a quantidade de unidades sua frota possui, juntamente também")
+            print("  do tamanho que aquela unidade ocupará no mapa, sendo representado pelo símbolo (O), onde o número de")
+            print("  'O's indica o tamanho que a unidade ocupa.")
+            print("- Para posicionar sua frota é necessário fornecer as coordenadas em que sua unidade será posicionada, o")
+            print("  posicionamento ocorre sempre da esquerda para a direita ou de cima para baixo, ou seja, caso você")
+            print("  escolha uma unidade de tamanho 4 e escolha a coordenada 'B3' na vertical, isso significa que a unidade")
+            print("  ocupará os espaços B3, B4, B5 e B6, e caso você escolha a coordenada 'B3' na horizontal, a unidade ocupará")
+            print("  os espaços B3, C3, D3 e E3.")
             print()
         elif e == '1':
             f1 = []
@@ -244,13 +311,144 @@ def main():
                 for j in range(10):
                     f1[i].append('*')
                     f2[i].append('*')
-                    jg1[i].append('*')
-                    jg2[i].append('*')
-            print(colors.yellow + "JOGADOR 1 POSICIONE SUA FROTA" + colors.fim)
-            print()
-            time.sleep(1)
+                    jg1[i].append('#')
+                    jg2[i].append('#')
+            print(colors.yellow + "JOGADOR 1 POSICIONE SUA FROTA")
+            print("Aperte Enter para continuar..." + colors.fim)
+            cont = input()
             Posicionar(f1)
-            #continuar pro jogador 2
+            print(colors.yellow + "JOGADOR 2 POSICIONE SUA FROTA")
+            print("Aperte Enter para continuar..." + colors.fim)
+            cont = input()
+            Posicionar(f2)
+
+            print(colors.yellow + "PREPARATIVOS ENCERRADOS")
+            print("JOGADOR 1 COMEÇA" + colors.fim)
+            print()
+            v = 1
+            while True:
+                if v == 1:
+                    print("  A B C D E F G H I J")
+                    for i in range(10):
+                        print("%d " %i, end="")
+                        for j in range(10):
+                            if jg2[i][j] == 'X':
+                                print(colors.red + "X " + colors.fim, end="")
+                            elif jg2[i][j] == '.':
+                                print(colors.grey + ". " + colors.fim, end="")
+                            else:
+                                print(colors.blue + "%s " %jg2[i][j] + colors.fim, end="")
+                        print()
+                    print()
+                    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
+                    y, x = Posicao2(jg2)
+
+                    if f2[x][y] == 'O':
+                        jg2[x][y] = 'X'
+                        f2[x][y] = 'X'
+                    else:
+                        jg2[x][y] = '.'
+
+                    print("  A B C D E F G H I J")
+                    for i in range(10):
+                        print("%d " %i, end="")
+                        for j in range(10):
+                            if jg2[i][j] == 'X':
+                                print(colors.red + "X " + colors.fim, end="")
+                            elif jg2[i][j] == '.':
+                                print(colors.grey + ". " + colors.fim, end="")
+                            else:
+                                print(colors.blue + "%s " %jg2[i][j] + colors.fim, end="")
+                        print()
+                    print()
+
+
+                    if Verifica(f2) == 'C':
+                        v = 2
+                        print(colors.yellow + "VEZ DO JOGADOR 2")
+                        print("Aperte Enter para continuar..." + colors.fim)
+                        cont = input()
+                    else:
+                        print(colors.green + "FIM DE JOGO!!")
+                        print("JOGADOR 1 VENCEU!" + colors.fim)
+                        print()
+                        print("Deseja ver o mapa completo do jogador 1?")
+                        print("     [1] Sim      [2] Não")
+                        if Escolha(2) == '1':
+                            print("  A B C D E F G H I J")
+                            for i in range(10):
+                                print("%d " %i, end="")
+                                for j in range(10):
+                                    if f1[i][j] == 'X':
+                                        print(colors.red + "X " + colors.fim, end="")
+                                    elif f1[i][j] == '*':
+                                        print(colors.grey + ". " + colors.fim, end="")
+                                    else:
+                                        print(colors.green + "%s " %f1[i][j] + colors.fim, end="")
+                                print()
+                            print()
+                        break
+
+                elif v == 2:
+                    print("  A B C D E F G H I J")
+                    for i in range(10):
+                        print("%d " %i, end="")
+                        for j in range(10):
+                            if jg1[i][j] == 'X':
+                                print(colors.red + "X " + colors.fim, end="")
+                            elif jg1[i][j] == '.':
+                                print(colors.grey + ". " + colors.fim, end="")
+                            else:
+                                print(colors.blue + "%s " %jg1[i][j] + colors.fim, end="")
+                        print()
+                    print()
+                    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
+                    y, x = Posicao2(jg1)
+
+                    if f1[x][y] == 'O':
+                        jg1[x][y] = 'X'
+                        f1[x][y] = 'X'
+                    else:
+                        jg1[x][y] = '.'
+
+                    print("  A B C D E F G H I J")
+                    for i in range(10):
+                        print("%d " %i, end="")
+                        for j in range(10):
+                            if jg1[i][j] == 'X':
+                                print(colors.red + "X " + colors.fim, end="")
+                            elif jg1[i][j] == '.':
+                                print(colors.grey + ". " + colors.fim, end="")
+                            else:
+                                print(colors.blue + "%s " %jg1[i][j] + colors.fim, end="")
+                        print()
+                    print()
+
+                    if Verifica(f1) == 'C':
+                        v = 1
+                        print(colors.yellow + "VEZ DO JOGADOR 1")
+                        print("Aperte Enter para continuar..." + colors.fim)
+                        cont = input()
+                    else:
+                        print(colors.green + "FIM DE JOGO!!")
+                        print("JOGADOR 2 VENCEU!" + colors.fim)
+                        print()
+                        print("Deseja ver o mapa completo do jogador 2?")
+                        print("     [1] Sim      [2] Não")
+                        if Escolha(2) == '1':
+                            print("  A B C D E F G H I J")
+                            for i in range(10):
+                                print("%d " %i, end="")
+                                for j in range(10):
+                                    if f2[i][j] == 'X':
+                                        print(colors.red + "X " + colors.fim, end="")
+                                    elif f2[i][j] == '*':
+                                        print(colors.grey + ". " + colors.fim, end="")
+                                    else:
+                                        print(colors.green + "%s " %f2[i][j] + colors.fim, end="")
+                                print()
+                            print()
+                        break
 
             print("[1] Jogar Novamente   [2] Sair")
             if Escolha(2) == '2':
