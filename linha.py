@@ -9,7 +9,7 @@ class colors:
     blue = '\033[94m'
     grey = '\033[90m'
     RED = '\033[101m'
-    BLUE = '\033[104m'
+    GREEN = '\033[102m'
     fim = '\033[0m'
 
 def Escolha(n):
@@ -46,90 +46,94 @@ def Posicao(ji):
             print("Insira a posição corretamente.")
     return col, p1
 
-def ImprimeJogo(vj):
+def ImprimeJogo(vj, p1, p2):
+    print(colors.yellow + "               PLACAR")
+    print(colors.red + "           %d" %p1 + colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
     print("  A B C D E F G H I J K L M N O P Q")
     for i in range(9):
         print("%d " %i, end="")
         if i == 0:
             for j in range(17):
                 if (j % 2) == 0:
-                    print("  ", end="")
+                    print(" ", end="")
                 else:
-                    if vj[i][j] == 'b':
-                        print(colors.blue + "_ " + colors.fim, end="")
+                    if vj[i][j] == 'g':
+                        print(colors.green + "___" + colors.fim, end="")
                     elif vj[i][j] == 'r':
-                        print(colors.red + "_ " + colors.fim, end="")
+                        print(colors.red + "___" + colors.fim, end="")
                     else:
-                        print("_ ", end="")
+                        print(colors.grey + "___" + colors.fim, end="")
             print()
         else:
             for j in range(17):
                 if (j % 2) == 0:
-                    if vj[i][j] == 'B':
-                        print(colors.blue + "|" + colors.fim, end="")
+                    if vj[i][j] == 'G':
+                        print(colors.green + "|" + colors.fim, end="")
                     elif vj[i][j] == 'R':
                         print(colors.red + "|" + colors.fim, end="")
                     else:
-                        print("|", end="")
+                        print(colors.grey + "|" + colors.fim, end="")
                 else:
-                    if vj[i][j] == 'b':
-                        print(colors.blue + " _ " + colors.fim, end="")
+                    if vj[i][j] == 'g':
+                        print(colors.green + "___" + colors.fim, end="")
                     elif vj[i][j] == 'r':
-                        print(colors.red + " _ " + colors.fim, end="")
-                    elif vj[i][j] == 'pb':
-                        print(colors.BLUE + " _ " + colors.fim, end="")
+                        print(colors.red + "___" + colors.fim, end="")
+                    elif vj[i][j] == 'pg':
+                        print(colors.GREEN + "___" + colors.fim, end="")
                     elif vj[i][j] == 'pr':
-                        print(colors.RED + " _ " + colors.fim, end="")
+                        print(colors.RED + "___" + colors.fim, end="")
                     else:
-                        print(" _ ", end="")
+                        print(colors.grey + "___" + colors.fim, end="")
             print()
     print()
 
-def Confirma(ji, x, y):
+def Confirma(ji, x, y, p1, p2):
+    print(colors.yellow + "               PLACAR")
+    print(colors.red + "           %d" %p1 + colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
     print("  A B C D E F G H I J K L M N O P Q")
     for i in range(9):
         print("%d " %i, end="")
         if i == 0:
             for j in range(17):
                 if (j % 2) == 0:
-                    print("  ", end="")
+                    print(" ", end="")
                 else:
-                    if ji[i][j] == 'b':
-                        print(colors.blue + "_ " + colors.fim, end="")
+                    if ji[i][j] == 'g':
+                        print(colors.green + "___" + colors.fim, end="")
                     elif ji[i][j] == 'r':
-                        print(colors.red + "_ " + colors.fim, end="")
+                        print(colors.red + "___" + colors.fim, end="")
                     else:
                         if i == x and j == y:
-                            print(colors.yellow + "_ " + colors.fim, end="")
+                            print(colors.yellow + "___" + colors.fim, end="")
                         else:
-                            print("_ ", end="")
+                            print(colors.grey + "___" + colors.fim, end="")
             print()
         else:
             for j in range(17):
                 if (j % 2) == 0:
-                    if ji[i][j] == 'B':
-                        print(colors.blue + "|" + colors.fim, end="")
+                    if ji[i][j] == 'G':
+                        print(colors.green + "|" + colors.fim, end="")
                     elif ji[i][j] == 'R':
                         print(colors.red + "|" + colors.fim, end="")
                     else:
                         if i == x and j == y:
                             print(colors.yellow + "|" + colors.fim, end="")
                         else:
-                            print("|", end="")
+                            print(colors.grey + "|" + colors.fim, end="")
                 else:
-                    if ji[i][j] == 'b':
-                        print(colors.blue + " _ " + colors.fim, end="")
+                    if ji[i][j] == 'g':
+                        print(colors.green + "___" + colors.fim, end="")
                     elif ji[i][j] == 'r':
-                        print(colors.red + " _ " + colors.fim, end="")
-                    elif ji[i][j] == 'pb':
-                        print(colors.BLUE + " _ " + colors.fim, end="")
+                        print(colors.red + "___" + colors.fim, end="")
+                    elif ji[i][j] == 'pg':
+                        print(colors.GREEN + "___" + colors.fim, end="")
                     elif ji[i][j] == 'pr':
-                        print(colors.RED + " _ " + colors.fim, end="")
+                        print(colors.RED + "___" + colors.fim, end="")
                     else:
                         if i == x and j == y:
-                            print(colors.yellow + " _ " + colors.fim, end="")
+                            print(colors.yellow + "___" + colors.fim, end="")
                         else:
-                            print(" _ ", end="")
+                            print(colors.grey + "___" + colors.fim, end="")
             print()
     print()
     print("A posição escolhida esta correta?")
@@ -149,7 +153,7 @@ def Verifica(ji, x, y, v, p1, p2):
                     p1 += 1
                     r = 1
                 else:
-                    ji[x][y-1] = 'pb'
+                    ji[x][y-1] = 'pg'
                     p2 += 1
                     r = 2
         if y < 16:
@@ -159,13 +163,13 @@ def Verifica(ji, x, y, v, p1, p2):
                     p1 += 1
                     r = 1
                 else:
-                    ji[x][y+1] = 'pb'
+                    ji[x][y+1] = 'pg'
                     p2 += 1
                     r = 2
         if v == 1:
             ji[x][y] = 'R'
         else:
-            ji[x][y] = 'B'
+            ji[x][y] = 'G'
     else:
         if x < 8:
             if ji[x+1][y+1] != '|' and ji[x+1][y-1] != '|' and ji[x+1][y] != '_':
@@ -174,13 +178,13 @@ def Verifica(ji, x, y, v, p1, p2):
                     p1 += 1
                     r = 1
                 else:
-                    ji[x+1][y] = 'pb'
+                    ji[x+1][y] = 'pg'
                     p2 += 1
                     r = 2
             if v == 1:
                 ji[x][y] = 'r'
             else:
-                ji[x][y] = 'b'
+                ji[x][y] = 'g'
         if x > 0:
             if ji[x][y-1] != '|' and ji[x][y+1] != '|' and ji[x-1][y] != '_':
                 if v == 1:
@@ -188,14 +192,14 @@ def Verifica(ji, x, y, v, p1, p2):
                     p1 += 1
                     r = 1
                 else:
-                    ji[x][y] = 'pb'
+                    ji[x][y] = 'pg'
                     p2 += 1
                     r = 2
             else:
                 if v == 1:
                     ji[x][y] = 'r'
                 else:
-                    ji[x][y] = 'b'
+                    ji[x][y] = 'g'
 
     for i in range(9):
         for j in range(17):
@@ -204,10 +208,10 @@ def Verifica(ji, x, y, v, p1, p2):
                 break
         if p == 1:
             break
-        
+
     if p == 0:
         r = 3
-    return r
+    return r, p1, p2
 
 def main():
     print("------- JOGO DAS LINHAS -------")
@@ -223,17 +227,17 @@ def main():
         elif e == '2':
             print("========== INSTRUÇÕES ==========")
             print()
-            print("- Batalha Naval é um jogo onde ambos os jogadores deverão posicionar suas frotas navais em diferentes")
-            print("  coordenadas, e após isso cada um deverá adivinhar onde o outro jogador posicionou sua frota. Ganha quem")
-            print("  encontrar todas as frotas do outro jogador.")
-            print("- Para começar, o jogador será apresentado a quantidade de unidades sua frota possui, juntamente também")
-            print("  do tamanho que aquela unidade ocupará no mapa, sendo representado pelo símbolo (O), onde o número de")
-            print("  'O's indica o tamanho que a unidade ocupa.")
-            print("- Para posicionar sua frota é necessário fornecer as coordenadas em que sua unidade será posicionada, o")
-            print("  posicionamento ocorre sempre da esquerda para a direita ou de cima para baixo, ou seja, caso você")
-            print("  escolha uma unidade de tamanho 4 e escolha a coordenada 'B3' na vertical, isso significa que a unidade")
-            print("  ocupará os espaços B3, B4, B5 e B6, e caso você escolha a coordenada 'B3' na horizontal, a unidade ocupará")
-            print("  os espaços B3, C3, D3 e E3.")
+            print("- No Jogo das Linhas, será fornecido aos jogadores um pequena tabela 8x8 com pequenos quadrados dentro.")
+            print("  A cada turno, os jogadores deverão pintar as linhas da tabela com o objetivo de formar um quadrado pintado,")
+            print("  isto é, um quadrado com todos os lados pintados.")
+            print("- Caso durante o turno de um jogador, ele complete um quadrado ao pintar a última linha, ele ganhará um ponto")
+            print("  e poderá jogar novamente no próximo turno. Ganha, aquele jogador que tiver mais pontos no final, ou em outras")
+            print("  palavras, aquele que conseguir preencher mais quadrados até o fim do jogo.")
+            print("- O jogo não irá se encerrar até que todas as linhas da tabela sejam pintadas.")
+            print("- Para preencher um quadrado, basta que todas as 4 linhas ao seu redor estejam pintadas. A cor em que as linhas")
+            print("  estão pintadas não importa, o jogador 2 (verde) pode forma um quadrado mesmo que as outras 3 linhas já estejam")
+            print("  pintadas pelo jogador 1 (vermelho), o importante é que durante o seu turno, ele consiga pintar a última linha")
+            print("  restante para completar o quadrado, é isso que determina de quem será o quadrado no final.")
             print()
         elif e == '1':
             ji = []
@@ -253,32 +257,32 @@ def main():
                             ji[i].append('_')
             print(colors.red + "O JOGADOR 1 COMEÇA" + colors.fim)
             print()
-            ImprimeJogo(ji)
             v = 1
             p1 = 0
             p2 = 0
+            ImprimeJogo(ji, p1, p2)
             while True:
                 while True:
                     print("Insira a posição que deseja jogar: (letra primeiro, depois o número)")
                     y, x = Posicao(ji)
                     print()
-                    c = Confirma(ji, x, y)
+                    c = Confirma(ji, x, y, p1, p2)
                     if c == 'C':
                         break
-                r = Verifica(ji, x, y, v, p1, p2)
-                ImprimeJogo(ji)
+                r, p1, p2 = Verifica(ji, x, y, v, p1, p2)
+                ImprimeJogo(ji, p1, p2)
                 if r == 3:
-                    print(colors.green + "FIM DE JOGO!!" + colors.fim)
+                    print(colors.yellow + "FIM DE JOGO!!" + colors.fim)
                     if p1 > p2:
                         print(colors.red + "O JOGADOR 1 GANHOU!" + colors.fim)
                     elif p2 > p1:
-                        print(colors.blue + "O JOGADOR 2 GANHOU!" + colors.fim)
+                        print(colors.green + "O JOGADOR 2 GANHOU!" + colors.fim)
                     else:
                         print("EMPATE!!")
                     print()
                     break
                 elif r == 2:
-                    print(colors.blue + "JOGADOR 2 JOGA NOVAMENTE" + colors.fim)
+                    print(colors.green + "JOGADOR 2 JOGA NOVAMENTE" + colors.fim)
                     print()
                 elif r == 1:
                     print(colors.red + "JOGADOR 1 JOGA NOVAMENTE" + colors.fim)
@@ -286,7 +290,7 @@ def main():
                 else:
                     if v == 1:
                         v = 2
-                        print(colors.blue + "VEZ DO JOGADOR 2" + colors.fim)
+                        print(colors.green + "VEZ DO JOGADOR 2" + colors.fim)
                     else:
                         v = 1
                         print(colors.red + "VEZ DO JOGADOR 1" + colors.fim)
