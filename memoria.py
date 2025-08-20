@@ -1,7 +1,15 @@
 import random
 
+class colors:
+    red = '\033[91m'
+    green = '\033[92m'
+    yellow = '\033[33m'
+    blue = '\033[94m'
+    purple = '\033[95m'
+    fim = '\033[0m'
+
 def CriaJogo():
-    l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    l = ['☻', '♥', '♦', '♣', '♠', '♂', '♀', '♫']
     m2 = []
 
     for i in range(4):
@@ -20,7 +28,7 @@ def CriaJogo():
     return m2
 
 def CriaJogo2():
-    l = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
+    l = ['☻', '♥', '♦', '♣', '♠', '•', '◙', '♂', '♀', '♪', '♫', '☼', '‼', '¶', '►', '◄', '▲', '§']
     m2 = []
 
     for i in range(6):
@@ -143,7 +151,7 @@ def main():
                     print("%d " %i, end="")
                     for j in range(4):
                         if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
+                            print(colors.yellow + "%s " %mr[x][y] + colors.fim, end="")
                         else:
                             print("%s " %mj[i][j], end="")
                     print()
@@ -161,9 +169,9 @@ def main():
                     print("%d " %i, end="")
                     for j in range(4):
                         if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
+                            print(colors.yellow + "%s " %mr[x][y] + colors.fim, end="")
                         elif x2 == i and y2 == j:
-                            print("%s " %mr[x2][y2], end="")
+                            print(colors.yellow + "%s " %mr[x2][y2] + colors.fim, end="")
                         else:
                             print("%s " %mj[i][j], end="")
                     print()
@@ -202,10 +210,12 @@ def main():
                             p1 = p1 + 1
                         else:
                             p2 = p2 + 1
+                    print()
                     print("==== FIM DE JOGO! ====")
                     print("       PLACAR:")
                     print("    %d     X     %d" %(p1, p2))
                     print("Jogador 1    Jogador 2")
+                    print()
                     if p1 > p2:
                         print("VITÓRIA DO JOGADOR 1!")
                     elif p2 > p1:
@@ -242,7 +252,7 @@ def main():
                     print("%d " %i, end="")
                     for j in range(6):
                         if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
+                            print(colors.yellow + "%s " %mr[x][y] + colors.fim, end="")
                         else:
                             print("%s " %mj[i][j], end="")
                     print()
@@ -260,9 +270,9 @@ def main():
                     print("%d " %i, end="")
                     for j in range(6):
                         if x == i and y == j:
-                            print("%s " %mr[x][y], end="")
+                            print(colors.yellow + "%s " %mr[x][y] + colors.fim, end="")
                         elif x2 == i and y2 == j:
-                            print("%s " %mr[x2][y2], end="")
+                            print(colors.yellow + "%s " %mr[x2][y2] + colors.fim, end="")
                         else:
                             print("%s " %mj[i][j], end="")
                     print()
