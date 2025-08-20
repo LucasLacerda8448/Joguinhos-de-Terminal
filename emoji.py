@@ -28,7 +28,7 @@ def EntregaCarta(ci, l):
         e = random.choice(ci)
         l[i].append(e)
         ci.remove(e)
-        if e == 'X_X':
+        if e == '☻':
             l[i].append('M')
         else:
             l[i].append('N')
@@ -364,7 +364,7 @@ def VezComputador(cc1, cc2, cj, ca, v, g, p):
     return cc1, cc2, cj, v, g, p
 
 def main():
-    print("----- JOGO DOS EMOJIS -----")
+    print("----- JOGO DOS EMOJIS ------")
     print()
     while True:
         print("========= OPÇÕES =========")
@@ -395,8 +395,10 @@ def main():
             print(colors.yellow + "DISTRIBUINDO AS CARTAS..." + colors.fim)
             print()
             time.sleep(1.2)
-            ci = ['X_X', ':)', ':)', ':(', ':(', 'UwU', 'UwU', 'OwO', 'OwO', ':3', ':3', '-_-', '-_-', ':O',
-                  ':O', '._.', '._.', '^-^', '^-^', 'Ò_Ó', 'Ò_Ó', '>_<', '>_<', ':D', ':D', 'B)', 'B)']
+            #ci = ['X_X', ':)', ':)', ':(', ':(', 'UwU', 'UwU', 'OwO', 'OwO', ':3', ':3', '-_-', '-_-', ':O',
+            #      ':O', '._.', '._.', '^-^', '^-^', 'Ò_Ó', 'Ò_Ó', '>_<', '>_<', ':D', ':D', 'B)', 'B)']
+            ci = ['☻', '☺', '☺', '♥', '♥', '♦', '♦', '♣', '♣', '♠', '♠', '•', '•', '♪',
+                  '♪', '♫', '♫', '☼', '☼', '▲', '▲', '♂', '♂', '♀', '♀', '◙', '◙']
             cc1 = []
             cc2 = []
             cj = []
