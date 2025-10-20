@@ -1,7 +1,7 @@
+
 import os
 import random
 import time
-os.system('color')
 
 class colors:
     red = '\033[91m'
@@ -299,7 +299,7 @@ def init_jogo():
 
     return jg, x, y, x2, y2
 
-def mov(map, nav, x, y, coin, Try): #CONTINUAR AQUI
+def mov(map, comm, v, nav, x, y, coin, Try): #CONTINUAR AQUI
     if nav == '▲':
         if map[x-1][y] == '═':
             r = 'N_Ok'
@@ -325,8 +325,8 @@ def mov(map, nav, x, y, coin, Try): #CONTINUAR AQUI
             y += 1
             r = 'Ok'
 
-    for v in range(2):
-        if v == 1:
+    for w in range(2):
+        if w == 1:
             if nav == '▲':
                 x -= 1
             elif nav == '◄':
@@ -335,12 +335,13 @@ def mov(map, nav, x, y, coin, Try): #CONTINUAR AQUI
                 x += 1
             elif nav == '►':
                 y += 1
-        print("                   Instrução:")
-        print("                      [↑]")
         for i in range(13):
-            if i == 1:
-                print(colors.yellow + "  Moedas:  " + colors.fim, end="")
-                print(colors.yellow + "   (%i/3)" %coin + colors.fim, end="")
+            if i == 5:
+                print(colors.yellow + "  Núcleo:  " + colors.fim, end="")
+            elif i == 6:
+                if map[x][y] == 0 or map[x][y] == 1 or map[x][y] == 2:
+                    coin += 1
+                print(colors.yellow + "   (%i/3)   " %coin + colors.fim, end="")
             else:
                 print("           ", end="")
             for j in range(13):
@@ -365,22 +366,49 @@ def mov(map, nav, x, y, coin, Try): #CONTINUAR AQUI
                                 print(colors.grey, end="")
                             print(" %s " %map[i][j] + colors.fim, end="")
             
-            if i == 1:
+            if i == 5:
                 print("   Tentativa:")
-                print("    (%i/5)" %Try)
+            elif i == 6:
+                print("    (%i/5)" %(Try+1))
             else:
                 print()
+        
+        if len(comm) > 5:
+            tam = 5
+        else:
+            tam = len(comm)
+
+        print("Instruções:  ", end="")
+        for i in range(tam):
+            if v < 2:
+                if i <= v:
+                    print(colors.yellow + "%s  " %comm[i] + colors.fim, end="")
+                else:
+                    print("%s  " %comm[i], end="")
+            elif (len(comm)-2) <= v:
+                if v == (len(comm)-2):
+                    if (i+v-3) <= v:
+                        print(colors.yellow + "%s  " %comm[i+v-3] + colors.fim, end="")
+                    else:
+                        print("%s  " %comm[i+v-3], end="")
+                else:
+                    print(colors.yellow + "%s  " %comm[i+v-4] + colors.fim, end="")
+            else:
+                if (i+v-2) <= v:
+                    print(colors.yellow + "%s  " %comm[i+v-2] + colors.fim, end="")
+                else:
+                    print("%s  " %comm[i+v-2], end="")
         print()
+        
         if r == 'N_Ok':
             break
         time.sleep(0.2)
 
-    return r, nav, x, y
 
-def vira(map, comm, nav, x, y, coin, Try):
-    instru = ""
-    if comm == '1':
-        instru = "←-"
+    return r, x, y
+
+def vira(map, comm, v, nav, x, y, coin, Try):
+    if comm[v] == '←':
         if nav == '▲':
             nav = '◄'
         elif nav == '◄':
@@ -390,7 +418,6 @@ def vira(map, comm, nav, x, y, coin, Try):
         elif nav == '►':
             nav = '▲'
     else:
-        instru = "-→"
         if nav == '▲':
             nav = '►'
         elif nav == '►':
@@ -400,12 +427,11 @@ def vira(map, comm, nav, x, y, coin, Try):
         elif nav == '◄':
             nav = '▲'
 
-    print("                   Instrução:")
-    print("                      [%s]" %instru)
     for i in range(13):
-        if i == 1:
-            print(colors.yellow + "  Moedas:  " + colors.fim, end="")
-            print(colors.yellow + "   (%i/3)" %coin + colors.fim, end="")
+        if i == 5:
+            print(colors.yellow + "  Núcleo:  " + colors.fim, end="")
+        elif i == 6:
+            print(colors.yellow + "   (%i/3)   " %coin + colors.fim, end="")
         else:
             print("           ", end="")
         for j in range(13):
@@ -430,12 +456,40 @@ def vira(map, comm, nav, x, y, coin, Try):
                             print(colors.grey, end="")
                         print(" %s " %map[i][j] + colors.fim, end="")
         
-        if i == 1:
+        if i == 5:
             print("   Tentativa:")
-            print("    (%i/5)" %Try)
+        elif i == 6:
+            print("    (%i/5)" %(Try+1))
         else:
             print()
     
+    if len(comm) > 5:
+        tam = 5
+    else:
+        tam = len(comm)
+
+    print("Instruções:  ", end="")
+    for i in range(tam):
+        if v < 2:
+            if i <= v:
+                print(colors.yellow + "%s  " %comm[i] + colors.fim, end="")
+            else:
+                print("%s  " %comm[i], end="")
+        elif (len(comm)-2) <= v:
+            if v == (len(comm)-2):
+                if (i+v-3) <= v:
+                    print(colors.yellow + "%s  " %comm[i+v-3] + colors.fim, end="")
+                else:
+                    print("%s  " %comm[i+v-3], end="")
+            else:
+                print(colors.yellow + "%s  " %comm[i+v-4] + colors.fim, end="")
+        else:
+            if (i+v-2) <= v:
+                print(colors.yellow + "%s  " %comm[i+v-2] + colors.fim, end="")
+            else:
+                print("%s  " %comm[i+v-2], end="")
+    print()
+
     return nav
 
 def tentativa(Try, jg, x, y, nav, coin, result):
@@ -446,7 +500,7 @@ def tentativa(Try, jg, x, y, nav, coin, result):
     coin_reg = []
 
     print("Insira a sequência de instruções para o robô seguir:")
-    print("       [1] ←-       [2] ↑       [3] -→")
+    print("       [1] ←        [2] ↑        [3] →")
     while True:
         print("Seq: ", end="")
         seq = input()
@@ -459,19 +513,24 @@ def tentativa(Try, jg, x, y, nav, coin, result):
                 break
             else:
                 if i != ' ':
-                    comm.append(i)
+                    if i == '1':
+                        comm.append('←')
+                    elif i == '2':
+                        comm.append('↑')
+                    else:
+                        comm.append('→')
         if reg == 0:
             break
     
     time.sleep(0.5)
-    for v in comm:
-        if v == '1' or v == '3':
-            nav_temp = vira(jg, v, nav_temp, xt, yt, coin_t, Try)
+    for v in range(len(comm)):
+        if comm[v] == '←' or comm[v] == '→':
+            nav_temp = vira(jg, comm, v, nav_temp, xt, yt, coin_t, Try)
             time.sleep(1.5)
-        elif v == '2':
-            r, jg, xt, yt = mov(jg, nav_temp, xt, yt, coin_t, Try)
+        elif comm[v] == '↑':
+            r, jg, xt, yt = mov(jg, comm, v, nav_temp, xt, yt, coin_t, Try)
             if r == 'N_Ok':
-                print("Algo deu errado durante o trajeto do robô. Tente Novamente.")
+                print("Algo deu errado durante o trajeto da nave. Tente Novamente.")
                 break
             if jg[xt][yt] == '☻':
                 result = 1
