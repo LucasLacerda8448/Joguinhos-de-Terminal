@@ -7,9 +7,8 @@ class colors:
     green = '\033[92m'
     yellow = '\033[33m'
     blue = '\033[94m'
-    grey = '\033[90m'
-    RED = '\033[101m'
-    GREEN = '\033[102m'
+    grey = '\033[30m'
+    white = '\033[37m'
     fim = '\033[0m'
 
 def Escolha(n):
@@ -31,12 +30,20 @@ def Posicao(ji):
         for i in range(len(p1)):
             p.append(p1[i])
         if len(p) == 2:
-            if 65 <= ord(p[0]) <= 81 and 48 <= ord(p[1]) <= 56:
-                col = p[0]
-                p.remove(col)
-                col = ord(col) - 65
-                p1 = int(p[0])
-                if ji[p1][col] == '|' or ji[p1][col] == '_':
+            if 65 <= ord(p[0]) <= 81 and 48 <= ord(p[1]) <= 57:
+                col = ord(p[0]) - 65
+                lin = int(p[1])
+                if ji[lin][col] == '│' or ji[lin][col] == '─':
+                    break
+                else:
+                    print("A posição inserida não pode ser usada.")
+            else:
+                print("Insira uma posição dentro do intervalo.")
+        elif len(p) == 3:
+            if 65 <= ord(p[0]) <= 81 and p[1] == '1' and 48 <= ord(p[2]) <= 54:
+                col = ord(p[0]) - 65
+                lin = int('1' + p[2])
+                if ji[lin][col] == '│' or ji[lin][col] == '─':
                     break
                 else:
                     print("A posição inserida não pode ser usada.")
@@ -44,97 +51,145 @@ def Posicao(ji):
                 print("Insira uma posição dentro do intervalo.") 
         else:
             print("Insira a posição corretamente.")
-    return col, p1
+    return col, lin
 
 def ImprimeJogo(vj, p1, p2):
-    print(colors.yellow + "               PLACAR")
-    print(colors.red + "           %d" %p1 + colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
-    print("  A B C D E F G H I J K L M N O P Q")
-    for i in range(9):
-        print("%d " %i, end="")
-        if i == 0:
+    print(colors.yellow + "                PLACAR")
+    if p1 > 9:
+        print(colors.red + "            %d" %p1, end="")
+    else:
+        print(colors.red + "             %d" %p1, end="")
+    print(colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
+    print("   A B C D E F G H I J K L M N O P Q")
+    for i in range(17):
+        if i > 9:
+            print("%d " %i, end="")
+        else:
+            print("%d  " %i, end="")
+        if i % 2 == 0:
             for j in range(17):
                 if (j % 2) == 0:
-                    print(" ", end="")
+                    print(colors.white, end="")
+                    if i == 0:
+                        if j == 0:
+                            print("┌", end="")
+                        elif j == 16:
+                            print("┐", end="")
+                        else:
+                            print("┬", end="")
+                    elif i == 16:
+                        if j == 0:
+                            print("└", end="")
+                        elif j == 16:
+                            print("┘", end="")
+                        else:
+                            print("┴", end="")
+                    else:
+                        if j == 0:
+                            print("├", end="")
+                        elif j == 16:
+                            print("┤", end="")
+                        else:
+                            print("┼", end="")
+                    print(colors.fim, end="")
                 else:
                     if vj[i][j] == 'g':
-                        print(colors.green + "___" + colors.fim, end="")
+                        print(colors.green, end="")
                     elif vj[i][j] == 'r':
-                        print(colors.red + "___" + colors.fim, end="")
+                        print(colors.red, end="")
                     else:
-                        print(colors.grey + "___" + colors.fim, end="")
-            print()
+                        print(colors.grey, end="")
+                    print("───" + colors.fim, end="")
         else:
             for j in range(17):
                 if (j % 2) == 0:
                     if vj[i][j] == 'G':
-                        print(colors.green + "|" + colors.fim, end="")
+                        print(colors.green + "│" + colors.fim, end="")
                     elif vj[i][j] == 'R':
-                        print(colors.red + "|" + colors.fim, end="")
+                        print(colors.red + "│" + colors.fim, end="")
                     else:
-                        print(colors.grey + "|" + colors.fim, end="")
+                        print(colors.grey + "│" + colors.fim, end="")
                 else:
-                    if vj[i][j] == 'g':
-                        print(colors.green + "___" + colors.fim, end="")
-                    elif vj[i][j] == 'r':
-                        print(colors.red + "___" + colors.fim, end="")
-                    elif vj[i][j] == 'pg':
-                        print(colors.GREEN + "___" + colors.fim, end="")
+                    if vj[i][j] == 'pg':
+                        print(colors.green + "▐█▌" + colors.fim, end="")
                     elif vj[i][j] == 'pr':
-                        print(colors.RED + "___" + colors.fim, end="")
+                        print(colors.red + "▐█▌" + colors.fim, end="")
                     else:
-                        print(colors.grey + "___" + colors.fim, end="")
-            print()
+                        print(colors.grey + "   " + colors.fim, end="")
+        print()
     print()
 
 def Confirma(ji, x, y, p1, p2):
-    print(colors.yellow + "               PLACAR")
-    print(colors.red + "           %d" %p1 + colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
-    print("  A B C D E F G H I J K L M N O P Q")
-    for i in range(9):
-        print("%d " %i, end="")
-        if i == 0:
+    print(colors.yellow + "                PLACAR")
+    if p1 > 9:
+        print(colors.red + "            %d" %p1, end="")
+    else:
+        print(colors.red + "             %d" %p1, end="")
+    print(colors.yellow + "     X" + colors.green + "     %d" %p2 + colors.fim)
+    print("   A B C D E F G H I J K L M N O P Q")
+    for i in range(17):
+        if i > 9:
+            print("%d " %i, end="")
+        else:
+            print("%d  " %i, end="")
+        if i % 2 == 0:
             for j in range(17):
                 if (j % 2) == 0:
-                    print(" ", end="")
+                    print(colors.white, end="")
+                    if i == 0:
+                        if j == 0:
+                            print("┌", end="")
+                        elif j == 16:
+                            print("┐", end="")
+                        else:
+                            print("┬", end="")
+                    elif i == 16:
+                        if j == 0:
+                            print("└", end="")
+                        elif j == 16:
+                            print("┘", end="")
+                        else:
+                            print("┴", end="")
+                    else:
+                        if j == 0:
+                            print("├", end="")
+                        elif j == 16:
+                            print("┤", end="")
+                        else:
+                            print("┼", end="")
+                    print(colors.fim, end="")
                 else:
                     if ji[i][j] == 'g':
-                        print(colors.green + "___" + colors.fim, end="")
+                        print(colors.green, end="")
                     elif ji[i][j] == 'r':
-                        print(colors.red + "___" + colors.fim, end="")
+                        print(colors.red, end="")
                     else:
                         if i == x and j == y:
-                            print(colors.yellow + "___" + colors.fim, end="")
+                            print(colors.yellow, end="")
                         else:
-                            print(colors.grey + "___" + colors.fim, end="")
-            print()
+                            print(colors.grey, end="")
+                    print("───" + colors.fim, end="")
         else:
             for j in range(17):
                 if (j % 2) == 0:
                     if ji[i][j] == 'G':
-                        print(colors.green + "|" + colors.fim, end="")
+                        print(colors.green, end="")
                     elif ji[i][j] == 'R':
-                        print(colors.red + "|" + colors.fim, end="")
+                        print(colors.red, end="")
                     else:
                         if i == x and j == y:
-                            print(colors.yellow + "|" + colors.fim, end="")
+                            print(colors.yellow, end="")
                         else:
-                            print(colors.grey + "|" + colors.fim, end="")
+                            print(colors.grey, end="")
+                    print("│" + colors.fim, end="")
                 else:
-                    if ji[i][j] == 'g':
-                        print(colors.green + "___" + colors.fim, end="")
-                    elif ji[i][j] == 'r':
-                        print(colors.red + "___" + colors.fim, end="")
-                    elif ji[i][j] == 'pg':
-                        print(colors.GREEN + "___" + colors.fim, end="")
+                    if ji[i][j] == 'pg':
+                        print(colors.green + "▐█▌" + colors.fim, end="")
                     elif ji[i][j] == 'pr':
-                        print(colors.RED + "___" + colors.fim, end="")
+                        print(colors.red + "▐█▌" + colors.fim, end="")
                     else:
-                        if i == x and j == y:
-                            print(colors.yellow + "___" + colors.fim, end="")
-                        else:
-                            print(colors.grey + "___" + colors.fim, end="")
-            print()
+                        print(colors.grey + "   " + colors.fim, end="")
+        print()
     print()
     print("A posição escolhida esta correta?")
     print("   [1] Sim          [2] Não")
@@ -145,9 +200,9 @@ def Confirma(ji, x, y, p1, p2):
 def Verifica(ji, x, y, v, p1, p2):
     r = 0
     p = 0
-    if ji[x][y] == '|':
+    if ji[x][y] == '│':
         if y > 0:
-            if ji[x][y-1] != '_' and ji[x][y-2] != '|' and ji[x-1][y-1] != '_':
+            if ji[x+1][y-1] != '─' and ji[x][y-2] != '│' and ji[x-1][y-1] != '─':
                 if v == 1:
                     ji[x][y-1] = 'pr'
                     p1 += 1
@@ -157,7 +212,7 @@ def Verifica(ji, x, y, v, p1, p2):
                     p2 += 1
                     r = 2
         if y < 16:
-            if ji[x][y+1] != '_' and ji[x][y+2] != '|' and ji[x-1][y+1] != '_':
+            if ji[x+1][y+1] != '─' and ji[x][y+2] != '│' and ji[x-1][y+1] != '─':
                 if v == 1:
                     ji[x][y+1] = 'pr'
                     p1 += 1
@@ -171,8 +226,8 @@ def Verifica(ji, x, y, v, p1, p2):
         else:
             ji[x][y] = 'G'
     else:
-        if x < 8:
-            if ji[x+1][y+1] != '|' and ji[x+1][y-1] != '|' and ji[x+1][y] != '_':
+        if x < 16:
+            if ji[x+1][y+1] != '│' and ji[x+1][y-1] != '│' and ji[x+2][y] != '─':
                 if v == 1:
                     ji[x+1][y] = 'pr'
                     p1 += 1
@@ -181,36 +236,31 @@ def Verifica(ji, x, y, v, p1, p2):
                     ji[x+1][y] = 'pg'
                     p2 += 1
                     r = 2
-            if v == 1:
-                ji[x][y] = 'r'
-            else:
-                ji[x][y] = 'g'
         if x > 0:
-            if ji[x][y-1] != '|' and ji[x][y+1] != '|' and ji[x-1][y] != '_':
+            if ji[x-1][y-1] != '│' and ji[x-1][y+1] != '│' and ji[x-2][y] != '─':
                 if v == 1:
-                    ji[x][y] = 'pr'
+                    ji[x-1][y] = 'pr'
                     p1 += 1
                     r = 1
                 else:
-                    ji[x][y] = 'pg'
+                    ji[x-1][y] = 'pg'
                     p2 += 1
                     r = 2
-            else:
-                if v == 1:
-                    ji[x][y] = 'r'
-                else:
-                    ji[x][y] = 'g'
+        if v == 1:
+            ji[x][y] = 'r'
+        else:
+            ji[x][y] = 'g'
 
-    for i in range(9):
+    for i in range(17):
         for j in range(17):
-            if ji[i][j] == '|' or ji[i][j] == '_':
+            if ji[i][j] == '│' or ji[i][j] == '─':
                 p = 1
                 break
         if p == 1:
             break
-
     if p == 0:
         r = 3
+
     return r, p1, p2
 
 def main():
@@ -241,20 +291,20 @@ def main():
             print()
         elif e == '1':
             ji = []
-            for i in range(9):
+            for i in range(17):
                 ji.append([])
-                if i == 0:
+                if i % 2 == 0:
                     for j in range(17):
                         if (j % 2) == 0:
                             ji[i].append(' ')
                         else:
-                            ji[i].append('_')
+                            ji[i].append('─')
                 else:
                     for j in range(17):
                         if (j % 2) == 0:
-                            ji[i].append('|')
+                            ji[i].append('│')
                         else:
-                            ji[i].append('_')
+                            ji[i].append(' ')
             print(colors.red + "O JOGADOR 1 COMEÇA" + colors.fim)
             print()
             v = 1
