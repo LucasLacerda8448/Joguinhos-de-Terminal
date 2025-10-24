@@ -1,5 +1,5 @@
 import os
-#os.system('color')
+os.system('color')
 
 class colors:
     red = '\033[91m'
@@ -92,6 +92,38 @@ def Verifica(j):
         return 'C'
     else:
         return 'E'
+    
+def Verifica2(j, pA, pO, P, M, G):
+    c = 0
+    v = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    m = j
+    for i in range(8):
+        p1 = m[v[i][0]]
+        p2 = m[v[i][1]]
+        p3 = m[v[i][2]]
+
+        if p1 == '*' or p2 == '*' or p3 == '*':
+            c = 1
+            continue
+        elif p1 in pA and p2 in pA and p3 in pA:
+            return 'A'
+        elif p1 in pO and p2 in pO and p3 in pO:
+            return 'O'
+
+    if c == 1:
+        if P == M == G == 0:
+            return 'E'
+        return 'C'
+    else:
+        if G != 0:
+            return 'C'
+        elif M == 0:
+            return 'E'
+        else:
+            if '°' in j or 'ª' in j:
+                return 'C'
+            else:
+                return 'E'
 
 def Jogar(j, ji, si, v):
     while True:
@@ -128,13 +160,13 @@ def main():
 
         e = '/'
         while '1' != e != '2' and e != '3':
-            print("[1] Modo normal   [2] Super-jogo da velha")
-            print("             [3] Sair")
+            print("[1] Modo normal        [2] Super-jogo da velha")
+            print("[3] Modo Alternativo   [4] Sair")
             print("-> ", end="")
             e = input()
             print()
 
-        if e == '3':
+        if e == '4':
             print("ENCERRANDO JOGO...")
             break
         elif e == '1':
@@ -263,6 +295,164 @@ def main():
                         print("Empate.")
                     print()
                     break
+        elif e == '3':
+            jva = ['*', '*', '*', '*', '*', '*', '*', '*', '*']
+            jA = ['ª', 'a', 'A']
+            jO = ['°', 'o', 'O']
+            for i in range(3):
+                print("    " + colors.grey, end="")
+                for j in range(3):
+                    print("* ", end="")
+                print(colors.fim)
+            print()
+            print("O jogador " + colors.red + "A" + colors.fim + " começa.")
+            v = 'X'
+            pA = mA = gA = pO = mO = gO = 3
+            while True:
+                print("Insira a posição que deseja jogar:")
+                p = 0
+                for i in range (3):
+                    print("    ", end="")
+                    for j in range(3):
+                        print("%d " %p, end="")
+                        p = p + 1
+                    print()
+                while True:
+                    print("-> ", end="")
+                    p1 = input()
+                    if len(p1) == 1 and 48 <= ord(p1) <= 56:
+                        p1 = int(p1)
+                        if jva[p1] == 'A' or jva[p1] == 'O':
+                            print("A posição inserida ja está cheia, insira outro valor.")
+                        elif jva[p1] == 'a' or jva[p1] == 'o':
+                            if v == 'X':
+                                G = gA
+                            else:
+                                G = gO
+                            if G == 0:
+                                print("Você não possui mais símbolos grandes, selecione outra posição.")
+                            else:
+                                print()
+                                break
+                        else:
+                            print()
+                            break
+                    else:
+                        print("Valor de entrada incorreto, insira outro valor.")
+
+                p = 0
+                for i in range(3):
+                    print("    ", end="")
+                    for j in range(3):
+                        if p == p1:
+                            print(colors.yellow, end="")
+                        else:
+                            if jva[p] in jA:
+                                print(colors.red, end="")
+                            elif jva[p] in jO:
+                                print(colors.green, end="")
+                            else:
+                                print(colors.grey, end="")
+                        print("%s " %jva[p], end="")    
+                        p = p + 1
+                    print(colors.fim)
+                print()
+                print("Escolha o tamanho do símbolo:")
+                if v == 'X':
+                    print("[1] %dx Pequeno   [2] %dx Médio   [3] %dx Grande" %(pA,mA,gA))
+                    P = pA
+                    M = mA
+                    G = gA
+                else:
+                    print("[1] %dx Pequeno   [2] %dx Médio   [3] %dx Grande" %(pO,mO,gO))
+                    P = pO
+                    M = mO
+                    G = gO
+                while True:
+                    print("-> ", end="")
+                    p2 = input()
+                    if len(p2) == 1 and 49 <= ord(p2) <= 51:
+                        if p2 == '1':
+                            if P == 0:
+                                print("Você não possui mais símbolos pequenos, escolha outro tamanho.")
+                            elif jva[p1] != '*':
+                                print("A posição selecionada possui um símbolo maior que o escolhido, escolha um tamanho maior.")
+                            else:
+                                P -= 1
+                                p2 = 0
+                                break
+                        elif p2 == '2':
+                            if M == 0:
+                                print("Você não possui mais símbolos médios, escolha outro tamanho.")
+                            elif jva[p1] == 'a' or jva[p1] == 'o':
+                                print("A posição selecionada possui um símbolo maior que o escolhido, escolha um tamanho maior.")
+                            else:
+                                M -= 1
+                                p2 = 1
+                                break
+                        else:
+                            if G == 0:
+                                print("Você não possui mais símbolos grandes, escolha outro tamanho.")
+                            else:
+                                G -= 1
+                                p2 = 2
+                                break
+                    else:
+                        print("Valor de entrada incorreto, insira outro valor.")
+
+                if v == 'X':
+                    jva[p1] = jA[p2]
+                    pA = P
+                    mA = M
+                    gA = G
+                    P = pO
+                    M = mO
+                    G = gO
+                else:
+                    jva[p1] = jO[p2]
+                    pO = P
+                    mO = M
+                    gO = G
+                    P = pA
+                    M = mA
+                    G = gA
+
+                print()
+                p = 0
+                for i in range(3):
+                    print("    ", end="")
+                    for j in range(3):
+                        if jva[p] in jA:
+                            print(colors.red, end="")
+                        elif jva[p] in jO:
+                            print(colors.green, end="")
+                        else:
+                            print(colors.grey, end="")
+                        print("%s " %jva[p], end="")    
+                        p = p + 1
+                    print(colors.fim)
+                print()
+                r = Verifica2(jva, jA, jO, P, M, G)
+                if r == 'C':
+                    if v == 'X':
+                        v = 'O'
+                        print("Vez do jogador " + colors.green + "O" + colors.fim + ".")
+                    else:
+                        v = 'X'
+                        print("Vez do jogador " + colors.red + "A" + colors.fim + ".")
+                else:
+                    print("FIM DE JOGO!")
+                    if r == 'A' or r == 'O':
+                        print("Jogador ", end="")
+                        if r == 'A':
+                            print(colors.red + "A" + colors.fim, end="")
+                        else:
+                            print(colors.green + "O" + colors.fim, end="")
+                        print(" Venceu.")
+                    elif r == 'E':
+                        print("Empate.")
+                    print()
+                    break
 
         e2 = '/'
         while '1' != e2 != '2':
@@ -279,3 +469,4 @@ def main():
             print()
 
 main()
+
