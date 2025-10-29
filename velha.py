@@ -8,6 +8,8 @@ class colors:
     d_red = '\033[31m'
     d_green = '\033[32m'
     b_yellow = '\033[93m'
+    b_purple = '\033[95m'
+    purple = '\033[35m'
     grey = '\033[90m'
     fim = '\033[0m'
 
@@ -49,11 +51,11 @@ def ImprimeJogo(l, li, si):
                 if c == li:
                     print(colors.yellow + "[%d]" %c + colors.fim, end="")
                 elif si[c] == 'X':
-                    print(colors.red + "[%d]" %c + colors.fim, end="")
+                    print(colors.d_red + "[%d]" %c + colors.fim, end="")
                 elif si[c] == 'O':
-                    print(colors.green + "[%d]" %c + colors.fim, end="")
+                    print(colors.d_green + "[%d]" %c + colors.fim, end="")
                 elif si[c] == 'E':
-                    print(colors.grey + "[%d]" %c + colors.fim, end="")
+                    print(colors.purple + "[%d]" %c + colors.fim, end="")
                 else:
                     print("[%d]" %c, end="")
                 
@@ -72,71 +74,103 @@ def ImprimeJogo(l, li, si):
         elif i % 2 == 0:
             c -= 3
             for j in range(3):
-                if c == li:
-                    print(colors.b_yellow + " ───┼───┼─── " + colors.fim, end="")
-                elif si[c] == 'X':
-                    print(colors.red + "    X   X    " + colors.fim, end="")
+                if si[c] == 'X':
+                    if c == li:
+                        print(colors.red + "    X   X    " + colors.fim, end="")
+                    else:
+                        print(colors.d_red + "    X   X    " + colors.fim, end="")
                 elif si[c] == 'O':
-                    print(colors.green + "  O       O  " + colors.fim, end="")
+                    if c == li:
+                        print(colors.green + "  O       O  " + colors.fim, end="")
+                    else:
+                        print(colors.d_green + "  O       O  " + colors.fim, end="")
+                elif si[c] == 'E':
+                    if c == li:
+                        print(colors.b_purple + " ───┼───┼─── " + colors.fim, end="")
+                    else:
+                        print(colors.purple + " ───┼───┼─── " + colors.fim, end="")
                 else:
-                    print(colors.grey + " ───┼───┼─── " + colors.fim, end="")
+                    if c == li:
+                        print(colors.b_yellow + " ───┼───┼─── " + colors.fim, end="")
+                    else:
+                        print(colors.grey + " ───┼───┼─── " + colors.fim, end="")
                 
                 if j < 2:
                     print("║", end="")
                 c = c + 1
             print()
-        else: #CONTINUAR DAQUI
-            '''
-            p = 0
-                if i == 1 or i == 3:
-                    print("───┼───┼───", end="")
-                else:
-                    for j in range(5):
-                        if (j % 2 == 0):
-                            print(colors.grey + " %s " %jv[p] + colors.fim, end="")
-                            p = p + 1
-                        else:
-                            print("│", end="")
-                print()
-            print()'''
-            for j in range(11):
-                if 1 <= i <= 3:
-                    if 0 <= j <= 2:
+        else:
+            for j in range(17):
+                if j == 0:
+                    print(" ", end="")
+                if 1 <= i <= 5:
+                    if 0 <= j <= 4:
                         le = 0
-                    elif 4 <= j <= 6:
+                    elif 6 <= j <= 10:
                         le = 1
-                    elif 8 <= j <= 10:
+                    elif 12 <= j <= 16:
                         le = 2
-                elif 5 <= i <= 7:
-                    if 0 <= j <= 2:
+                elif 7 <= i <= 11:
+                    if 0 <= j <= 4:
                         le = 3
-                    elif 4 <= j <= 6:
+                    elif 6 <= j <= 10:
                         le = 4
-                    elif 8 <= j <= 10:
+                    elif 12 <= j <= 16:
                         le = 5
-                elif 9 <= i <= 11:
-                    if 0 <= j <= 2:
+                elif 13 <= i <= 17:
+                    if 0 <= j <= 4:
                         le = 6
-                    elif 4 <= j <= 6:
+                    elif 6 <= j <= 10:
                         le = 7
-                    elif 8 <= j <= 10:
+                    elif 12 <= j <= 16:
                         le = 8
-                if j == 3 or j == 7:
-                    print("  ", end="")
-                    p = p - 4
-                elif si[le] == '1':
-                    if li == le:
-                        print(colors.yellow + "%s " %l[le][p] + colors.fim, end="")
-                    else:
-                        print("%s " %l[le][p], end="")
+                if j == 5 or j == 11:
+                    print(" ║ ", end="")
+                    p = p - 3
                 else:
-                    if si[le] == 'X':
-                        print(colors.red + "%s " %lX[p] + colors.fim, end="")
-                    elif si[le] == 'O':
-                        print(colors.green + "%s " %lO[p] + colors.fim, end="")
-                    elif si[le] == 'E':
-                        print(colors.grey + "%s " %l[le][p] + colors.fim, end="")
-                p = p + 1
+                    if j % 2 == 0:
+                        if li == le:
+                            if si[le] == 'E':
+                                print(colors.b_purple, end="")
+                            elif si[le] == 'X' or (l[le][p] == 'X' and si[le] != 'O'):
+                                print(colors.red, end="")
+                            elif si[le] == 'O' or l[le][p] == 'O':
+                                print(colors.green, end="")
+                            else:
+                                print(colors.yellow, end="")
+                        else:
+                            if si[le] == 'E':
+                                print(colors.purple, end="")
+                            elif si[le] == 'X' or (l[le][p] == 'X' and si[le] != 'O'):
+                                print(colors.d_red, end="")
+                            elif si[le] == 'O' or l[le][p] == 'O':
+                                print(colors.d_green, end="")
+                            else:
+                                print(colors.grey, end="")
+
+                        if si[le] == 'X':
+                            print(" %s " %lX[p] + colors.fim, end="")
+                        elif si[le] == 'O':
+                            print(" %s " %lO[p] + colors.fim, end="")
+                        else:
+                            print(" %s " %l[le][p] + colors.fim, end="")
+                        p = p + 1
+                    else:
+                        if si[le] == 'X' or si[le] == 'O':
+                            print(" ", end="")
+                        else:
+                            if li == le:
+                                if si[le] == 'E':
+                                    print(colors.b_purple, end="")
+                                else:
+                                    print(colors.b_yellow, end="")
+                            else:
+                                if si[le] == 'E':
+                                    print(colors.purple, end="")
+                                else:
+                                    print(colors.grey, end="")
+
+                            print("│" + colors.fim, end="")
             if p == 9:
                 p = 0
             print()
@@ -199,23 +233,16 @@ def Jogar(j, ji, si, v):
     while True:
         print("-> ", end="")
         p1 = input()
-        p2 = 0
-        for i in p1:
-            if 48 <= ord(i) <= 57:
-                p2 = 1
-            else:
-                p2 = 0
-                break
-        if p2 == 1:
+        if len(p1) == 1 and 48 <= ord(p1) <= 56:
             p1 = int(p1)
-            if p1 < 0 or p1 > 8:
-                print("Valores inválidos, insira outro valor.")
-            elif j[ji][p1] == 'X' or j[ji][p1] == 'O':
+            if j[ji][p1] == 'X' or j[ji][p1] == 'O':
                 print("A posição inserida ja está ocupada, insira outro valor.")
             else:
                 j[ji][p1] = v
                 print()
                 break
+        else:
+            print("Valores inválidos, insira outro valor.")
     r = Verifica(j[ji])
     if r != 'C':
         si[ji] = r
@@ -321,53 +348,42 @@ def main():
             print("O jogador X começa.")
             v = 'X'
             while True:
-                if si[ji] != '*':
+                if 48 > ord(si[ji]) or ord(si[ji]) > 56:
                     print("Insira a posição do jogo que deseja jogar:")
                     while True:
                         print("-> ", end="")
                         ji = input()
-                        ij = 0
-                        for i in ji:
-                            if 48 <= ord(i) <= 57:
-                                ij = 1
-                            else:
-                                ij = 0
-                                break
-                        if ij == 1:
+                        if len(ji) == 1 and 48 <= ord(ji) <= 56:
                             ji = int(ji)
-                            if ji < 0 or ji > 8:
-                                print("Valores inválidos, insira outro valor.")
-                            elif si[ji] == 'X' or si[ji] == 'O':
-                                print("O jogo escolhido ja foi finalizado, insira outro valor.")
+                            if si[ji] == 'X' or si[ji] == 'O' or si[ji] == 'E':
+                                print("O jogo escolhido já foi finalizado, insira outro valor.")
                             else:
                                 print()
                                 ImprimeJogo(sjv, ji, si)
                                 break
+                        else:
+                            print("Valores inválidos, insira outro valor.")
                 
                 print("Insira a posição que deseja jogar:")
-                p = 0
-                for i in range (3):
-                    print("    ", end="")
-                    for j in range(3):
-                        print("%s " %mi[p], end="")
-                        p = p + 1
-                    print()
-
                 r, ji = Jogar(sjv, ji, si, v)
                 if r == 'C':
+                    ImprimeJogo(sjv, ji, si)
                     if v == 'X':
                         v = 'O'
+                        print("Vez do jogador " + colors.green + "O" + colors.fim + ".")
                     else:
                         v = 'X'
-                    ImprimeJogo(sjv, ji, si)
-                    print("Vez do jogador %s." %v)
+                        print("Vez do jogador " + colors.red + "X" + colors.fim + ".")
                 else:
                     ImprimeJogo(sjv, -1, si)
                     print("FIM DE JOGO!")
-                    if r == 'X' or r == 'O':
-                        print("Jogador %s Venceu." %r)
-                    elif r == 'E':
+                    if r == 'E':
                         print("Empate.")
+                    else:
+                        if r == 'X':
+                            print("Jogador " + colors.red + "X" + colors.fim + " Venceu.")
+                        else:
+                            print("Jogador " + colors.green + "O" + colors.fim + " Venceu.")
                     print()
                     break
         elif e == '3':
