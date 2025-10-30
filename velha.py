@@ -11,16 +11,23 @@ class colors:
     b_purple = '\033[95m'
     purple = '\033[35m'
     grey = '\033[90m'
+    black = '\033[30m'
     fim = '\033[0m'
 
 '''
+ ╱ ⟋/
+╳
+
+  ⟋⟋⟍
+✕    
+      x⤫X✕╳
      0 1 2 3 4  5  6 7 8 9 10 11 1213141516
 0       [0]           [1]           [2]
-1    X │   │    ║  X │   │    ║  X │   │    
-2   ───┼───┼─── ║ ───┼───┼─── ║ ───┼───┼─── 
-3      │ O │ X  ║    │ O │ X  ║    │ O │ X  
-4   ───┼───┼─── ║ ───┼───┼─── ║ ───┼───┼─── 
-5      │   │    ║    │   │    ║    │   │    
+1    X │   ╱ ⟋  ║  X │   │    ║  X │   │    
+2   ───┼──╱⟋─── ║ ───┼───┼─── ║ ───┼───┼─── 
+3      │ ✕ │ X  ║    │ O │ X  ║    │ O │ X  
+4   ───⟋╱──┼─── ║ ───┼───┼─── ║ ───┼───┼─── 
+5    ⟋ ╱   │    ║    │   │    ║    │   │    
 6  ═════[3]═════╬═════[4]═════╬═════[5]═════
 7    X │   │    ║  X │   │    ║  X │   │    
 8   ───┼───┼─── ║ ───┼───┼─── ║ ───┼───┼─── 
@@ -36,8 +43,8 @@ class colors:
 '''
 
 def ImprimeJogo(l, li, si):
-    lX = ['X', ' ', 'X', ' ', 'X', ' ', 'X', ' ', 'X']
-    lO = ['O', 'O', 'O', 'O', ' ', 'O', 'O', 'O', 'O']
+    lX = ['⟍', ' ', '⟋', ' ', '✕', ' ', '⟋', ' ', '⟍']
+    lO = [' ┌─', '───', '─┐ ', ' │ ', '   ', ' │ ', ' └─', '───', '─┘ ']
     p = 0
     c = 0
     le = 0
@@ -76,14 +83,20 @@ def ImprimeJogo(l, li, si):
             for j in range(3):
                 if si[c] == 'X':
                     if c == li:
-                        print(colors.red + "    X   X    " + colors.fim, end="")
+                        if i == 4 or i == 10 or i == 16:
+                            print(colors.red + "    ⟋   ⟍    " + colors.fim, end="")
+                        else:
+                            print(colors.red + "    ⟍   ⟋    " + colors.fim, end="")
                     else:
-                        print(colors.d_red + "    X   X    " + colors.fim, end="")
+                        if i == 4 or i == 10 or i == 16:
+                            print(colors.d_red + "    ⟋   ⟍    " + colors.fim, end="")
+                        else:
+                            print(colors.d_red + "    ⟍   ⟋    " + colors.fim, end="")
                 elif si[c] == 'O':
                     if c == li:
-                        print(colors.green + "  O       O  " + colors.fim, end="")
+                        print(colors.green + "  │       │  " + colors.fim, end="")
                     else:
-                        print(colors.d_green + "  O       O  " + colors.fim, end="")
+                        print(colors.d_green + "  │       │  " + colors.fim, end="")
                 elif si[c] == 'E':
                     if c == li:
                         print(colors.b_purple + " ───┼───┼─── " + colors.fim, end="")
@@ -103,26 +116,26 @@ def ImprimeJogo(l, li, si):
             for j in range(17):
                 if j == 0:
                     print(" ", end="")
-                if 1 <= i <= 5:
-                    if 0 <= j <= 4:
+                if i <= 5:
+                    if j <= 4:
                         le = 0
-                    elif 6 <= j <= 10:
+                    elif j <= 10:
                         le = 1
-                    elif 12 <= j <= 16:
+                    else:
                         le = 2
-                elif 7 <= i <= 11:
-                    if 0 <= j <= 4:
+                elif i <= 11:
+                    if j <= 4:
                         le = 3
-                    elif 6 <= j <= 10:
+                    elif j <= 10:
                         le = 4
-                    elif 12 <= j <= 16:
+                    else:
                         le = 5
-                elif 13 <= i <= 17:
-                    if 0 <= j <= 4:
+                else:
+                    if j <= 4:
                         le = 6
-                    elif 6 <= j <= 10:
+                    elif j <= 10:
                         le = 7
-                    elif 12 <= j <= 16:
+                    else:
                         le = 8
                 if j == 5 or j == 11:
                     print(" ║ ", end="")
@@ -137,7 +150,7 @@ def ImprimeJogo(l, li, si):
                             elif si[le] == 'O' or l[le][p] == 'O':
                                 print(colors.green, end="")
                             else:
-                                print(colors.yellow, end="")
+                                print(colors.grey, end="")
                         else:
                             if si[le] == 'E':
                                 print(colors.purple, end="")
@@ -146,31 +159,41 @@ def ImprimeJogo(l, li, si):
                             elif si[le] == 'O' or l[le][p] == 'O':
                                 print(colors.d_green, end="")
                             else:
-                                print(colors.grey, end="")
+                                print(colors.black, end="")
 
                         if si[le] == 'X':
                             print(" %s " %lX[p] + colors.fim, end="")
                         elif si[le] == 'O':
-                            print(" %s " %lO[p] + colors.fim, end="")
+                            print("%s" %lO[p] + colors.fim, end="")
                         else:
                             print(" %s " %l[le][p] + colors.fim, end="")
                         p = p + 1
                     else:
-                        if si[le] == 'X' or si[le] == 'O':
+                        if si[le] == 'X':
                             print(" ", end="")
                         else:
                             if li == le:
                                 if si[le] == 'E':
                                     print(colors.b_purple, end="")
+                                elif si[le] == 'O':
+                                    print(colors.green, end="")
                                 else:
                                     print(colors.b_yellow, end="")
                             else:
                                 if si[le] == 'E':
                                     print(colors.purple, end="")
+                                elif si[le] == 'O':
+                                    print(colors.d_green, end="")
                                 else:
                                     print(colors.grey, end="")
-
-                            print("│" + colors.fim, end="")
+                                    
+                            if si[le] == 'O':
+                                if i == 3 or i == 9 or i == 15:
+                                    print(" " + colors.fim, end="")
+                                else:
+                                    print("─" + colors.fim, end="")
+                            else:
+                                print("│" + colors.fim, end="")
             if p == 9:
                 p = 0
             print()
