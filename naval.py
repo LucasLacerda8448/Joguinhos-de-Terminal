@@ -28,114 +28,43 @@ def Escolha(n):
     return e
 
 def Posicao(jg, f, v):
-    tam = 6 - f  #MUDAR A ORDEM DAS FROTAS DE DECRESCENTE PARA CRESCENTE, OU SEJA, [1] Tam 1; [2] Tam 2; etc
     while True:
         print("-> ", end="")
         p1 = input()
-        p = []
-        for i in range(len(p1)):
-            p.append(p1[i])
-        if len(p) == 2:
-            if 65 <= ord(p[0]) <= 74 and 48 <= ord(p[1]) <= 57:
-                col = ord(p[0]) - 65
-                lin = int(p[1])
+        if len(p1) == 2:
+            if 65 <= ord(p1[0]) <= 74 and 48 <= ord(p1[1]) <= 57:
+                col = ord(p1[0]) - 65
+                lin = int(p1[1])
                 if jg[lin][col] == '░░░':
-                    reg = lin + 1
-                    reg2 = col + 1
-                    if f == 1:  #CONTINUAR DAQUI ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                        if v == 0:
-                            if (reg2 + 3) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(4):
-                                    if jg[lin][reg2] == '░░░':
-                                        reg2 += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg2 - col) == 5:
-                                break
-                        else:
-                            if (reg + 3) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(4):
-                                    if jg[reg][col] == '░░░':
-                                        reg += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg - lin) == 5:
-                                break 
-                    elif f == 2:
-                        if v == 0:
-                            if (reg2 + 2) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(3):
-                                    if jg[lin][reg2] == '░░░':
-                                        reg2 += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg2 - col) == 4:
-                                break
-                        else:
-                            if (reg + 2) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(3):
-                                    if jg[reg][col] == '░░░':
-                                        reg += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg - lin) == 4:
-                                break 
-                    elif f == 3:
-                        if v == 0:
-                            if (reg2 + 1) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(2):
-                                    if jg[lin][reg2] == '░░░':
-                                        reg2 += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg2 - col) == 3:
-                                break
-                        else:
-                            if (reg + 1) > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                for i in range(2):
-                                    if jg[reg][col] == '░░░':
-                                        reg += 1
-                                    else:
-                                        print("A unidade escolhida não cabe no espaço escolhido.")
-                                        break
-                            if (reg - lin) == 3:
-                                break  
-                    elif f == 4:
-                        if v == 0:
-                            if reg2 > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                if jg[lin][reg2] == '░░░':
-                                    break
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                        else:
-                            if reg > 9:
-                                print("A unidade escolhida não cabe no espaço escolhido.")
-                            else:
-                                if jg[reg][col] == '░░░':
-                                    break
-                                else:
-                                    print("A unidade escolhida não cabe no espaço escolhido.")
-                    else:
+                    if f == 1:
                         break
+                    else:
+                        reg = lin + 1
+                        reg2 = col + 1
+                        if v == 0: #Horizontal
+                            if (col + f - 1) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(f-1):
+                                    if jg[lin][reg2] == '░░░':
+                                        reg2 += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
+                            if (reg2 - col) == f:
+                                break
+                        else:
+                            if (lin + f - 1) > 9:
+                                print("A unidade escolhida não cabe no espaço escolhido.")
+                            else:
+                                for i in range(f-1):
+                                    if jg[reg][col] == '░░░':
+                                        reg += 1
+                                    else:
+                                        print("A unidade escolhida não cabe no espaço escolhido.")
+                                        break
+                            if (reg - lin) == f:
+                                break 
                 else:
                     print("A coordenada inserida não pode ser usada.")
             else:
@@ -146,7 +75,7 @@ def Posicao(jg, f, v):
     return col, lin
 
 def Posicionar(pf):
-    lista = [1, 1, 2, 3, 4]
+    lista = [4, 3, 2, 1, 1]
     for r in range(11):
         c = 0
         print("    A   B   C   D   E   F   G   H   I   J")
@@ -160,37 +89,45 @@ def Posicionar(pf):
                     print(colors.blue + "%s" %pf[i][j], end="")
 
                 if j == 9:
-                    print(colors.d_blue + "║")
+                    print(colors.d_blue + "║", end="")
+                    if i == 3:
+                        print(colors.fim + "        Frota:" + colors.d_blue)
+                    elif i == 4:
+                        if lista[1] == 0:
+                            print(colors.grey + " [2] %dx Navios Comuns [■ ■]" %lista[1] + colors.d_blue)
+                        else:
+                            print(colors.fim + " [2] %dx Navios Comuns [■ ■]" %lista[1] + colors.d_blue)
+                    elif i == 5:
+                        if lista[3] == 0:
+                            print(colors.grey + " [4] %dx Navio-tanque [■ ■ ■ ■]" %lista[3] + colors.d_blue) 
+                        else:
+                            print(colors.fim + " [4] %dx Navio-tanque [■ ■ ■ ■]" %lista[3] + colors.d_blue)
+                    else:
+                        print()
                 else:
                     print(colors.d_blue + "│", end="")
             if i == 9:
                 print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
             else:
-                print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
-        print()
-        print("Frota:")
-        if lista[0] == 0:
-            print(colors.grey + "[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
-        else:
-            print("[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
-        if lista[3] == 0:
-            print(colors.grey + "    [4] %dx Navios Comuns (O O)" %lista[3] + colors.fim) 
-        else:
-            print(colors.fim + "    [4] %dx Navios Comuns (O O)" %lista[3])
-
-        if lista[1] == 0:
-            print(colors.grey + "[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
-        else:
-            print("[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
-        if lista[4] == 0:
-            print(colors.grey + "     [5] %dx Submarinos (O)" %lista[4] + colors.fim) 
-        else:
-            print(colors.fim + "     [5] %dx Submarinos (O)" %lista[4]) 
-
-        if lista[2] == 0:
-            print(colors.grey + "[3] %dx Contratorpedeiros (O O O)" %lista[2] + colors.fim)
-        else:
-            print("[3] %dx Contratorpedeiros (O O O)" %lista[2])
+                print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim, end="")
+                if i == 3:
+                    if lista[0] == 0:
+                        print(colors.grey + " [1] %dx Submarinos [■]" %lista[0] + colors.fim)
+                    else:
+                        print(" [1] %dx Submarinos [■]" %lista[0])
+                elif i == 4:
+                    if lista[2] == 0:
+                        print(colors.grey + " [3] %dx Contratorpedeiros [■ ■ ■]" %lista[2] + colors.fim)
+                    else:
+                        print(" [3] %dx Contratorpedeiros [■ ■ ■]" %lista[2])
+                elif i == 5:
+                    if lista[4] == 0:
+                        print(colors.grey + " [5] %dx Porta-avião [■ ■ ■ ■ ■]" %lista[4] + colors.fim) 
+                    else:
+                        print(" [5] %dx Porta-avião [■ ■ ■ ■ ■]" %lista[4])
+                else:
+                    print()
+                
         print()
         print("Selecione qual unidade posicionar")
         while True:
@@ -210,14 +147,15 @@ def Posicionar(pf):
             col, lin = Posicao(pf, fe, v)
             x = lin
             y = col
-            c = 6 - fe
+            c = fe
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
                 print("%d " %i + colors.d_blue + "║", end="")
                 for j in range(10):
                     if i == x and j == y:
-                        print(colors.yellow + "▐█▌", end="")
+                        print(colors.yellow + " ■ ", end="")
+                        pf[i][j] = 'T'
                         c -= 1
                         if v == 0 and c != 0:
                             y += 1
@@ -240,22 +178,54 @@ def Posicionar(pf):
             print("A posição escolhida esta correta?")
             print("   [1] Sim          [2] Não")
             if Escolha(2) == '1':
-                c = 6 - fe
                 for i in range(10):
                     for j in range(10):
-                        if i == lin and j == col:
-                            pf[lin][col] = 'O'
-                            c -= 1
-                            if v == 0 and c != 0:
-                                col += 1
-                            elif v == 1 and c != 0:
-                                lin += 1
+                        if pf[i][j] == 'T':
+                            pf[i][j] = 'O'
                 break
-    for i in range(20):
+            else:
+                for i in range(10):
+                    for j in range(10):
+                        if pf[i][j] == 'T':
+                            pf[i][j] = '░░░'
+
+    for i in range(30):
         print()
+
+'''
+1 bloco: ▐█▌
+4x
+▐█▌
+
+2x
+▐█▌   ▐█▌▐█▌
+▐█▌  
+
+2x
+▐█▌     ▐█▌▐█▌▐█▌
+▐█▌
+▐█▌   ▐█▌          ▐█▌    ▐█▌▐█▌    ▐█▌▐█▌
+      ▐█▌▐█▌    ▐█▌▐█▌    ▐█▌          ▐█▌
+
+2x
+▐█▌▐█▌▐█▌▐█▌    ▐█▌▐█▌  ▐█▌▐█▌▐█▌       ▐█▌
+                ▐█▌▐█▌     ▐█▌       ▐█▌▐█▌▐█▌
+▐█▌▐█▌   ▐█▌
+▐█▌      ▐█▌      ▐█▌▐█▌          ▐█▌▐█▌
+▐█▌      ▐█▌▐█▌      ▐█▌▐█▌    ▐█▌▐█▌
+
+1x
+▐█▌   ▐█▌▐█▌▐█▌▐█▌▐█▌   ▐█▌   ▐█▌
+▐█▌                     ▐█▌▐█▌▐█▌
+▐█▌  ▐█▌         ▐█▌                ▐█▌
+▐█▌  ▐█▌▐█▌      ▐█▌                ▐█▌   ▐█▌▐█▌
+▐█▌     ▐█▌▐█▌   ▐█▌▐█▌▐█▌    ▐█▌▐█▌▐█▌   ▐█▌▐█▌▐█▌
+
+'''
 
 def Posicionar2(pf):
-    lista = [1, 2, 2, 2, 4]
+    lista = [4, 2, 2, 2, 1]
+    lista_model = [[1, 1],[1, 1, 1, 1, 1, 1],[1, 1, 1, 1, 1, 1, 1, 1],[1, 1, 1, 1, 1, 1, 1]]
     for r in range(11):
         c = 0
         print("    A   B   C   D   E   F   G   H   I   J")
@@ -269,64 +239,109 @@ def Posicionar2(pf):
                     print(colors.blue + "%s" %pf[i][j], end="")
 
                 if j == 9:
-                    print(colors.d_blue + "║")
+                    print(colors.d_blue + "║", end="")
+                    if i == 3:
+                        print(colors.fim + "        Frota:" + colors.d_blue)
+                    elif i == 4:
+                        if lista[1] == 0:
+                            print(colors.grey + " [2] %dx Navios Comuns" %lista[1] + colors.d_blue)
+                        else:
+                            print(colors.fim + " [2] %dx Navios Comuns" %lista[1] + colors.d_blue)
+                    elif i == 5:
+                        if lista[3] == 0:
+                            print(colors.grey + " [4] %dx Navio-tanque" %lista[3] + colors.d_blue) 
+                        else:
+                            print(colors.fim + " [4] %dx Navio-tanque" %lista[3] + colors.d_blue)
+                    else:
+                        print()
                 else:
                     print(colors.d_blue + "│", end="")
             if i == 9:
                 print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
             else:
-                print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
+                print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim, end="")
+                if i == 3:
+                    if lista[0] == 0:
+                        print(colors.grey + " [1] %dx Submarinos" %lista[0] + colors.fim)
+                    else:
+                        print(" [1] %dx Submarinos" %lista[0])
+                elif i == 4:
+                    if lista[2] == 0:
+                        print(colors.grey + " [3] %dx Contratorpedeiros" %lista[2] + colors.fim)
+                    else:
+                        print(" [3] %dx Contratorpedeiros" %lista[2])
+                elif i == 5:
+                    if lista[4] == 0:
+                        print(colors.grey + " [5] %dx Porta-avião" %lista[4] + colors.fim) 
+                    else:
+                        print(" [5] %dx Porta-avião" %lista[4])
+                else:
+                    print()
+                
         print()
-        print("Frota:")
-        if lista[0] == 0:
-            print(colors.grey + "[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
-        else:
-            print("[1] %dx Porta-avião (O O O O O)" %lista[0], end="")
-        if lista[3] == 0:
-            print(colors.grey + "    [4] %dx Navios Comuns (O O)" %lista[3] + colors.fim) 
-        else:
-            print(colors.fim + "    [4] %dx Navios Comuns (O O)" %lista[3])
-
-        if lista[1] == 0:
-            print(colors.grey + "[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
-        else:
-            print("[2] %dx Navio-tanque (O O O O)" %lista[1], end="")
-        if lista[4] == 0:
-            print(colors.grey + "     [5] %dx Submarinos (O)" %lista[4] + colors.fim) 
-        else:
-            print(colors.fim + "     [5] %dx Submarinos (O)" %lista[4]) 
-
-        if lista[2] == 0:
-            print(colors.grey + "[3] %dx Contratorpedeiros (O O O)" %lista[2] + colors.fim)
-        else:
-            print("[3] %dx Contratorpedeiros (O O O)" %lista[2])
-        print()
-        print("Selecione qual unidade posicionar")
         while True:
-            fe = int(Escolha(5))
-            if lista[fe-1] == 0:
-                print("Você não possui mais esta unidade para posicionar, escolha outra")
+            print("Selecione qual unidade posicionar")
+            while True:
+                fe = int(Escolha(5))
+                if lista[fe-1] == 0:
+                    print("Você não possui mais esta unidade para posicionar, escolha outra")
+                else:
+                    lista[fe-1] -= 1
+                    break
+            
+            if fe != 1:
+                print("Frota de Tamanho %d:" %fe)
+                if fe == 2:
+                    if lista_model[0][0] == 0:
+                        print(colors.grey + "[1] ■ ■" + colors.fim, end="")
+                    else:
+                        print("[1] ■ ■", end="")
+                    if lista_model[0][1] == 0:
+                        print(colors.grey + "   [2] ■")
+                        print("              ■" + colors.fim)
+                    else:
+                        print("   [2] ■")
+                        print("              ■")
+                    tam = 2
+                elif fe == 3:
+                    if lista_model[1][0] == 0:
+                        print(colors.grey + "[1] ■ ■ ■" + colors.fim, end="")
+                    else:
+                        print("[1] ■ ■ ■", end="")
+                    #CONTINUAR DAQUI    
+                    print("    [2] ■ ■""         [3] ■")
+                    print("                   ■             ■")
+                    print("[4] ■     [5]  ■      [6] ■ ■    ■")
+                    print("    ■ ■      ■ ■          ■")
+                    tam = 6
+                elif fe == 4:
+                    tam = 8
+                elif fe == 5:
+                    tam = 7
+                print("Escolha qual modelo deseja utilizar." %fe)
+                while True:
+                    tam = int(Escolha(tam))
+                    if lista_model[fe-2][tam-1] == 0:
+                        print("Você não possui mais este modelo para posicionar, escolha outro")
+                    else:
+                        lista_model[fe-2][tam-1] -= 1
+                        model = str(fe) + str(tam)
+                        break
             else:
-                lista[fe-1] -= 1
-                break
-        while True:
-            v = 0
-            print("Como deseja posicionar sua unidade?")
-            print("[1] Verticalmente  [2] Horizontalmente")
-            if Escolha(2) == '1':
-                v = 1
+                model = str(fe) + 0    
             print("Informe as coordenadas que deseja posicionar: (letra primeiro, depois o número)")
             col, lin = Posicao(pf, fe, v)
             x = lin
             y = col
-            c = 6 - fe
+            c = fe
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
                 print("%d " %i + colors.d_blue + "║", end="")
                 for j in range(10):
                     if i == x and j == y:
-                        print(colors.yellow + "▐█▌", end="")
+                        print(colors.yellow + " ■ ", end="")
+                        pf[i][j] = 'T'
                         c -= 1
                         if v == 0 and c != 0:
                             y += 1
@@ -349,34 +364,29 @@ def Posicionar2(pf):
             print("A posição escolhida esta correta?")
             print("   [1] Sim          [2] Não")
             if Escolha(2) == '1':
-                c = 6 - fe
                 for i in range(10):
                     for j in range(10):
-                        if i == lin and j == col:
-                            pf[lin][col] = 'O'
-                            c -= 1
-                            if v == 0 and c != 0:
-                                col += 1
-                            elif v == 1 and c != 0:
-                                lin += 1
+                        if pf[i][j] == 'T':
+                            pf[i][j] = 'O'
                 break
-    for i in range(20):
+            else:
+                for i in range(10):
+                    for j in range(10):
+                        if pf[i][j] == 'T':
+                            pf[i][j] = '░░░'
+
+    for i in range(30):
         print()
 
 def Posicao2(jg):
     while True:
         print("-> ", end="")
         p1 = input()
-        p = []
-        for i in range(len(p1)):
-            p.append(p1[i])
-        if len(p) == 2:
-            if 65 <= ord(p[0]) <= 74 and 48 <= ord(p[1]) <= 57:
-                col = p[0]
-                p.remove(col)
-                col = ord(col) - 65
-                p1 = int(p[0])
-                if jg[p1][col] == '#':
+        if len(p1) == 2:
+            if 65 <= ord(p1[0]) <= 74 and 48 <= ord(p1[1]) <= 57:
+                col = ord(p1[0]) - 65
+                lin = int(p1[1])
+                if jg[lin][col] == '▒▒▒':
                     break
                 else:
                     print("A coordenada inserida não pode ser usada.")
@@ -385,21 +395,108 @@ def Posicao2(jg):
         else:
             print("Insira a coordenada corretamente.")
     print()
-    return col, p1
+
+    return col, lin
 
 def Verifica(jg):
-    r = 0
     for i in range(10):
         for j in range(10):
             if jg[i][j] == 'O':
-                r = 1
-                break
-        if r == 1:
-            break
-    if r == 1:
-        return 'C'
+                return 'C'
     return 'F'
 
+def Jogar(f_jog, f_ini, jg_ini, v):
+    print("    A   B   C   D   E   F   G   H   I   J")
+    print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
+    for i in range(10):
+        print("%d " %i + colors.d_blue + "║", end="")
+        for j in range(10):
+            if jg_ini[i][j] == 'X':
+                print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
+            elif jg_ini[i][j] == '.':
+                print(colors.grey + "░░░", end="")
+            else:
+                print(colors.b_blue + "%s" %jg_ini[i][j], end="")
+    
+            if j == 9:
+                print(colors.d_blue + "║")
+            else:
+                print(colors.d_blue + "│", end="")
+        if i == 9:
+            print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
+        else:
+            print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
+    print()
+    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
+    y, x = Posicao2(jg_ini)
+    
+    if f_ini[x][y] == 'O':
+        jg_ini[x][y] = 'X'
+        f_ini[x][y] = 'X'
+    else:
+        jg_ini[x][y] = '.'
+
+    print("    A   B   C   D   E   F   G   H   I   J")
+    print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
+    for i in range(10):
+        print("%d " %i + colors.d_blue + "║", end="")
+        for j in range(10):
+            if jg_ini[i][j] == 'X':
+                print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
+            elif jg_ini[i][j] == '.':
+                print(colors.grey + "░░░", end="")
+            else:
+                print(colors.b_blue + "%s" %jg_ini[i][j], end="")
+    
+            if j == 9:
+                print(colors.d_blue + "║")
+            else:
+                print(colors.d_blue + "│", end="")
+        if i == 9:
+            print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
+        else:
+            print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
+    print()
+    
+    if Verifica(f_ini) == 'C':
+        if v == 1:
+            v = 2
+        else:
+            v = 1
+        print(colors.yellow + "VEZ DO JOGADOR %d" %v)
+        print("Aperte Enter para continuar..." + colors.fim)
+        cont = input()
+    else:
+        print(colors.green + "FIM DE JOGO!!")
+        print("JOGADOR %d VENCEU!" %v + colors.fim)
+        print()
+        print("Deseja ver o mapa completo do jogador %d?" %v)
+        print("     [1] Sim      [2] Não")
+        if Escolha(2) == '1':
+            print("    A   B   C   D   E   F   G   H   I   J")
+            print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
+            for i in range(10):
+                print("%d " %i + colors.d_blue + "║", end="")
+                for j in range(10):
+                    if f_jog[i][j] == 'X':
+                        print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
+                    elif f_jog[i][j] == '░░░':
+                        print(colors.grey + "░░░", end="")
+                    else:
+                        print(colors.green + "▐█▌" %f_jog[i][j], end="")
+            
+                    if j == 9:
+                        print(colors.d_blue + "║")
+                    else:
+                        print(colors.d_blue + "│", end="")
+                if i == 9:
+                    print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
+                else:
+                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
+            print()
+        v = 3
+
+    return f_ini, jg_ini, v
 
 def main():
     print("------ BATALHA NAVAL ------")
@@ -467,136 +564,11 @@ def main():
             v = 1
             while True:
                 if v == 1:
-                    print("    A   B   C   D   E   F   G   H   I   J")
-                    print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
-                    for i in range(10):
-                        print("%d " %i + colors.d_blue + "║", end="")
-                        for j in range(10):
-                            if jg2[i][j] == 'X':
-                                print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
-                            elif jg2[i][j] == '.':
-                                print(colors.grey + "░░░", end="")
-                            else:
-                                print(colors.b_blue + "%s" %jg2[i][j], end="")
-                            
-                            if j == 9:
-                                print(colors.d_blue + "║")
-                            else:
-                                print(colors.d_blue + "│", end="")
-                        if i == 9:
-                            print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
-                        else:
-                            print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
-                    print()
-                    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
-                    y, x = Posicao2(jg2)
-
-                    if f2[x][y] == 'O':
-                        jg2[x][y] = 'X'
-                        f2[x][y] = 'X'
-                    else:
-                        jg2[x][y] = '.'
-
-                    print("  A B C D E F G H I J")
-                    for i in range(10):
-                        print("%d " %i, end="")
-                        for j in range(10):
-                            if jg2[i][j] == 'X':
-                                print(colors.red + "X " + colors.fim, end="")
-                            elif jg2[i][j] == '.':
-                                print(colors.grey + ". " + colors.fim, end="")
-                            else:
-                                print(colors.blue + "%s " %jg2[i][j] + colors.fim, end="")
-                        print()
-                    print()
-
-
-                    if Verifica(f2) == 'C':
-                        v = 2
-                        print(colors.yellow + "VEZ DO JOGADOR 2")
-                        print("Aperte Enter para continuar..." + colors.fim)
-                        cont = input()
-                    else:
-                        print(colors.green + "FIM DE JOGO!!")
-                        print("JOGADOR 1 VENCEU!" + colors.fim)
-                        print()
-                        print("Deseja ver o mapa completo do jogador 1?")
-                        print("     [1] Sim      [2] Não")
-                        if Escolha(2) == '1':
-                            print("  A B C D E F G H I J")
-                            for i in range(10):
-                                print("%d " %i, end="")
-                                for j in range(10):
-                                    if f1[i][j] == 'X':
-                                        print(colors.red + "X " + colors.fim, end="")
-                                    elif f1[i][j] == '*':
-                                        print(colors.grey + ". " + colors.fim, end="")
-                                    else:
-                                        print(colors.green + "%s " %f1[i][j] + colors.fim, end="")
-                                print()
-                            print()
-                        break
-
+                    f2, jg2, v = Jogar(f1, f2, jg2, v)
                 elif v == 2:
-                    print("  A B C D E F G H I J")
-                    for i in range(10):
-                        print("%d " %i, end="")
-                        for j in range(10):
-                            if jg1[i][j] == 'X':
-                                print(colors.red + "X " + colors.fim, end="")
-                            elif jg1[i][j] == '.':
-                                print(colors.grey + ". " + colors.fim, end="")
-                            else:
-                                print(colors.blue + "%s " %jg1[i][j] + colors.fim, end="")
-                        print()
-                    print()
-                    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
-                    y, x = Posicao2(jg1)
-
-                    if f1[x][y] == 'O':
-                        jg1[x][y] = 'X'
-                        f1[x][y] = 'X'
-                    else:
-                        jg1[x][y] = '.'
-
-                    print("  A B C D E F G H I J")
-                    for i in range(10):
-                        print("%d " %i, end="")
-                        for j in range(10):
-                            if jg1[i][j] == 'X':
-                                print(colors.red + "X " + colors.fim, end="")
-                            elif jg1[i][j] == '.':
-                                print(colors.grey + ". " + colors.fim, end="")
-                            else:
-                                print(colors.blue + "%s " %jg1[i][j] + colors.fim, end="")
-                        print()
-                    print()
-
-                    if Verifica(f1) == 'C':
-                        v = 1
-                        print(colors.yellow + "VEZ DO JOGADOR 1")
-                        print("Aperte Enter para continuar..." + colors.fim)
-                        cont = input()
-                    else:
-                        print(colors.green + "FIM DE JOGO!!")
-                        print("JOGADOR 2 VENCEU!" + colors.fim)
-                        print()
-                        print("Deseja ver o mapa completo do jogador 2?")
-                        print("     [1] Sim      [2] Não")
-                        if Escolha(2) == '1':
-                            print("  A B C D E F G H I J")
-                            for i in range(10):
-                                print("%d " %i, end="")
-                                for j in range(10):
-                                    if f2[i][j] == 'X':
-                                        print(colors.red + "X " + colors.fim, end="")
-                                    elif f2[i][j] == '*':
-                                        print(colors.grey + ". " + colors.fim, end="")
-                                    else:
-                                        print(colors.green + "%s " %f2[i][j] + colors.fim, end="")
-                                print()
-                            print()
-                        break
+                    f1, jg1, v = Jogar(f2, f1, jg1, v)
+                else:
+                    break
 
             print("[1] Jogar Novamente   [2] Sair")
             if Escolha(2) == '2':
@@ -607,58 +579,3 @@ def main():
                 print()
 
 main()
-
-'''
-1 bloco: ▐█▌
-4x
-▐█▌
-
-2x
-▐█▌   ▐█▌▐█▌
-▐█▌  
-
-2x
-▐█▌     ▐█▌▐█▌▐█▌
-▐█▌
-▐█▌   ▐█▌          ▐█▌    ▐█▌▐█▌    ▐█▌▐█▌
-      ▐█▌▐█▌    ▐█▌▐█▌    ▐█▌          ▐█▌
-
-2x
-▐█▌▐█▌▐█▌▐█▌    ▐█▌▐█▌  ▐█▌▐█▌▐█▌       ▐█▌
-                ▐█▌▐█▌     ▐█▌       ▐█▌▐█▌▐█▌
-▐█▌▐█▌   ▐█▌
-▐█▌      ▐█▌      ▐█▌▐█▌          ▐█▌▐█▌
-▐█▌      ▐█▌▐█▌      ▐█▌▐█▌    ▐█▌▐█▌
-
-1x
-▐█▌   ▐█▌▐█▌▐█▌▐█▌▐█▌   ▐█▌   ▐█▌
-▐█▌                     ▐█▌▐█▌▐█▌
-▐█▌  ▐█▌         ▐█▌                ▐█▌
-▐█▌  ▐█▌▐█▌      ▐█▌                ▐█▌   ▐█▌▐█▌
-▐█▌     ▐█▌▐█▌   ▐█▌▐█▌▐█▌    ▐█▌▐█▌▐█▌   ▐█▌▐█▌▐█▌
-
-    A   B   C   D   E   F   G   H   I   J
-  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗
-0 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-1 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-2 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-3 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-4 ║▒▒▒│░░░│   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-5 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-6 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-7 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-8 ║   │   │   │   │   │   │   │   │   │   ║
-  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-9 ║   │   │   │   │   │   │   │   │   │   ║
-  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝
-
-  print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
-'''
