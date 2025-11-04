@@ -195,6 +195,31 @@ def Posicionar(pf):
 def Posicionar2(pf):
     lista = [4, 2, 2, 2, 1]
     cores = [[colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim]]
+    fro1 = [['0', '0', '0', '0', ' ', ' ', 'B']]
+    fro2 = [['0', '0', '0', '1', ' ', ' ', 'C', ' ', ' ', 'b'], 
+            ['0', '0', '1', '0', ' ', 'F', 'b']]
+    fro3 = [['0', '0', '2', '0', ' ', 'F', 'f', 'b'],  
+            ['1', '0', '0', '1', ' ', 'f', 'C', ' ', ' ', 'b'],  
+            ['0', '0', '0', '2', ' ', ' ', 'C', ' ', ' ', 'c', ' ', ' ', 'b'],  
+            ['0', '1', '1', '0', ' ', 'c', ' ', 'F', 'b'],  
+            ['1', '1', '0', '0', ' ', ' ', 'c', ' ', 'f', 'B'],  
+            ['0', '0', '1', '1', ' ', 'F', 'c', ' ', 'b']]
+    fro4 = [['0', '0', '3', '0', 'F', 'f', 'f', 'b'],  
+            ['0', '0', '1', '1', ' ', 'F', 'c', ' ', 'f', 'b'],  
+            ['1', '1', '1', '0', ' ', ' ', 'c', ' ', 'f', 'F', 'b'],  
+            ['1', '0', '1', '1', ' ', 'f', 'F', 'c', ' ', ' ', 'b'],  
+            ['0', '2', '1', '0', ' ', 'c', ' ', 'c', ' ', 'F', 'b'],  
+            ['0', '0', '1', '2', ' ', 'F', 'c', ' ', 'c', ' ', 'b'],  
+            ['1', '0', '1', '1', ' ', 'f', 'C', ' ', ' ', 'f', 'b'],  
+            ['1', '0', '1', '1', ' ', ' ', 'F', 'c', ' ', 'f', 'b']]
+    fro5 = [['0', '0', '4', '0', 'F', 'f', 'f', 'f', 'b'],  
+            ['1', '1', '1', '0', ' ', 'f', ' ', 'c', ' ', 'f', 'F', 'b'],  
+            ['1', '1', '1', '0', ' ', 'f', 'c', ' ', 'f', 'F', 'b'],  
+            ['2', '2', '0', '0', ' ', ' ', ' ', 'c', ' ', ' ', ' ', 'c', ' ', 'f', 'f', 'B'],  
+            ['0', '2', '2', '0', ' ', 'c', ' ', 'c', ' ', 'F', 'f', 'b'],  
+            ['1', '1', '1', '1', ' ', 'c', ' ', 'f', 'C', ' ', ' ', 'f', 'b'],  
+            ['0', '0', '0', '4', ' ', ' ', 'C', ' ', ' ', 'c', ' ', ' ', 'c', ' ', ' ', 'c', ' ', ' ', 'b']]
+
     for r in range(11):
         for i in range(5):
             if lista[i] == 0:
@@ -264,6 +289,16 @@ def Posicionar2(pf):
                                 if es == '11' and lista[0] != 0:
                                     break
                                 lista.append(es)
+                                if fe == 1:
+                                    fro = fro1
+                                elif fe == 2:
+                                    fro = fro2
+                                elif fe == 3:
+                                    fro = fro3
+                                elif fe == 4:
+                                    fro = fro4
+                                else:
+                                    fro = fro5
                                 break
             
             print()
@@ -281,17 +316,9 @@ def Posicionar2(pf):
                         print(colors.d_blue + "║", end="")
                         if i == 2:
                             print(colors.b_yellow + " Utilize o [■] como ponto de referência para", end="")
-                        elif i == 3: #24 modelos diferentes
+                        elif i == 3:
                             print(colors.b_yellow + "           ", end="")
-                            if '41' != es != '51':
-                                print("     ", end="")
-                                #continuar daqui, filtrar onde começa
                             
-                            if es == '32' or es == '44' or es == '47':
-                                print("<- [■] ->", end="") #44
-                                print("<- [■]", end="") #32 47
-                                print("[ ]", end="") #34 35 43 45 52 53 54 55 56
-                                print("[■] ->", end="") #11 21 22 31 33 36 41 42 46 48 51 57
                         elif i == 4:
                             if fe == 2345:
                                 sd
