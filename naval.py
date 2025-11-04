@@ -192,44 +192,15 @@ def Posicionar(pf):
     for i in range(30):
         print()
 
-'''
-1 bloco: ▐█▌
-4x
-▐█▌
-
-2x
-▐█▌   ▐█▌▐█▌
-▐█▌  
-
-2x
-▐█▌     ▐█▌▐█▌▐█▌
-▐█▌
-▐█▌   ▐█▌          ▐█▌    ▐█▌▐█▌    ▐█▌▐█▌
-      ▐█▌▐█▌    ▐█▌▐█▌    ▐█▌          ▐█▌
-
-2x
-▐█▌▐█▌▐█▌▐█▌    ▐█▌▐█▌  ▐█▌▐█▌▐█▌       ▐█▌
-                ▐█▌▐█▌     ▐█▌       ▐█▌▐█▌▐█▌
-▐█▌▐█▌   ▐█▌
-▐█▌      ▐█▌      ▐█▌▐█▌          ▐█▌▐█▌
-▐█▌      ▐█▌▐█▌      ▐█▌▐█▌    ▐█▌▐█▌
-
-1x
-▐█▌   ▐█▌▐█▌▐█▌▐█▌▐█▌   ▐█▌   ▐█▌
-▐█▌                     ▐█▌▐█▌▐█▌
-▐█▌  ▐█▌         ▐█▌                ▐█▌
-▐█▌  ▐█▌▐█▌      ▐█▌                ▐█▌   ▐█▌▐█▌
-▐█▌     ▐█▌▐█▌   ▐█▌▐█▌▐█▌    ▐█▌▐█▌▐█▌   ▐█▌▐█▌▐█▌
-
-'''
-
 def Posicionar2(pf):
     lista = [4, 2, 2, 2, 1]
-    lista_model = [[1, 1],[1, 1, 1, 1, 1, 1],[1, 1, 1, 1, 1, 1, 1, 1],[1, 1, 1, 1, 1, 1, 1]]
+    cores = [[colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim]]
     for r in range(11):
-        c = 0
-        print("    A   B   C   D   E   F   G   H   I   J")
-        print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
+        for i in range(5):
+            if lista[i] == 0:
+                cores[i][0] = cores[i][1] = colors.grey
+        print("    A   B   C   D   E   F   G   H   I   J" + cores[0][0] + "   ─────────────── %dx Submarinos ──────────────" %lista[0])
+        print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + cores[0][1] + "                  [11] ■"  + colors.fim)
         for i in range(10):
             print("%d " %i + colors.d_blue + "║", end="")
             for j in range(10):
@@ -240,95 +211,142 @@ def Posicionar2(pf):
 
                 if j == 9:
                     print(colors.d_blue + "║", end="")
-                    if i == 3:
-                        print(colors.fim + "        Frota:" + colors.d_blue)
-                    elif i == 4:
-                        if lista[1] == 0:
-                            print(colors.grey + " [2] %dx Navios Comuns" %lista[1] + colors.d_blue)
-                        else:
-                            print(colors.fim + " [2] %dx Navios Comuns" %lista[1] + colors.d_blue)
-                    elif i == 5:
-                        if lista[3] == 0:
-                            print(colors.grey + " [4] %dx Navio-tanque" %lista[3] + colors.d_blue) 
-                        else:
-                            print(colors.fim + " [4] %dx Navio-tanque" %lista[3] + colors.d_blue)
-                    else:
-                        print()
                 else:
                     print(colors.d_blue + "│", end="")
-            if i == 9:
-                print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
+            if i == 0:
+                print(cores[1][0] + " ───────────── %dx Navios Comuns ─────────────" %lista[1])
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[1][1] + "               [21] ■   [22] ■ ■"  + colors.fim)
+            elif i == 1:
+                print(cores[1][1] + "                    ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][0] + " ─────────── %dx Contratorpedeiros ───────────" %lista[2] + colors.fim)
+            elif i == 2:
+                print(cores[2][1] + "     [31] ■ ■ ■   [32] ■ ■        [33] ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "                         ■             ■"  + colors.fim)
+            elif i == 3:
+                print(cores[2][1] + "     [34] ■    [35]  ■     [36] ■ ■    ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "          ■ ■      ■ ■          ■"  + colors.fim)
+            elif i == 4:
+                print(cores[3][0] + " ───────────── %dx Navios-Tanque ─────────────" %lista[3])
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [41] ■ ■ ■ ■  [42] ■ ■  [43]  ■   [44] ■ ■ ■"  + colors.fim)
+            elif i == 5:
+                print(cores[3][1] + "                    ■ ■      ■ ■ ■        ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [45] ■  [46] ■ ■"  + colors.fim)
+            elif i == 6:
+                print(cores[3][1] + "      ■       ■   [47] ■ ■    [48]  ■ ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + "      ■ ■     ■          ■ ■      ■ ■"  + colors.fim)
+            elif i == 7:
+                print(cores[4][0] + " ────────────── %dx Porta-Aviões ─────────────" %lista[4])
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [51] ■ ■ ■ ■ ■  [52] ■   ■  [53] ■ ■     ■"  + colors.fim)
+            elif i == 8:
+                print(cores[4][1] + "                      ■ ■ ■       ■ ■ ■   ■")
+                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [54]   ■  [55] ■             ■           ■"  + colors.fim)
             else:
-                print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim, end="")
-                if i == 3:
-                    if lista[0] == 0:
-                        print(colors.grey + " [1] %dx Submarinos" %lista[0] + colors.fim)
-                    else:
-                        print(" [1] %dx Submarinos" %lista[0])
-                elif i == 4:
-                    if lista[2] == 0:
-                        print(colors.grey + " [3] %dx Contratorpedeiros" %lista[2] + colors.fim)
-                    else:
-                        print(" [3] %dx Contratorpedeiros" %lista[2])
-                elif i == 5:
-                    if lista[4] == 0:
-                        print(colors.grey + " [5] %dx Porta-avião" %lista[4] + colors.fim) 
-                    else:
-                        print(" [5] %dx Porta-avião" %lista[4])
-                else:
-                    print()
-                
+                print(cores[4][1] + "        ■       ■        [56] ■ ■    [57] ■")
+                print(colors.d_blue + "  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + cores[4][1] + "    ■ ■ ■       ■ ■ ■           ■ ■       ■"  + colors.fim)
         print()
+
         while True:
             print("Selecione qual unidade posicionar")
             while True:
-                fe = int(Escolha(5))
-                if lista[fe-1] == 0:
-                    print("Você não possui mais esta unidade para posicionar, escolha outra")
-                else:
-                    lista[fe-1] -= 1
-                    break
+                print("-> ", end="")
+                es = input()
+                if len(es) == 2:
+                    if 49 <= ord(es[0]) <= 53 and 49 <= ord(es[1]) <= 56:
+                        fe = int(es[0])
+                        model = int(es[1])
+                        if (fe == model == 1) or (fe == 2 and model <= 2) or (fe == 3 and model <= 6) or (fe == 4 and model <= 8) or (fe == 5 and model <= 7):
+                            if lista[fe-1] == 0:
+                                print("Você já utilizou todas as frotas desse tipo, escolha outra")
+                            elif es in lista:
+                                print("Você não possui mais este modelo para posicionar, escolha outro")
+                            else:
+                                lista[fe-1] -= 1
+                                if es == '11' and lista[0] != 0:
+                                    break
+                                lista.append(es)
+                                break
             
-            if fe != 1:
-                print("Frota de Tamanho %d:" %fe)
-                if fe == 2:
-                    if lista_model[0][0] == 0:
-                        print(colors.grey + "[1] ■ ■" + colors.fim, end="")
+            print()
+            print("    A   B   C   D   E   F   G   H   I   J")
+            print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
+            for i in range(10):
+                print("%d " %i + colors.d_blue + "║", end="")
+                for j in range(10):
+                    if pf[i][j] == 'O':
+                        print(colors.green + "▐█▌", end="")
                     else:
-                        print("[1] ■ ■", end="")
-                    if lista_model[0][1] == 0:
-                        print(colors.grey + "   [2] ■")
-                        print("              ■" + colors.fim)
+                        print(colors.blue + "%s" %pf[i][j], end="")
+
+                    if j == 9:
+                        print(colors.d_blue + "║", end="")
+                        if i == 2:
+                            print(colors.b_yellow + " Utilize o [■] como ponto de referência para", end="")
+                        elif i == 3: #24 modelos diferentes
+                            print(colors.b_yellow + "           ", end="")
+                            if '41' != es != '51':
+                                print("     ", end="")
+                                #continuar daqui, filtrar onde começa
+                            
+                            if es == '32' or es == '44' or es == '47':
+                                print("<- [■] ->", end="") #44
+                                print("<- [■]", end="") #32 47
+                                print("[ ]", end="") #34 35 43 45 52 53 54 55 56
+                                print("[■] ->", end="") #11 21 22 31 33 36 41 42 46 48 51 57
+                        elif i == 4:
+                            if fe == 2345:
+                                sd
+                        elif i == 5:
+                            if fe == 345:
+                                sd
+                        elif i == 6:
+                            if es == '57':
+                                sd
+                        elif i == 7:
+                            if es == '57':
+                                sd
+                        print(colors.d_blue)
                     else:
-                        print("   [2] ■")
-                        print("              ■")
-                    tam = 2
-                elif fe == 3:
-                    if lista_model[1][0] == 0:
-                        print(colors.grey + "[1] ■ ■ ■" + colors.fim, end="")
-                    else:
-                        print("[1] ■ ■ ■", end="")
-                    #CONTINUAR DAQUI    
-                    print("    [2] ■ ■""         [3] ■")
-                    print("                   ■             ■")
-                    print("[4] ■     [5]  ■      [6] ■ ■    ■")
-                    print("    ■ ■      ■ ■          ■")
-                    tam = 6
-                elif fe == 4:
-                    tam = 8
-                elif fe == 5:
-                    tam = 7
-                print("Escolha qual modelo deseja utilizar." %fe)
-                while True:
-                    tam = int(Escolha(tam))
-                    if lista_model[fe-2][tam-1] == 0:
-                        print("Você não possui mais este modelo para posicionar, escolha outro")
-                    else:
-                        lista_model[fe-2][tam-1] -= 1
-                        model = str(fe) + str(tam)
-                        break
-            else:
-                model = str(fe) + 0    
+                        print(colors.d_blue + "│", end="")
+                if i == 9:
+                    print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
+                elif i == 2:
+                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.b_yellow + "         posicionar a frota escolhida" + colors.fim)
+                else:
+                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
+            print()
+
+            '''
+            ║           [ ]  [ ]  [ ]  [ ]  [ ]
+            ╢           5 4  3 2   1
+            ║                [ ]  [ ]  [ ]  [ ]
+            ╢ 
+            ║                     [ ]  [ ]  [ ]
+            ╢ 
+            ║                          [ ]  [ ]
+            ╢ 
+            ║                               [ ]
+
+                        [21] ⌂   [22] ⌂ ■
+                             ■
+
+                [31] ⌂ ■ ■   [32] ■ ⌂        [33] ⌂
+                                    ■             ■
+                [34] ■    [35]  ■     [36] ⌂ ■    ■
+                     ⌂ ■      ■ ⌂          ■
+
+            [41] ⌂ ■ ■ ■  [42] ⌂ ■  [43]  ■   [44] ■ ⌂ ■
+                               ■ ■      ■ ⌂ ■        ■
+            [45] ■  [46] ⌂ ■
+                 ■       ■   [47] ■ ⌂    [48]  ⌂ ■
+                 ⌂ ■     ■          ■ ■      ■ ■
+
+            [51] ⌂ ■ ■ ■ ■  [52] ■   ■  [53] ■ ■     ⌂
+                                 ■ ⌂ ■       ■ ⌂ ■   ■
+            [54]   ■  [55] ■             ■           ■
+                   ■       ■        [56] ■ ⌂    [57] ■
+               ■ ■ ⌂       ⌂ ■ ■           ■ ■       ■
+            '''
+
             print("Informe as coordenadas que deseja posicionar: (letra primeiro, depois o número)")
             col, lin = Posicao(pf, fe, v)
             x = lin
