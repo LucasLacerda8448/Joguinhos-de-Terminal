@@ -192,88 +192,133 @@ def Posicionar(pf):
     for i in range(30):
         print()
 
+def Posicao_Avançado(jg, f):
+    while True:
+        print("-> ", end="")
+        p1 = input()
+        if p1 == 'V' or p1 == 'v':
+            return -1, -1, 0, 0, 0, 0
+        if len(p1) == 2:
+            if 65 <= ord(p1[0]) <= 74 and 48 <= ord(p1[1]) <= 57:
+                col = ord(p1[0]) - 65
+                lin = int(p1[1])
+                if jg[lin][col] == '░░░':
+                    x1 = col - int(f[0])
+                    y1 = lin - int(f[1])
+                    x2 = col + int(f[2])
+                    y2 = lin + int(f[3])
+                    if f[4] == 'B':
+                        break
+                    else:
+                        if x1 < 0 or y1 < 0 or x2 > 9 or y2 > 9:
+                            print("A unidade escolhida não cabe no espaço selecionado.")
+                        else:
+                            sum = -1
+                            erro = 0
+                            for i in range(y1, y2+1):
+                                for j in range(x1, x2+1):
+                                    sum += 1
+                                    if f[sum+4] != ' ':
+                                        if jg[i][j] != '░░░':
+                                            print("A unidade escolhida não cabe no espaço escolhido.")
+                                            erro = 1
+                                            break
+                                        else:
+                                            if 'f' != f[sum+4] != 'F':
+                                                break
+                                if erro:
+                                    break
+                            if erro == 0:
+                                break
+                else:
+                    print("A coordenada inserida não pode ser usada.")
+            else:
+                print("Insira uma coordenada dentro do intervalo.") 
+        else:
+            print("Insira a coordenada corretamente.")
+
+    return col, lin, x1, y1, x2, y2
+
 def Posicionar2(pf):
     lista = [4, 2, 2, 2, 1]
     cores = [[colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim], [colors.b_yellow, colors.fim]]
-    #primeiro: 
-    #segundo: 
-    #terceiro: 11 21 33
-    fro1 = [['0', '0', '0', '0', ' ', ' ', 'B']] #11
-    fro2 = [['0', '0', '0', '1', ' ', ' ', 'C', ' ', ' ', 'b'], #21
-            ['0', '0', '1', '0', ' ', 'F', 'b']] #22
-    fro3 = [['0', '0', '2', '0', ' ', 'F', 'f', 'b'], #31
-            ['1', '0', '0', '1', ' ', 'f', 'C', ' ', ' ', 'b'], #32
-            ['0', '0', '0', '2', ' ', ' ', 'C', ' ', ' ', 'c', ' ', ' ', 'b'], #33
-            ['0', '1', '1', '0', ' ', 'c', ' ', 'F', 'b'], #34
-            ['1', '1', '0', '0', ' ', ' ', 'c', ' ', 'f', 'B'], #35
-            ['0', '0', '1', '1', ' ', 'F', 'c', ' ', 'b']] #36
+    fro = []
+    fro1 = [['0', '0', '0', '0', 'B']] #11
+    fro2 = [['0', '0', '0', '1', 'C', 'b'], #21
+            ['0', '0', '1', '0', 'F', 'b']] #22
+    fro3 = [['0', '0', '2', '0', 'F', 'f', 'b'], #31
+            ['1', '0', '0', '1', 'f', 'C', ' ', 'b'], #32
+            ['0', '0', '0', '2', 'C', 'c', 'b'], #33
+            ['0', '1', '1', '0', 'c', 'F', 'b'], #34
+            ['1', '1', '0', '0', ' ', 'c', 'f', 'B'], #35
+            ['0', '0', '1', '1', 'F', 'c', 'b']] #36
     fro4 = [['0', '0', '3', '0', 'F', 'f', 'f', 'b'], #41
-            ['0', '0', '1', '1', ' ', 'F', 'c', ' ', 'f', 'b'], #42
-            ['1', '1', '1', '0', ' ', ' ', 'c', ' ', 'f', 'F', 'b'], #43
-            ['1', '0', '1', '1', ' ', 'f', 'F', 'c', ' ', ' ', 'b'], #44
-            ['0', '2', '1', '0', ' ', 'c', ' ', 'c', ' ', 'F', 'b'], #45
-            ['0', '0', '1', '2', ' ', 'F', 'c', ' ', 'c', ' ', 'b'], #46
-            ['1', '0', '1', '1', ' ', 'f', 'C', ' ', ' ', 'f', 'b'], #47
-            ['1', '0', '1', '1', ' ', ' ', 'F', 'c', ' ', 'f', 'b']] #48
+            ['0', '0', '1', '1', 'F', 'c', 'f', 'b'], #42
+            ['1', '1', '1', '0', ' ', 'c', 'f', 'F', 'b'], #43
+            ['1', '0', '1', '1', 'f', 'F', 'c', ' ', 'b'], #44
+            ['0', '2', '1', '0', 'c', 'c', 'F', 'b'], #45
+            ['0', '0', '1', '2', 'F', 'c', 'c', 'b'], #46
+            ['1', '0', '1', '1', 'f', 'C', ' ', 'f', 'b'], #47
+            ['1', '0', '1', '1', ' ', 'F', 'c', 'f', 'b']] #48
     fro5 = [['0', '0', '4', '0', 'F', 'f', 'f', 'f', 'b'], #51
-            ['1', '1', '1', '0', ' ', 'f', ' ', 'c', ' ', 'f', 'F', 'b'], #52
-            ['1', '1', '1', '0', ' ', 'f', 'c', ' ', 'f', 'F', 'b'], #53
-            ['2', '2', '0', '0', ' ', ' ', ' ', 'c', ' ', ' ', ' ', 'c', ' ', 'f', 'f', 'B'], #54
-            ['0', '2', '2', '0', ' ', 'c', ' ', 'c', ' ', 'F', 'f', 'b'], #55
-            ['1', '1', '1', '1', ' ', 'c', ' ', 'f', 'C', ' ', ' ', 'f', 'b'], #56
-            ['0', '0', '0', '4', ' ', ' ', 'C', ' ', ' ', 'c', ' ', ' ', 'c', ' ', ' ', 'c', ' ', ' ', 'b']] #57
+            ['1', '1', '1', '0', 'f', ' ', 'c', 'f', 'F', 'b'], #52
+            ['1', '1', '1', '0', 'f', 'c', 'f', 'F', 'b'], #53
+            ['2', '2', '0', '0', ' ', ' ', 'c', ' ', ' ', 'c', 'f', 'f', 'B'], #54
+            ['0', '2', '2', '0', 'c', 'c', 'F', 'f', 'b'], #55
+            ['1', '1', '1', '1', 'c', 'f', 'C', ' ', 'f', 'b'], #56
+            ['0', '0', '0', '4', 'C', 'c', 'c', 'c', 'b']] #57
 
     for r in range(11):
         for i in range(5):
             if lista[i] == 0:
                 cores[i][0] = cores[i][1] = colors.grey
-        print("    A   B   C   D   E   F   G   H   I   J" + cores[0][0] + "   ─────────────── %dx Submarinos ──────────────" %lista[0])
-        print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + cores[0][1] + "                  [11] ■"  + colors.fim)
-        for i in range(10):
-            print("%d " %i + colors.d_blue + "║", end="")
-            for j in range(10):
-                if pf[i][j] == 'O':
-                    print(colors.green + "▐█▌", end="")
-                else:
-                    print(colors.blue + "%s" %pf[i][j], end="")
-
-                if j == 9:
-                    print(colors.d_blue + "║", end="")
-                else:
-                    print(colors.d_blue + "│", end="")
-            if i == 0:
-                print(cores[1][0] + " ───────────── %dx Navios Comuns ─────────────" %lista[1])
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[1][1] + "               [21] ■   [22] ■ ■"  + colors.fim)
-            elif i == 1:
-                print(cores[1][1] + "                    ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][0] + " ─────────── %dx Contratorpedeiros ───────────" %lista[2] + colors.fim)
-            elif i == 2:
-                print(cores[2][1] + "     [31] ■ ■ ■   [32] ■ ■        [33] ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "                         ■             ■"  + colors.fim)
-            elif i == 3:
-                print(cores[2][1] + "     [34] ■    [35]  ■     [36] ■ ■    ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "          ■ ■      ■ ■          ■"  + colors.fim)
-            elif i == 4:
-                print(cores[3][0] + " ───────────── %dx Navios-Tanque ─────────────" %lista[3])
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [41] ■ ■ ■ ■  [42] ■ ■  [43]  ■   [44] ■ ■ ■"  + colors.fim)
-            elif i == 5:
-                print(cores[3][1] + "                    ■ ■      ■ ■ ■        ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [45] ■  [46] ■ ■"  + colors.fim)
-            elif i == 6:
-                print(cores[3][1] + "      ■       ■   [47] ■ ■    [48]  ■ ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + "      ■ ■     ■          ■ ■      ■ ■"  + colors.fim)
-            elif i == 7:
-                print(cores[4][0] + " ────────────── %dx Porta-Aviões ─────────────" %lista[4])
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [51] ■ ■ ■ ■ ■  [52] ■   ■  [53] ■ ■     ■"  + colors.fim)
-            elif i == 8:
-                print(cores[4][1] + "                      ■ ■ ■       ■ ■ ■   ■")
-                print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [54]   ■  [55] ■             ■           ■"  + colors.fim)
-            else:
-                print(cores[4][1] + "        ■       ■        [56] ■ ■    [57] ■")
-                print(colors.d_blue + "  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + cores[4][1] + "    ■ ■ ■       ■ ■ ■           ■ ■       ■"  + colors.fim)
-        print()
-
         while True:
+            print("    A   B   C   D   E   F   G   H   I   J" + cores[0][0] + "   ─────────────── %dx Submarinos ──────────────" %lista[0])
+            print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + cores[0][1] + "                  [11] ■"  + colors.fim)
+            for i in range(10):
+                print("%d " %i + colors.d_blue + "║", end="")
+                for j in range(10):
+                    if pf[i][j] == 'O':
+                        print(colors.green + "▐█▌", end="")
+                    else:
+                        print(colors.blue + "%s" %pf[i][j], end="")
+
+                    if j == 9:
+                        print(colors.d_blue + "║", end="")
+                    else:
+                        print(colors.d_blue + "│", end="")
+                if i == 0:
+                    print(cores[1][0] + " ───────────── %dx Navios Comuns ─────────────" %lista[1])
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[1][1] + "               [21] ■   [22] ■ ■"  + colors.fim)
+                elif i == 1:
+                    print(cores[1][1] + "                    ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][0] + " ─────────── %dx Contratorpedeiros ───────────" %lista[2] + colors.fim)
+                elif i == 2:
+                    print(cores[2][1] + "     [31] ■ ■ ■   [32] ■ ■        [33] ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "                         ■             ■"  + colors.fim)
+                elif i == 3:
+                    print(cores[2][1] + "     [34] ■    [35]  ■     [36] ■ ■    ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[2][1] + "          ■ ■      ■ ■          ■"  + colors.fim)
+                elif i == 4:
+                    print(cores[3][0] + " ───────────── %dx Navios-Tanque ─────────────" %lista[3])
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [41] ■ ■ ■ ■  [42] ■ ■  [43]  ■   [44] ■ ■ ■"  + colors.fim)
+                elif i == 5:
+                    print(cores[3][1] + "                    ■ ■      ■ ■ ■        ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + " [45] ■  [46] ■ ■"  + colors.fim)
+                elif i == 6:
+                    print(cores[3][1] + "      ■       ■   [47] ■ ■    [48]  ■ ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[3][1] + "      ■ ■     ■          ■ ■      ■ ■"  + colors.fim)
+                elif i == 7:
+                    print(cores[4][0] + " ────────────── %dx Porta-Aviões ─────────────" %lista[4])
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [51] ■ ■ ■ ■ ■  [52] ■   ■  [53] ■ ■     ■"  + colors.fim)
+                elif i == 8:
+                    print(cores[4][1] + "                      ■ ■ ■       ■ ■ ■   ■")
+                    print(colors.d_blue + "  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + cores[4][1] + " [54]   ■  [55] ■             ■           ■"  + colors.fim)
+                else:
+                    print(cores[4][1] + "        ■       ■        [56] ■ ■    [57] ■")
+                    print(colors.d_blue + "  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + cores[4][1] + "    ■ ■ ■       ■ ■ ■           ■ ■       ■"  + colors.fim)
+            print()
+
             print("Selecione qual unidade posicionar")
             while True:
                 print("-> ", end="")
@@ -289,9 +334,6 @@ def Posicionar2(pf):
                                 print("Você não possui mais este modelo para posicionar, escolha outro")
                             else:
                                 lista[fe-1] -= 1
-                                if es == '11' and lista[0] != 0:
-                                    break
-                                lista.append(es)
                                 if fe == 1:
                                     fro = fro1
                                 elif fe == 2:
@@ -302,9 +344,12 @@ def Posicionar2(pf):
                                     fro = fro4
                                 else:
                                     fro = fro5
+                                if es == '11' and lista[0] != 0:
+                                    break
+                                lista.append(es)
                                 break
-            
             print()
+            sum = -1
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
@@ -317,89 +362,92 @@ def Posicionar2(pf):
 
                     if j == 9:
                         print(colors.d_blue + "║", end="")
-                        if i == 2:
-                            print(colors.b_yellow + " Utilize o [■] como ponto de referência para", end="")
-                        elif i == 3:
-                            print(colors.b_yellow + "           ", end="")
-                            
-                        elif i == 4:
-                            if fe == 2345:
-                                sd
-                        elif i == 5:
-                            if fe == 345:
-                                sd
-                        elif i == 6:
-                            if es == '57':
-                                sd
-                        elif i == 7:
-                            if es == '57':
-                                sd
+                        if 2 <= i <= 5:
+                            if i == 2:
+                                print(colors.yellow + "         posicionar a frota escolhida", end="")
+                            else:
+                                print(colors.b_yellow, end="")
+                                if 'b' != fro[model-1][sum+4] != 'B':
+                                    print("               ", end="")
+                                    if '41' != es != '51':
+                                        print("   ", end="")
+                                        if es == '11' or es == '21' or es == '33' or es == '57':
+                                            print("   ", end="")
+                                    for w in range(5):
+                                        sum += 1
+                                        if fro[model-1][sum+4] == ' ':
+                                            print("   ", end="")
+                                        elif fro[model-1][sum+4] == 'f':
+                                            print("[ ]", end="")
+                                        elif fro[model-1][sum+4] == 'F':
+                                            print("[■]", end="")
+                                        else:
+                                            if fro[model-1][sum+4] == 'c' or fro[model-1][sum+4] == 'b':
+                                                print("[ ]", end="")
+                                            else:
+                                                print("[■]", end="")
+                                            break
                         print(colors.d_blue)
                     else:
                         print(colors.d_blue + "│", end="")
                 if i == 9:
                     print("  ╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝" + colors.fim)
-                elif i == 2:
-                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.b_yellow + "         posicionar a frota escolhida" + colors.fim)
+                elif i == 1:
+                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.yellow + " Utilize o [■] como ponto de referência para" + colors.fim)
+                elif 3 <= i <= 4:
+                    print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.b_yellow, end="")
+                    if 'b' != fro[model-1][sum+4] != 'B':
+                        print("               ", end="")
+                        if '41' != es != '51':
+                            print("   ", end="")
+                            if es == '11' or es == '21' or es == '33' or es == '57':
+                                print("   ", end="")
+                        for w in range(5):
+                            sum += 1
+                            if fro[model-1][sum+4] == ' ':
+                                print("   ", end="")
+                            elif fro[model-1][sum+4] == 'f':
+                                print("[ ]", end="")
+                            elif fro[model-1][sum+4] == 'F':
+                                print("[■]", end="")
+                            else:
+                                if fro[model-1][sum+4] == 'c' or fro[model-1][sum+4] == 'b':
+                                    print("[ ]", end="")
+                                else:
+                                    print("[■]", end="")
+                                break
+                    print(colors.fim)
                 else:
                     print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
             print()
 
-            '''
-            ║           [ ]  [ ]  [ ]  [ ]  [ ]
-            ╢           5 4  3 2   1
-            ║                [ ]  [ ]  [ ]  [ ]
-            ╢ 
-            ║                     [ ]  [ ]  [ ]
-            ╢ 
-            ║                          [ ]  [ ]
-            ╢ 
-            ║                               [ ]
+            print("Informe as coordenadas que deseja posicionar (ou digite 'V' para voltar):")
+            col, lin, x1, y1, x2, y2 = Posicao_Avançado(pf, fro[model-1])
+            if col == lin == -1:
+                lista[fe-1] += 1
+                if es == '11' and lista[0] != 0:
+                    continue
+                lista.remove(es)
+                continue
 
-                        [21] ⌂   [22] ⌂ ■
-                             ■
-
-                [31] ⌂ ■ ■   [32] ■ ⌂        [33] ⌂
-                                    ■             ■
-                [34] ■    [35]  ■     [36] ⌂ ■    ■
-                     ⌂ ■      ■ ⌂          ■
-
-            [41] ⌂ ■ ■ ■  [42] ⌂ ■  [43]  ■   [44] ■ ⌂ ■
-                               ■ ■      ■ ⌂ ■        ■
-            [45] ■  [46] ⌂ ■
-                 ■       ■   [47] ■ ⌂    [48]  ⌂ ■
-                 ⌂ ■     ■          ■ ■      ■ ■
-
-            [51] ⌂ ■ ■ ■ ■  [52] ■   ■  [53] ■ ■     ⌂
-                                 ■ ⌂ ■       ■ ⌂ ■   ■
-            [54]   ■  [55] ■             ■           ■
-                   ■       ■        [56] ■ ⌂    [57] ■
-               ■ ■ ⌂       ⌂ ■ ■           ■ ■       ■
-            '''
-
-            print("Informe as coordenadas que deseja posicionar: (letra primeiro, depois o número)")
-            col, lin = Posicao(pf, fe, v)
-            x = lin
-            y = col
-            c = fe
+            sum = -1
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
                 print("%d " %i + colors.d_blue + "║", end="")
                 for j in range(10):
-                    if i == x and j == y:
-                        print(colors.yellow + " ■ ", end="")
-                        pf[i][j] = 'T'
-                        c -= 1
-                        if v == 0 and c != 0:
-                            y += 1
-                        elif v == 1 and c != 0:
-                            x += 1
-                    else:
-                        if pf[i][j] == 'O':
-                            print(colors.green + "▐█▌", end="")
-                        else:
-                            print(colors.blue + "%s" %pf[i][j], end="")
+                    if y1 <= i <= y2 and x1 <= j <= x2:
+                        if 'b' != fro[model-1][sum+4] != 'B':
+                            sum += 1
+                            if fro[model-1][sum+4] != ' ':
+                                print(colors.yellow + " ■ ", end="")
+                                pf[i][j] = 'T'
+                                if fro[model-1][sum+4] == 'c' or fro[model-1][sum+4] == 'C':
+                                    y1 += 1
+                    if pf[i][j] == 'O':
+                        print(colors.green + "▐█▌", end="")
+                    elif pf[i][j] != 'T':
+                        print(colors.blue + "%s" %pf[i][j], end="")
                     if j == 9:
                         print(colors.d_blue + "║")
                     else:
@@ -422,6 +470,11 @@ def Posicionar2(pf):
                     for j in range(10):
                         if pf[i][j] == 'T':
                             pf[i][j] = '░░░'
+                lista[fe-1] += 1
+                if es == '11' and lista[0] != 0:
+                    continue
+                lista.remove(es)
+                continue
 
     for i in range(30):
         print()
@@ -627,4 +680,3 @@ def main():
                 print()
 
 main()
-
