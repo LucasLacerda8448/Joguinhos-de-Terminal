@@ -584,7 +584,7 @@ def Jogar(f_jog, f_ini, jg_ini, v):
                     elif f_jog[i][j] == '░░░':
                         print(colors.grey + "░░░", end="")
                     else:
-                        print(colors.green + "▐█▌" %f_jog[i][j], end="")
+                        print(colors.green + "▐█▌", end="")
             
                     if j == 9:
                         print(colors.d_blue + "║")
