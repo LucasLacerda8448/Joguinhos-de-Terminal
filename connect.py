@@ -1,12 +1,14 @@
 import os
-#os.system('color')
+os.system('color')
 
 class colors:
     red = '\033[91m'
     green = '\033[92m'
     yellow = '\033[33m'
     blue = '\033[94m'
+    BLUE = '\033[104m'
     grey = '\033[90m'
+    black = '\033[30m'
     fim = '\033[0m'
 
 def Escolha(n):
@@ -21,12 +23,10 @@ def Escolha(n):
     return e
 
 def AdicionaBola(p, mj):
-    v = 6
     for i in range(6)[::-1]:
-        if mj[i][p] == '*':
-            v = i
-            break
-    return v
+        if mj[i][p-1] == '◯':
+            return i
+    return 6
 
 def Verifica(m):
     c = 0
@@ -38,7 +38,7 @@ def Verifica(m):
             p2 = m[h[1]][i]
             p3 = m[h[2]][i]
             p4 = m[h[3]][i]
-            if p4 == '*':
+            if p4 == '◯':
                 c = 1
                 break
             elif p1 == p2 == p3 == p4:
@@ -52,14 +52,14 @@ def Verifica(m):
             h[2] -= 1
             h[3] -= 1
     #Horizontal
-    for i in range(6):
+    for i in range(6)[::-1]:
         h = [0, 1, 2, 3]
         for j in range(4):
             p1 = m[i][h[0]]
             p2 = m[i][h[1]]
             p3 = m[i][h[2]]
             p4 = m[i][h[3]]
-            if p1 == '*' or p2 == '*' or p3 == '*' or p4 == '*':
+            if p1 == '◯' or p4 == '◯':
                 c = 1
             elif p1 == p2 == p3 == p4:
                 m[i][h[0]] = 'V'
@@ -79,7 +79,7 @@ def Verifica(m):
             p2 = m[h[1]][i + 1]
             p3 = m[h[2]][i + 2]
             p4 = m[h[3]][i + 3]
-            if p1 == '*' or p2 == '*' or p3 == '*' or p4 == '*':
+            if p1 == '◯' or p4 == '◯':
                 c = 1
                 break
             elif p1 == p2 == p3 == p4:
@@ -100,7 +100,7 @@ def Verifica(m):
             p2 = m[h[1]][i + 1]
             p3 = m[h[2]][i + 2]
             p4 = m[h[3]][i + 3]
-            if p1 == '*' or p2 == '*' or p3 == '*' or p4 == '*':
+            if p1 == '◯' or p4 == '◯':
                 c = 1
                 break
             elif p1 == p2 == p3 == p4:
@@ -124,15 +124,16 @@ def main():
     print()
     while True:
         mi = []
-        print("    0 1 2 3 4 5 6")
+        print(colors.blue + "  ┐ " + colors.fim + "1 2 3 4 5 6 7" + colors.blue + " ┌")
         for i in range(6):
-            print("    ", end="")
+            print("  │ ", end="")
             mi.append([])
             for j in range(7):
-                mi[i].append('O')
-                print(colors.blue + "%s " %mi[i][j] + colors.fim, end="")
-            print()
-        print()
+                mi[i].append('◯')
+                print("%s " %mi[i][j], end="")
+            print("│")
+        print(" ─┼───────────────┼─")
+        print("  ┘               └" + colors.fim)
 
         print("[1] Jogar   [2] Sair")
         e = Escolha(2)
@@ -144,53 +145,50 @@ def main():
             for i in range(6):
                 mj.append([])
                 for j in range(7):
-                    mj[i].append('*')
+                    mj[i].append('◯')
 
-            v = 'O'
-            print("Jogador " + colors.yellow + "O" + colors.fim + " começa.")
+            v = 'Y'
+            print("Jogador " + colors.yellow + "⬤" + colors.fim + " começa.")
             while True:
                 print("Escolha a coluna que deseja jogar:")
                 while True:
-                    p = '/'
-                    while '0' != p != '1' and '2' != p != '3' and '4' != p != '5' and '6' != p:
-                        print("-> ", end="")
-                        p = input()
-                    p = int(p)
+                    p = int(Escolha(7))
                     i = AdicionaBola(p, mj)
                     if i == 6:
                         print("A coluna escolhida ja está cheia, escolha outra coluna.")
                     else:
-                        mj[i][p] = v
+                        mj[i][p-1] = v
                         print()
                         break
                 r = Verifica(mj)
-                print("    0 1 2 3 4 5 6")
+                print(colors.blue + "  ┐ " + colors.fim + "1 2 3 4 5 6 7" + colors.blue + " ┌")
                 for i in range(6):
-                    print("    ", end="")
+                    print("  │ ", end="")
                     for j in range(7):
-                        if mj[i][j] == '*':
-                            print(colors.blue + "%s " %mi[i][j] + colors.fim, end="")
-                        elif mj[i][j] == 'X':
-                            print(colors.red + "%s " %mi[i][j] + colors.fim, end="")
-                        elif mj[i][j] == 'O':
-                            print(colors.yellow + "%s " %mi[i][j] + colors.fim, end="")
+                        if mj[i][j] == '◯':
+                            print("%s " %mi[i][j], end="")
+                        elif mj[i][j] == 'R':
+                            print(colors.red + "⬤ " + colors.blue, end="")
+                        elif mj[i][j] == 'Y':
+                            print(colors.yellow + "⬤ " + colors.blue, end="")
                         elif mj[i][j] == 'V':
-                            print(colors.green + "%s " %mi[i][j] + colors.fim, end="")
-                    print()
-                print()
+                            print(colors.green + "⬤ " + colors.blue, end="")
+                    print("│")
+                print(" ─┼───────────────┼─")
+                print("  ┘               └" + colors.fim)
                 if r == 'C':
-                    if v == 'O':
-                        v = 'X'
-                        print("Vez do jogador " + colors.red + "O" + colors.fim + ".")
+                    if v == 'Y':
+                        v = 'R'
+                        print("Vez do jogador " + colors.red + "⬤" + colors.fim + ".")
                     else:
-                        v = 'O'
-                        print("Vez do jogador " + colors.yellow + "O" + colors.fim + ".")
+                        v = 'Y'
+                        print("Vez do jogador " + colors.yellow + "⬤" + colors.fim + ".")
                 else:
                     print("FIM DE JOGO!")
-                    if r == 'O':
-                        print("Jogador " + colors.yellow + "O" + colors.fim + " Venceu.")
-                    elif r == 'X':
-                        print("Jogador " + colors.red + "O" + colors.fim + " Venceu.")
+                    if r == 'Y':
+                        print("Jogador " + colors.yellow + "⬤" + colors.fim + " Venceu.")
+                    elif r == 'R':
+                        print("Jogador " + colors.red + "⬤" + colors.fim + " Venceu.")
                     elif r == 'E':
                         print("Empate.")
                     print()
