@@ -161,22 +161,20 @@ def main():
                         print()
                         break
                 r = Verifica(mj)
-                print(colors.blue + "  ┐ " + colors.fim + "1 2 3 4 5 6 7" + colors.blue + " ┌")
-                for i in range(6):
-                    print("  │ ", end="")
-                    for j in range(7):
-                        if mj[i][j] == '◯':
-                            print("%s " %mi[i][j], end="")
-                        elif mj[i][j] == 'R':
-                            print(colors.red + "⬤ " + colors.blue, end="")
-                        elif mj[i][j] == 'Y':
-                            print(colors.yellow + "⬤ " + colors.blue, end="")
-                        elif mj[i][j] == 'V':
-                            print(colors.green + "⬤ " + colors.blue, end="")
-                    print("│")
-                print(" ─┼───────────────┼─")
-                print("  ┘               └" + colors.fim)
                 if r == 'C':
+                    print(colors.blue + "  ┐ " + colors.fim + "1 2 3 4 5 6 7" + colors.blue + " ┌")
+                    for i in range(6):
+                        print("  │ ", end="")
+                        for j in range(7):
+                            if mj[i][j] == '◯':
+                                print("%s " %mi[i][j], end="")
+                            elif mj[i][j] == 'R':
+                                print(colors.red + "⬤ " + colors.blue, end="")
+                            elif mj[i][j] == 'Y':
+                                print(colors.yellow + "⬤ " + colors.blue, end="")
+                        print("│")
+                    print(" ─┼───────────────┼─")
+                    print("  ┘               └" + colors.fim)
                     if v == 'Y':
                         v = 'R'
                         print("Vez do jogador " + colors.red + "⬤" + colors.fim + ".")
@@ -184,6 +182,21 @@ def main():
                         v = 'Y'
                         print("Vez do jogador " + colors.yellow + "⬤" + colors.fim + ".")
                 else:
+                    print(colors.blue + "  ┐ " + colors.fim + "1 2 3 4 5 6 7" + colors.blue + " ┌")
+                    for i in range(6):
+                        print("  │ ", end="")
+                        for j in range(7):
+                            if mj[i][j] == '◯':
+                                print("%s " %mi[i][j], end="")
+                            elif mj[i][j] == 'R':
+                                print(colors.red + "◯ " + colors.blue, end="")
+                            elif mj[i][j] == 'Y':
+                                print(colors.yellow + "◯ " + colors.blue, end="")
+                            elif mj[i][j] == 'V':
+                                print(colors.green + "⬤ " + colors.blue, end="")
+                        print("│")
+                    print(" ─┼───────────────┼─")
+                    print("  ┘               └" + colors.fim)
                     print("FIM DE JOGO!")
                     if r == 'Y':
                         print("Jogador " + colors.yellow + "⬤" + colors.fim + " Venceu.")
