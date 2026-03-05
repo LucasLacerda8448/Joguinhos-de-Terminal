@@ -1,3 +1,5 @@
+#CÓDIGO DESATUALIZADO
+
 import time
 import subprocess
 caminho = ".\\programas\\"
