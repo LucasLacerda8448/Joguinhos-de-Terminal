@@ -46,6 +46,10 @@ class Peao():
                     jg[x-2][y] = 'n'    
 
 p = Peao('W', i, j, 0)
+
+lista.append(Peao('W', i, j, 0))
+
+p.setMov(1)
 '''
 
 class colors:
