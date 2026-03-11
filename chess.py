@@ -6,6 +6,48 @@ import random
 import time
 #os.system('color')
 
+'''
+class Peao():
+    def __init__(self, cor, pos_x, pos_y, mov):
+        self.img = '♙'
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def movimento(pos_x, pos_y, mov, cor):
+        
+    elif pe == '♙' or pe == '♟':
+        if t[0] == 'B':
+            #Ataque
+            if y != 0:
+                if jg[x+1][y-1] == 'W':
+                    jg[x+1][y-1] = 'w'
+            if y != 7:
+                if jg[x+1][y+1] == 'W':
+                    jg[x+1][y+1] = 'w'
+            #Movimento
+            if jg[x+1][y] == 'N':
+                jg[x+1][y] = 'n'
+                if pe == '♟' and jg[x+2][y] == 'N':
+                    jg[x+2][y] = 'n'
+        else:
+            #Ataque
+            if y != 0:
+                if jg[x-1][y-1] == 'B':
+                    jg[x-1][y-1] = 'b'
+            if y != 7:
+                if jg[x-1][y+1] == 'B':
+                    jg[x-1][y+1] = 'b'
+            #Movimento
+            if jg[x-1][y] == 'N':
+                jg[x-1][y] = 'n'
+                if pe == '♟' and jg[x-2][y] == 'N':
+                    jg[x-2][y] = 'n'    
+
+p = Peao('W', i, j, 0)
+'''
+
 class colors:
     red = '\033[91m'
     RED = '\033[41m'
