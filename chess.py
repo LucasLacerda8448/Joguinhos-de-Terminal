@@ -132,8 +132,8 @@ def Verifica(jg, jg2, x, y, t):
             jg[x-1][y] = jg[x-1][y].lower()
         if y != 7 and jg[x][y+1] not in t: #Direita
             jg[x][y+1] = jg[x][y+1].lower()
-        if x != 7 and jg[x-1][y] not in t: #Baixo
-            jg[x-1][y] = jg[x-1][y].lower()
+        if x != 7 and jg[x+1][y] not in t: #Baixo
+            jg[x+1][y] = jg[x+1][y].lower()
     else:
         #TORRE OU RAINHA
         if pe != '♝':
@@ -205,7 +205,7 @@ def Posicao2(jg, t):
             if 65 <= ord(p1[0]) <= 72 and 48 <= ord(p1[1]) <= 55:
                 col = ord(p1[0]) - 65
                 lin = int(p1[1])
-                if jg[lin][col].islower() and jg[lin][col] != t[2]:
+                if (jg[lin][col].islower() or jg[lin][col] == 'R') and jg[lin][col] != t[2]:
                     break 
                 else:
                     print("A coordenada inserida não pode ser usada.")
