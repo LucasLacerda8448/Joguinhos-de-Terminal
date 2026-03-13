@@ -2,55 +2,7 @@
 # EM DESENVOLVIMENTO AINDA!!!! #
 ################################
 import os
-import random
-import time
-#os.system('color')
-
-'''
-class Peao():
-    def __init__(self, cor, pos_x, pos_y, mov):
-        self.img = '♙'
-        self.cor = cor
-        self.pos_x = pos_x
-        self.pos_y = pos_y
-        self.mov = mov
-
-    def movimento(pos_x, pos_y, mov, cor):
-        
-    elif pe == '♙' or pe == '♟':
-        if t[0] == 'B':
-            #Ataque
-            if y != 0:
-                if jg[x+1][y-1] == 'W':
-                    jg[x+1][y-1] = 'w'
-            if y != 7:
-                if jg[x+1][y+1] == 'W':
-                    jg[x+1][y+1] = 'w'
-            #Movimento
-            if jg[x+1][y] == 'N':
-                jg[x+1][y] = 'n'
-                if pe == '♟' and jg[x+2][y] == 'N':
-                    jg[x+2][y] = 'n'
-        else:
-            #Ataque
-            if y != 0:
-                if jg[x-1][y-1] == 'B':
-                    jg[x-1][y-1] = 'b'
-            if y != 7:
-                if jg[x-1][y+1] == 'B':
-                    jg[x-1][y+1] = 'b'
-            #Movimento
-            if jg[x-1][y] == 'N':
-                jg[x-1][y] = 'n'
-                if pe == '♟' and jg[x-2][y] == 'N':
-                    jg[x-2][y] = 'n'    
-
-p = Peao('W', i, j, 0)
-
-lista.append(Peao('W', i, j, 0))
-
-p.setMov(1)
-'''
+os.system('color')
 
 class colors:
     red = '\033[91m'
@@ -64,19 +16,19 @@ class colors:
     grey = '\033[90m'
     WHITE = '\033[107m'
     white = '\033[37m'
+    invi = '\033[08m'
     fim = '\033[0m'
 
 class Peao():
-    def __init__(self, tipo, pos_x, pos_y, mov):
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
         self.img = '♙'
+        self.Pts = 1
         self.tipo = tipo
+        self.cor = cor
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.mov = mov
 
-    def getTipo(self):
-        return self.tipo
-    
     def mudaTipo(self, atk):
         if atk:
             self.tipo = self.tipo.lower()
@@ -86,28 +38,335 @@ class Peao():
     def getMove(self, tab):
         if self.tipo == 'B':
             #Ataque
-            if self.pos_y != 0 and tab[self.pos_x+1][self.pos_y-1].getTipo() == 'W':
+            if self.pos_y != 0 and tab[self.pos_x+1][self.pos_y-1].cor == colors.green:
                 tab[self.pos_x+1][self.pos_y-1].mudaTipo(1)
-            if self.pos_y != 7 and tab[self.pos_x+1][self.pos_y+1].getTipo() == 'W':
+            if self.pos_y != 7 and tab[self.pos_x+1][self.pos_y+1].cor == colors.green:
                 tab[self.pos_x+1][self.pos_y+1].mudaTipo(1)
             #Movimento
-            if tab[self.pos_x+1][self.pos_y].getTipo() == 'N':
+            if tab[self.pos_x+1][self.pos_y].tipo == 'N':
                 tab[self.pos_x+1][self.pos_y].mudaTipo(1)
-                if self.mov == 0 and tab[self.pos_x+2][self.pos_y].getTipo() == 'N':
+                if self.mov == 0 and tab[self.pos_x+2][self.pos_y].tipo == 'N':
                     tab[self.pos_x+2][self.pos_y].mudaTipo(1)
         else:
             #Ataque
-            if self.pos_y != 0 and tab[self.pos_x-1][self.pos_y-1].getTipo() == 'B':
+            if self.pos_y != 0 and tab[self.pos_x-1][self.pos_y-1].cor == colors.red:
                 tab[self.pos_x-1][self.pos_y-1].mudaTipo(1)
-            if self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].getTipo() == 'B':
+            if self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].cor == colors.red:
                 tab[self.pos_x-1][self.pos_y+1].mudaTipo(1)
             #Movimento
-            if tab[self.pos_x-1][self.pos_y].getTipo() == 'N':
+            if tab[self.pos_x-1][self.pos_y].tipo == 'N':
                 tab[self.pos_x-1][self.pos_y].mudaTipo(1)
-                if self.mov == 0 and tab[self.pos_x-2][self.pos_y].getTipo() == 'N':
+                if self.mov == 0 and tab[self.pos_x-2][self.pos_y].tipo == 'N':
                     tab[self.pos_x-2][self.pos_y].mudaTipo(1)
         
         return tab
+    
+    def Promo(self, tab):
+        print("Promoção do Peão - Escolha qual usar:")
+        print("[1] " + self.cor + "♞" + colors.fim + "    [2] " + self.cor + "♝" + colors.fim + "    [3] " + self.cor + "♜" + colors.fim + "    [4] " + self.cor + "♛" + colors.fim)
+        e = Escolha(4)
+        if e == '1':
+            tab[self.pos_x][self.pos_y] = Cavalo(self.tipo, self.cor, self.pos_x, self.pos_y, 1)
+        elif e == '2':
+            tab[self.pos_x][self.pos_y] = Bispo(self.tipo, self.cor, self.pos_x, self.pos_y, 1)
+        elif e == '3':
+            tab[self.pos_x][self.pos_y] = Torre(self.tipo, self.cor, self.pos_x, self.pos_y, 1)
+        else:
+            tab[self.pos_x][self.pos_y] = Rainha(self.tipo, self.cor, self.pos_x, self.pos_y, 1)
+        
+        return tab
+
+class Rei():
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
+        self.img = '♚'
+        self.Pts = 0
+        self.tipo = tipo
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+        else:
+            self.tipo = self.tipo.upper()
+
+    def getMove(self, tab):
+        if not self.mov: # Não moveu o Rei
+            if tab[self.pos_x][self.pos_y+1].tipo == tab[self.pos_x][self.pos_y+2].tipo == 'N' and not tab[self.pos_x][self.pos_y+3].mov:
+                tab[self.pos_x][self.pos_y+2].tipo = 'r'
+                tab[self.pos_x][self.pos_y+2].img = '○'
+            if tab[self.pos_x][self.pos_y-1].tipo == tab[self.pos_x][self.pos_y-2].tipo == tab[self.pos_x][self.pos_y-3].tipo == 'N' and not tab[self.pos_x][self.pos_y-4].mov:
+                tab[self.pos_x][self.pos_y-2].tipo = 'R'
+                tab[self.pos_x][self.pos_y-2].img = '○'
+
+        if self.pos_y != 0 and tab[self.pos_x][self.pos_y-1].cor != self.cor: #Esquerda
+            tab[self.pos_x][self.pos_y-1].mudaTipo(1)
+        if self.pos_x != 0 and tab[self.pos_x-1][self.pos_y].cor != self.cor: #Cima
+            tab[self.pos_x-1][self.pos_y].mudaTipo(1)
+        if self.pos_y != 7 and tab[self.pos_x][self.pos_y+1].cor != self.cor: #Direita
+            tab[self.pos_x][self.pos_y+1].mudaTipo(1)
+        if self.pos_x != 7 and tab[self.pos_x+1][self.pos_y].cor != self.cor: #Baixo
+            tab[self.pos_x+1][self.pos_y].mudaTipo(1)
+
+        if self.pos_y != 0 and self.pos_x != 0 and tab[self.pos_x-1][self.pos_y-1].cor != self.cor: #Diagonal Superior Esquerda
+            tab[self.pos_x-1][self.pos_y-1].mudaTipo(1)
+        if self.pos_x != 0 and self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].cor != self.cor: #Diagonal Superior Direita
+            tab[self.pos_x-1][self.pos_y+1].mudaTipo(1)
+        if self.pos_y != 7 and self.pos_x != 7 and tab[self.pos_x+1][self.pos_y+1].cor != self.cor: #Diagonal Inferior Direita
+            tab[self.pos_x+1][self.pos_y+1].mudaTipo(1)
+        if self.pos_x != 7 and self.pos_y != 0 and tab[self.pos_x+1][self.pos_y-1].cor != self.cor: #Diagonal Inferior Esquerda
+            tab[self.pos_x+1][self.pos_y-1].mudaTipo(1)
+        
+        return tab
+    
+class Cavalo():
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
+        self.img = '♞'
+        self.Pts = 3
+        self.tipo = tipo
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+        else:
+            self.tipo = self.tipo.upper()
+
+    def getMove(self, tab):
+        #    x─┐
+        #      │
+        #      C
+        if self.pos_x > 1 and self.pos_y != 0 and tab[self.pos_x-2][self.pos_y-1].cor != self.cor:
+            tab[self.pos_x-2][self.pos_y-1].mudaTipo(1)
+        #      ┌─x
+        #      │ 
+        #      C
+        if self.pos_x > 1 and self.pos_y != 7 and tab[self.pos_x-2][self.pos_y+1].cor != self.cor:
+            tab[self.pos_x-2][self.pos_y+1].mudaTipo(1)
+        #      ┌───x
+        #      C
+        if self.pos_x != 0 and self.pos_y < 6 and tab[self.pos_x-1][self.pos_y+2].cor != self.cor:
+            tab[self.pos_x-1][self.pos_y+2].mudaTipo(1)
+        #      C
+        #      └───x
+        if self.pos_x != 7 and self.pos_y < 6 and tab[self.pos_x+1][self.pos_y+2].cor != self.cor:
+            tab[self.pos_x+1][self.pos_y+2].mudaTipo(1)
+        #      C
+        #      │  
+        #      └─x
+        if self.pos_x < 6 and self.pos_y != 7 and tab[self.pos_x+2][self.pos_y+1].cor != self.cor:
+            tab[self.pos_x+2][self.pos_y+1].mudaTipo(1)
+        #      C
+        #      │  
+        #    x─┘ 
+        if self.pos_x < 6 and self.pos_y != 0 and tab[self.pos_x+2][self.pos_y-1].cor != self.cor:
+            tab[self.pos_x+2][self.pos_y-1].mudaTipo(1)
+        #      C
+        #  x───┘
+        if self.pos_x != 7 and self.pos_y > 1 and tab[self.pos_x+1][self.pos_y-2].cor != self.cor:
+            tab[self.pos_x+1][self.pos_y-2].mudaTipo(1)
+        #  x───┐   
+        #      C
+        if self.pos_x != 0 and self.pos_y > 1 and tab[self.pos_x-1][self.pos_y-2].cor != self.cor:
+            tab[self.pos_x-1][self.pos_y-2].mudaTipo(1)
+        
+        return tab
+
+class Bispo():
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
+        self.img = '♝'
+        self.Pts = 3
+        self.tipo = tipo
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+        else:
+            self.tipo = self.tipo.upper()
+
+    def getMove(self, tab):
+        for i in range(1,8): #Diagonal Superior Direita
+            if (self.pos_x - i) < 0 or (self.pos_y + i) > 7 or tab[self.pos_x-i][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y+i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Inferior Direita
+            if (self.pos_x + i) > 7 or (self.pos_y + i) > 7 or tab[self.pos_x+i][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y+i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Inferior Esquerda
+            if (self.pos_x + i) > 7 or (self.pos_y - i) < 0 or tab[self.pos_x+i][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y-i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Superior Esquerda
+            if (self.pos_x - i) < 0 or (self.pos_y - i) < 0 or tab[self.pos_x-i][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y-i].tipo != 'n':
+                    break
+
+        return tab
+    
+class Torre():
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
+        self.img = '♜'
+        self.Pts = 5
+        self.tipo = tipo
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+        else:
+            self.tipo = self.tipo.upper()
+
+    def getMove(self, tab):
+        for i in range(1,8): #Cima
+            if (self.pos_x - i) < 0 or tab[self.pos_x-i][self.pos_y].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y].tipo != 'n':
+                    break
+        for i in range(1,8): #Esquerda
+            if (self.pos_y - i) < 0 or tab[self.pos_x][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x][self.pos_y-i].tipo != 'n':
+                    break
+        for i in range(1,8): #Baixo
+            if (self.pos_x + i) > 7 or tab[self.pos_x+i][self.pos_y].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y].tipo != 'n':
+                    break
+        for i in range(1,8): #Direita
+            if (self.pos_y + i) > 7 or tab[self.pos_x][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x][self.pos_y+i].tipo != 'n':
+                    break
+
+        return tab
+
+class Rainha():
+    def __init__(self, tipo, cor, pos_x, pos_y, mov):
+        self.img = '♛'
+        self.Pts = 9
+        self.tipo = tipo
+        self.cor = cor
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+        self.mov = mov
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+        else:
+            self.tipo = self.tipo.upper()
+
+    def getMove(self, tab):
+        for i in range(1,8): #Cima
+            if (self.pos_x - i) < 0 or tab[self.pos_x-i][self.pos_y].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y].tipo != 'n':
+                    break
+        for i in range(1,8): #Esquerda
+            if (self.pos_y - i) < 0 or tab[self.pos_x][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x][self.pos_y-i].tipo != 'n':
+                    break
+        for i in range(1,8): #Baixo
+            if (self.pos_x + i) > 7 or tab[self.pos_x+i][self.pos_y].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y].tipo != 'n':
+                    break
+        for i in range(1,8): #Direita
+            if (self.pos_y + i) > 7 or tab[self.pos_x][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x][self.pos_y+i].tipo != 'n':
+                    break
+
+        for i in range(1,8): #Diagonal Superior Direita
+            if (self.pos_x - i) < 0 or (self.pos_y + i) > 7 or tab[self.pos_x-i][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y+i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Inferior Direita
+            if (self.pos_x + i) > 7 or (self.pos_y + i) > 7 or tab[self.pos_x+i][self.pos_y+i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y+i].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y+i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Inferior Esquerda
+            if (self.pos_x + i) > 7 or (self.pos_y - i) < 0 or tab[self.pos_x+i][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x+i][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x+i][self.pos_y-i].tipo != 'n':
+                    break
+        for i in range(1,8): #Diagonal Superior Esquerda
+            if (self.pos_x - i) < 0 or (self.pos_y - i) < 0 or tab[self.pos_x-i][self.pos_y-i].cor == self.cor:
+                break
+            else:
+                tab[self.pos_x-i][self.pos_y-i].mudaTipo(1)
+                if tab[self.pos_x-i][self.pos_y-i].tipo != 'n':
+                    break
+
+        return tab
+
+class Vazio():
+    def __init__(self, tipo, pos_x, pos_y):
+        self.img = ' '
+        self.tipo = tipo
+        self.cor = colors.purple
+        self.pos_x = pos_x
+        self.pos_y = pos_y
+
+    def mudaTipo(self, atk):
+        if atk:
+            self.tipo = self.tipo.lower()
+            self.img = '•'
+        else:
+            self.tipo = self.tipo.upper()
+            if self.tipo == 'R':
+                self.tipo = 'N'
+            self.img = ' '
 
 def Escolha(n):
     e = 0
