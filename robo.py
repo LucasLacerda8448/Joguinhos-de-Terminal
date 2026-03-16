@@ -11,7 +11,13 @@ class colors:
     blue = '\033[94m'
     grey = '\033[90m'
     fim = '\033[0m'
-    
+
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def Escolha(n):
     e = 0
     l = []
@@ -365,7 +371,8 @@ def mov(map, comm, v, nav, x, y, coin, Try):
 
     if map[x][y] == 0 or map[x][y] == 1 or map[x][y] == 2:
         coin += 1
-        
+    
+    limpa()
     for i in range(13):
         if i == 5:
             print(colors.yellow + " Núcleos:  " + colors.fim, end="")
@@ -458,6 +465,7 @@ def vira(map, comm, v, nav, x, y, coin, Try):
         elif nav == '◄':
             nav = '▲'
 
+    limpa()
     imprime(map, x, y, nav, coin, Try)
     
     if len(comm) > 5:
@@ -495,7 +503,8 @@ def tentativa(Try, jg, x, y, x2, y2, nav, coin, result):
     nav_temp = nav
     coin_t = coin
     coin_reg = []
-
+    
+    limpa()
     imprime(jg, x, y, nav, coin, Try)
     print("Insira a sequência de instruções para a nave seguir:")
     print("       [1] ←        [2] ↑        [3] →")
@@ -521,6 +530,7 @@ def tentativa(Try, jg, x, y, x2, y2, nav, coin, result):
             break
     
     time.sleep(0.5)
+    limpa()
     print(colors.green + "ENTRADA ACEITA! " + colors.fim + "Pressione 'Enter' para iniciar a simulação.")
     imprime(jg, x, y, nav, coin, Try)
     
@@ -581,6 +591,7 @@ def tentativa(Try, jg, x, y, x2, y2, nav, coin, result):
     return jg, x, y, nav, coin, result
 
 def main():
+    limpa()
     print(colors.b_yellow + "₊⁺.⋆₊⁺⋆. NAVEGADOR .⋆⁺₊⋆.⁺₊" + colors.fim)
     print()
     while True:
@@ -592,6 +603,7 @@ def main():
             print("ENCERRANDO JOGO...")
             break
         elif e == '2':
+            limpa()
             print("========== INSTRUÇÕES ==========")
             print()
             print("- ")
@@ -620,6 +632,7 @@ def main():
                 print("ENCERRANDO JOGO...")
                 break
             elif e2 == '1':
+                limpa()
                 print("INICIANDO NOVO JOGO...")
                 print()
 
