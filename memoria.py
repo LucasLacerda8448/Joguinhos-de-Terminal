@@ -1,4 +1,5 @@
 import random
+import os
 
 class colors:
     red = '\033[91m'
@@ -7,6 +8,12 @@ class colors:
     blue = '\033[94m'
     purple = '\033[95m'
     fim = '\033[0m'
+
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def CriaJogo():
     l = ['☻', '♥', '♦', '♣', '♠', '♂', '♀', '♫']
@@ -109,6 +116,7 @@ def Posicao(mj, tam):
     return x, y
 
 def main():
+    limpa()
     print("- JOGO DA MEMÓRIA -")
     print()
     while True:
@@ -125,6 +133,7 @@ def main():
             break
 
         elif e == '1':
+            limpa()
             mj = []
             print("  0 1 2 3")
             for i in range(4):
@@ -146,6 +155,7 @@ def main():
                 print("Insira a posição da primeira carta:")
                 x, y = Posicao(mj, 4)
                 print()
+                limpa()
                 print("  0 1 2 3")
                 for i in range(4):
                     print("%d " %i, end="")
@@ -164,6 +174,7 @@ def main():
                     else:
                         break
                 print()
+                limpa()
                 print("  0 1 2 3")
                 for i in range(4):
                     print("%d " %i, end="")
@@ -183,6 +194,9 @@ def main():
                     v2 = 1
                 r = Verifica(mj, 4)
                 if r == 0:
+                    print("Aperte Enter para continuar...")
+                    cont = input()
+                    limpa()
                     if v2 == 1:
                         print("Jogador %d joga mais uma vez." %v)
                         if v == 1:
@@ -195,8 +209,6 @@ def main():
                         else:
                             v = 1
                         print("Vez do jogador %d." %v)
-                    print("Aperte Enter para continuar...")
-                    cont = input()
                     print("  0 1 2 3")
                     for i in range(4):
                         print("%d " %i, end="")
@@ -226,6 +238,7 @@ def main():
                     break
 
         elif e == '2':
+            limpa()
             mj = []
             print("  0 1 2 3 4 5")
             for i in range(6):
@@ -246,6 +259,7 @@ def main():
                 v2 = 0
                 print("Insira a posição da primeira carta:")
                 x, y = Posicao(mj, 6)
+                limpa()
                 print()
                 print("  0 1 2 3 4 5")
                 for i in range(6):
@@ -264,6 +278,7 @@ def main():
                         print("A posição inserida já foi usada, insira outro valor.")
                     else:
                         break
+                limpa()
                 print()
                 print("  0 1 2 3 4 5")
                 for i in range(6):
@@ -284,6 +299,9 @@ def main():
                     v2 = 1
                 r = Verifica(mj, 6)
                 if r == 0:
+                    print("Aperte Enter para continuar...")
+                    cont = input()
+                    limpa()
                     if v2 == 1:
                         print("Jogador %d joga mais uma vez." %v)
                         if v == 1:
@@ -296,8 +314,6 @@ def main():
                         else:
                             v = 1
                         print("Vez do jogador %d." %v)
-                    print("Aperte Enter para continuar...")
-                    cont = input()
                     print("  0 1 2 3 4 5")
                     for i in range(6):
                         print("%d " %i, end="")
@@ -335,6 +351,7 @@ def main():
             print("ENCERRANDO JOGO...")
             break
         elif e2 == '1':
+            limpa()
             print("INICIANDO NOVO JOGO...")
             print()
 
