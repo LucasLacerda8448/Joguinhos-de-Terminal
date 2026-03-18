@@ -69,7 +69,6 @@ class Peao():
 
     def setMove(self, tab):
         for i in self.lista:
-            print("%d %d" %(i[0], i[1]))
             tab[i[0]][i[1]].mudaTipo(1)
 
     def Promo(self, tab):
