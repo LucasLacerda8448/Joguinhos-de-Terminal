@@ -11,7 +11,7 @@ class colors:
     b_purple = '\033[95m'
     purple = '\033[35m'
     grey = '\033[90m'
-    black = '\033[30m'
+    invi = '\033[08m'
     fim = '\033[0m'
 
 def ImprimeJogo(l, li, si):
@@ -131,7 +131,7 @@ def ImprimeJogo(l, li, si):
                             elif si[le] == 'O' or l[le][p] == 'O':
                                 print(colors.d_green, end="")
                             else:
-                                print(colors.black, end="")
+                                print(colors.invi, end="")
 
                         if si[le] == 'X':
                             print(" %s " %lX[p] + colors.fim, end="")
