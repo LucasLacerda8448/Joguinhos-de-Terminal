@@ -42,35 +42,36 @@ class Peao():
 
     def getMove(self, tab):
         self.lista = []
-        if self.tipo == 'B':
+        if self.cor == colors.red:
             #Ataque
             if self.pos_y != 0 and tab[self.pos_x+1][self.pos_y-1].cor == colors.green:
-                tab[self.pos_x+1][self.pos_y-1].mudaTipo(1)
                 self.lista.append([self.pos_x+1, self.pos_y-1])
             if self.pos_y != 7 and tab[self.pos_x+1][self.pos_y+1].cor == colors.green:
-                tab[self.pos_x+1][self.pos_y+1].mudaTipo(1)
                 self.lista.append([self.pos_x+1, self.pos_y+1])
             #Movimento
             if tab[self.pos_x+1][self.pos_y].tipo == 'N':
-                tab[self.pos_x+1][self.pos_y].mudaTipo(1)
+                self.lista.append([self.pos_x+1, self.pos_y])
                 if self.mov == 0 and tab[self.pos_x+2][self.pos_y].tipo == 'N':
-                    tab[self.pos_x+2][self.pos_y].mudaTipo(1)
+                    self.lista.append([self.pos_x+2, self.pos_y])
         else:
             #Ataque
             if self.pos_y != 0 and tab[self.pos_x-1][self.pos_y-1].cor == colors.red:
-                tab[self.pos_x-1][self.pos_y-1].mudaTipo(1)
                 self.lista.append([self.pos_x-1, self.pos_y-1])
             if self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].cor == colors.red:
-                tab[self.pos_x-1][self.pos_y+1].mudaTipo(1)
                 self.lista.append([self.pos_x-1, self.pos_y+1])
             #Movimento
             if tab[self.pos_x-1][self.pos_y].tipo == 'N':
-                tab[self.pos_x-1][self.pos_y].mudaTipo(1)
+                self.lista.append([self.pos_x-1, self.pos_y])
                 if self.mov == 0 and tab[self.pos_x-2][self.pos_y].tipo == 'N':
-                    tab[self.pos_x-2][self.pos_y].mudaTipo(1)
+                    self.lista.append([self.pos_x-2, self.pos_y])
         
         return tab
-    
+
+    def setMove(self, tab):
+        for i in self.lista:
+            print("%d %d" %(i[0], i[1]))
+            tab[i[0]][i[1]].mudaTipo(1)
+
     def Promo(self, tab):
         print("Promoção do Peão - Escolha qual usar:")
         print("[1] " + self.cor + "♞" + colors.fim + "    [2] " + self.cor + "♝" + colors.fim + "    [3] " + self.cor + "♜" + colors.fim + "    [4] " + self.cor + "♛" + colors.fim)
@@ -124,38 +125,37 @@ class Rei():
             if tab[self.pos_x][self.pos_y+1].tipo == tab[self.pos_x][self.pos_y+2].tipo == 'N' and not tab[self.pos_x][self.pos_y+3].mov:
                 tab[self.pos_x][self.pos_y+2].tipo = 'r'
                 tab[self.pos_x][self.pos_y+2].img = '○'
+                self.lista.append([self.pos_x, self.pos_y+2])
             if tab[self.pos_x][self.pos_y-1].tipo == tab[self.pos_x][self.pos_y-2].tipo == tab[self.pos_x][self.pos_y-3].tipo == 'N' and not tab[self.pos_x][self.pos_y-4].mov:
                 tab[self.pos_x][self.pos_y-2].tipo = 'R'
                 tab[self.pos_x][self.pos_y-2].img = '○'
+                self.lista.append([self.pos_x, self.pos_y-2])
 
         if self.pos_y != 0 and tab[self.pos_x][self.pos_y-1].cor != self.cor: #Esquerda
-            tab[self.pos_x][self.pos_y-1].mudaTipo(1)
             self.lista.append([self.pos_x, self.pos_y-1])
         if self.pos_x != 0 and tab[self.pos_x-1][self.pos_y].cor != self.cor: #Cima
-            tab[self.pos_x-1][self.pos_y].mudaTipo(1)
             self.lista.append([self.pos_x-1, self.pos_y])
         if self.pos_y != 7 and tab[self.pos_x][self.pos_y+1].cor != self.cor: #Direita
-            tab[self.pos_x][self.pos_y+1].mudaTipo(1)
             self.lista.append([self.pos_x, self.pos_y+1])
         if self.pos_x != 7 and tab[self.pos_x+1][self.pos_y].cor != self.cor: #Baixo
-            tab[self.pos_x+1][self.pos_y].mudaTipo(1)
             self.lista.append([self.pos_x+1, self.pos_y])
 
         if self.pos_y != 0 and self.pos_x != 0 and tab[self.pos_x-1][self.pos_y-1].cor != self.cor: #Diagonal Superior Esquerda
-            tab[self.pos_x-1][self.pos_y-1].mudaTipo(1)
             self.lista.append([self.pos_x-1, self.pos_y-1])
         if self.pos_x != 0 and self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].cor != self.cor: #Diagonal Superior Direita
-            tab[self.pos_x-1][self.pos_y+1].mudaTipo(1)
             self.lista.append([self.pos_x-1, self.pos_y+1])
         if self.pos_y != 7 and self.pos_x != 7 and tab[self.pos_x+1][self.pos_y+1].cor != self.cor: #Diagonal Inferior Direita
-            tab[self.pos_x+1][self.pos_y+1].mudaTipo(1)
             self.lista.append([self.pos_x+1, self.pos_y+1])
         if self.pos_x != 7 and self.pos_y != 0 and tab[self.pos_x+1][self.pos_y-1].cor != self.cor: #Diagonal Inferior Esquerda
-            tab[self.pos_x+1][self.pos_y-1].mudaTipo(1)
             self.lista.append([self.pos_x+1, self.pos_y-1])
         
         return tab
     
+    def setMove(self, tab):
+        for i in self.lista:
+            if tab[i[0]][i[1]].img != '○':
+                tab[i[0]][i[1]].mudaTipo(1)
+
     def Movimento(self, tab, x, y):
         self.mov = 1
         if tab[x][y].img == '○':
@@ -203,48 +203,44 @@ class Cavalo():
         #      │
         #      C
         if self.pos_x > 1 and self.pos_y != 0 and tab[self.pos_x-2][self.pos_y-1].cor != self.cor:
-            tab[self.pos_x-2][self.pos_y-1].mudaTipo(1)
             self.lista.append([self.pos_x-2, self.pos_y-1])
         #      ┌─x
         #      │ 
         #      C
         if self.pos_x > 1 and self.pos_y != 7 and tab[self.pos_x-2][self.pos_y+1].cor != self.cor:
-            tab[self.pos_x-2][self.pos_y+1].mudaTipo(1)
             self.lista.append([self.pos_x-2, self.pos_y+1])
         #      ┌───x
         #      C
         if self.pos_x != 0 and self.pos_y < 6 and tab[self.pos_x-1][self.pos_y+2].cor != self.cor:
-            tab[self.pos_x-1][self.pos_y+2].mudaTipo(1)
             self.lista.append([self.pos_x-1, self.pos_y+2])
         #      C
         #      └───x
         if self.pos_x != 7 and self.pos_y < 6 and tab[self.pos_x+1][self.pos_y+2].cor != self.cor:
-            tab[self.pos_x+1][self.pos_y+2].mudaTipo(1)
             self.lista.append([self.pos_x+1, self.pos_y+2])
         #      C
         #      │  
         #      └─x
         if self.pos_x < 6 and self.pos_y != 7 and tab[self.pos_x+2][self.pos_y+1].cor != self.cor:
-            tab[self.pos_x+2][self.pos_y+1].mudaTipo(1)
             self.lista.append([self.pos_x+2, self.pos_y+1])
         #      C
         #      │  
         #    x─┘ 
         if self.pos_x < 6 and self.pos_y != 0 and tab[self.pos_x+2][self.pos_y-1].cor != self.cor:
-            tab[self.pos_x+2][self.pos_y-1].mudaTipo(1)
             self.lista.append([self.pos_x+2, self.pos_y-1])
         #      C
         #  x───┘
         if self.pos_x != 7 and self.pos_y > 1 and tab[self.pos_x+1][self.pos_y-2].cor != self.cor:
-            tab[self.pos_x+1][self.pos_y-2].mudaTipo(1)
             self.lista.append([self.pos_x+1, self.pos_y-2])
         #  x───┐   
         #      C
         if self.pos_x != 0 and self.pos_y > 1 and tab[self.pos_x-1][self.pos_y-2].cor != self.cor:
-            tab[self.pos_x-1][self.pos_y-2].mudaTipo(1)
             self.lista.append([self.pos_x-1, self.pos_y-2])
         
         return tab
+
+    def setMove(self, tab):
+        for i in self.lista:
+            tab[i[0]][i[1]].mudaTipo(1)
 
     def Movimento(self, tab, x, y):
         tab[x][y] = tab[self.pos_x][self.pos_y]
@@ -281,37 +277,37 @@ class Bispo():
             if (self.pos_x - i) < 0 or (self.pos_y + i) > 7 or tab[self.pos_x-i][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y+i])
-                if tab[self.pos_x-i][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y+i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Inferior Direita
             if (self.pos_x + i) > 7 or (self.pos_y + i) > 7 or tab[self.pos_x+i][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y+i])
-                if tab[self.pos_x+i][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y+i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Inferior Esquerda
             if (self.pos_x + i) > 7 or (self.pos_y - i) < 0 or tab[self.pos_x+i][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y-i])
-                if tab[self.pos_x+i][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y-i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Superior Esquerda
             if (self.pos_x - i) < 0 or (self.pos_y - i) < 0 or tab[self.pos_x-i][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y-i])
-                if tab[self.pos_x-i][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y-i].tipo != 'N':
                     break
 
         return tab
     
+    def setMove(self, tab):
+        for i in self.lista:
+            tab[i[0]][i[1]].mudaTipo(1)
+
     def Movimento(self, tab, x, y):
         tab[x][y] = tab[self.pos_x][self.pos_y]
         tab[self.pos_x][self.pos_y] = Vazio(self.pos_x, self.pos_y)
@@ -346,37 +342,37 @@ class Torre():
             if (self.pos_x - i) < 0 or tab[self.pos_x-i][self.pos_y].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y])
-                if tab[self.pos_x-i][self.pos_y].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y].tipo != 'N':
                     break
         for i in range(1,8): #Esquerda
             if (self.pos_y - i) < 0 or tab[self.pos_x][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x, self.pos_y-i])
-                if tab[self.pos_x][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x][self.pos_y-i].tipo != 'N':
                     break
         for i in range(1,8): #Baixo
             if (self.pos_x + i) > 7 or tab[self.pos_x+i][self.pos_y].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y])
-                if tab[self.pos_x+i][self.pos_y].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y].tipo != 'N':
                     break
         for i in range(1,8): #Direita
             if (self.pos_y + i) > 7 or tab[self.pos_x][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x, self.pos_y+i])
-                if tab[self.pos_x][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x][self.pos_y+i].tipo != 'N':
                     break
 
         return tab
     
+    def setMove(self, tab):
+        for i in self.lista:
+            tab[i[0]][i[1]].mudaTipo(1)
+
     def Movimento(self, tab, x, y):
         self.mov = 1
         tab[x][y] = tab[self.pos_x][self.pos_y]
@@ -412,70 +408,66 @@ class Rainha():
             if (self.pos_x - i) < 0 or tab[self.pos_x-i][self.pos_y].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y])
-                if tab[self.pos_x-i][self.pos_y].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y].tipo != 'N':
                     break
         for i in range(1,8): #Esquerda
             if (self.pos_y - i) < 0 or tab[self.pos_x][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x, self.pos_y-i])
-                if tab[self.pos_x][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x][self.pos_y-i].tipo != 'N':
                     break
         for i in range(1,8): #Baixo
             if (self.pos_x + i) > 7 or tab[self.pos_x+i][self.pos_y].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y])
-                if tab[self.pos_x+i][self.pos_y].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y].tipo != 'N':
                     break
         for i in range(1,8): #Direita
             if (self.pos_y + i) > 7 or tab[self.pos_x][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x, self.pos_y+i])
-                if tab[self.pos_x][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x][self.pos_y+i].tipo != 'N':
                     break
 
         for i in range(1,8): #Diagonal Superior Direita
             if (self.pos_x - i) < 0 or (self.pos_y + i) > 7 or tab[self.pos_x-i][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y+i])
-                if tab[self.pos_x-i][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y+i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Inferior Direita
             if (self.pos_x + i) > 7 or (self.pos_y + i) > 7 or tab[self.pos_x+i][self.pos_y+i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y+i].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y+i])
-                if tab[self.pos_x+i][self.pos_y+i].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y+i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Inferior Esquerda
             if (self.pos_x + i) > 7 or (self.pos_y - i) < 0 or tab[self.pos_x+i][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x+i][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x+i, self.pos_y-i])
-                if tab[self.pos_x+i][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x+i][self.pos_y-i].tipo != 'N':
                     break
         for i in range(1,8): #Diagonal Superior Esquerda
             if (self.pos_x - i) < 0 or (self.pos_y - i) < 0 or tab[self.pos_x-i][self.pos_y-i].cor == self.cor:
                 break
             else:
-                tab[self.pos_x-i][self.pos_y-i].mudaTipo(1)
                 self.lista.append([self.pos_x-i, self.pos_y-i])
-                if tab[self.pos_x-i][self.pos_y-i].tipo != 'n':
+                if tab[self.pos_x-i][self.pos_y-i].tipo != 'N':
                     break
 
         return tab
     
+    def setMove(self, tab):
+        for i in self.lista:
+            tab[i[0]][i[1]].mudaTipo(1)
+
     def Movimento(self, tab, x, y):
         tab[x][y] = tab[self.pos_x][self.pos_y]
         tab[self.pos_x][self.pos_y] = Vazio(self.pos_x, self.pos_y)
@@ -562,7 +554,7 @@ def verificaXeque(tab, x, y):
     tab[x][y] = Peao(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
     tab[x][y].getMove(tab)
     for i in tab[x][y].lista:
-        if tab[i[0]][i[1]].img != '♜' and tab[i[0]][i[1]].img != '♞':
+        if tab[i[0]][i[1]].img != '♜' and tab[i[0]][i[1]].img != '♞' and tab[i[0]][i[1]].cor != colors.purple:
             tab[x][y].mudaTipo(1)
             tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
             return 0
@@ -709,19 +701,12 @@ def main():
             while True:
                 print("Escolha as coordenadas que deseja jogar: (letra primeiro, depois o número)")
                 while True:
-                    conf = 0
                     y, x = Posicao(tab, t[0])
                     tab[x][y].getMove(tab)
-                    for i in tab:
-                        for j in i:
-                            if j.tipo.islower() and j.img != '♚':
-                                conf = 1
-                                break
-                        if conf:
-                            break
-                    if conf:
+                    if len(tab[x][y].lista) > 0:
                         break
                     print("A peça escolhida não tem como se mover.")
+                tab[x][y].setMove(tab)
                 ImprimeJogo(tab, pts1, pts2)
                 print("Informe a próxima jogada ou digite 'V' para voltar e escolher outra peça")
                 y2, x2 = Posicao2(tab, t[0])
