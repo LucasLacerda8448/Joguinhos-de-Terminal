@@ -49,9 +49,9 @@ class Peao():
             if self.pos_y != 7 and tab[self.pos_x+1][self.pos_y+1].cor == colors.green:
                 self.lista.append([self.pos_x+1, self.pos_y+1])
             #Movimento
-            if tab[self.pos_x+1][self.pos_y].tipo == 'N':
+            if tab[self.pos_x+1][self.pos_y].cor == colors.purple:
                 self.lista.append([self.pos_x+1, self.pos_y])
-                if self.mov == 0 and tab[self.pos_x+2][self.pos_y].tipo == 'N':
+                if self.mov == 0 and tab[self.pos_x+2][self.pos_y].cor == colors.purple:
                     self.lista.append([self.pos_x+2, self.pos_y])
         else:
             #Ataque
@@ -60,9 +60,9 @@ class Peao():
             if self.pos_y != 7 and tab[self.pos_x-1][self.pos_y+1].cor == colors.red:
                 self.lista.append([self.pos_x-1, self.pos_y+1])
             #Movimento
-            if tab[self.pos_x-1][self.pos_y].tipo == 'N':
+            if tab[self.pos_x-1][self.pos_y].cor == colors.purple:
                 self.lista.append([self.pos_x-1, self.pos_y])
-                if self.mov == 0 and tab[self.pos_x-2][self.pos_y].tipo == 'N':
+                if self.mov == 0 and tab[self.pos_x-2][self.pos_y].cor == colors.purple:
                     self.lista.append([self.pos_x-2, self.pos_y])
         
         return tab
@@ -550,39 +550,39 @@ def Posicao2(tab, t):
     return col, lin
 
 def verificaXeque(tab, x, y):
-    verifica = Peao(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica = Peao(tab[x][y].tipo, tab[x][y].cor, x, y, 1)
     verifica.getMove(tab)
     for i in verifica.lista:
         if tab[i[0]][i[1]].img != '♜' and tab[i[0]][i[1]].img != '♞' and tab[i[0]][i[1]].cor != colors.purple:
             tab[x][y].mudaTipo(1)
-            return 0
+            return 1
         
-    verifica = Cavalo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica = Cavalo(tab[x][y].tipo, tab[x][y].cor, x, y, 1)
     verifica.getMove(tab)
     for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♞':
             tab[x][y].mudaTipo(1)
-            return 0
+            return 1
         
-    verifica = Torre(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica = Torre(tab[x][y].tipo, tab[x][y].cor, x, y, 1)
     verifica.getMove(tab)
     for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♜' or tab[i[0]][i[1]].img == '♛' or tab[i[0]][i[1]].img == '♚':
             if tab[i[0]][i[1]].img == '♚' and (abs(i[0]-x) > 1 or abs(i[1]-y) > 1):
-                return 1
+                return 0
             tab[x][y].mudaTipo(1)
-            return 0
+            return 1
         
-    verifica = Bispo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica = Bispo(tab[x][y].tipo, tab[x][y].cor, x, y, 1)
     verifica.getMove(tab)
     for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♝' or tab[i[0]][i[1]].img == '♛' or tab[i[0]][i[1]].img == '♚':
             if tab[i[0]][i[1]].img == '♚' and abs(i[0]-x) != abs(i[1]-y) != 1:
-                return 1
+                return 0
             tab[x][y].mudaTipo(1)
-            return 0
+            return 1
 
-    return 1
+    return 0
 
 def ImprimeJogo(tab, p1, p2):
     pt1 = 0
@@ -654,7 +654,9 @@ def main():
             pts1 = [0]
             pts2 = [0]
             tab = []
-            t = [colors.red, 'B', 'KB']
+            t = [[colors.red, 'B', 'KB', -1, -1],
+                 [colors.green, 'W', 'KW', -1, -1]]
+            tc = 0
             print(colors.yellow + "            PLACAR")
             if pts1[0] > 9:
                 print(colors.green + "          %d" %pts1[0], end="")
@@ -669,25 +671,21 @@ def main():
                 for j in range(8):
                     if i == 0 or i == 7:
                         if peças[j] == '♜':
-                            tab[i].append(Torre(t[1], t[0], i, j, 0))
+                            tab[i].append(Torre(t[tc][1], t[tc][0], i, j, 0))
                         elif peças[j] == '♞':
-                            tab[i].append(Cavalo(t[1], t[0], i, j, 1))
+                            tab[i].append(Cavalo(t[tc][1], t[tc][0], i, j, 1))
                         elif peças[j] == '♝':
-                            tab[i].append(Bispo(t[1], t[0], i, j, 1))
+                            tab[i].append(Bispo(t[tc][1], t[tc][0], i, j, 1))
                         elif peças[j] == '♛':
-                            tab[i].append(Rainha(t[1], t[0], i, j, 1))
+                            tab[i].append(Rainha(t[tc][1], t[tc][0], i, j, 1))
                         else:
-                            tab[i].append(Rei(t[2], t[0], i, j, 0))
-                            if t[0] == colors.red:
-                                bx = i
-                                by = j
-                            else:
-                                wx = i
-                                wy = j
+                            tab[i].append(Rei(t[tc][2], t[tc][0], i, j, 0))
+                            t[tc][3] = i
+                            t[tc][4] = j
                     elif i == 1 or i == 6:
-                        tab[i].append(Peao(t[1], t[0], i, j, 0))
+                        tab[i].append(Peao(t[tc][1], t[tc][0], i, j, 0))
                     else:
-                        t = [colors.green, 'W', 'KW']
+                        tc = 1
                         tab[i].append(Vazio(i, j))
 
                     if (j % 2 == 0 and i % 2 == 0) or (j % 2 != 0 and i % 2 != 0):
@@ -699,15 +697,35 @@ def main():
             while True:
                 print("Escolha as coordenadas que deseja jogar: (letra primeiro, depois o número)")
                 while True:
-                    y, x = Posicao(tab, t[0])
+                    aux = []
+                    y, x = Posicao(tab, t[tc][0])
                     tab[x][y].getMove(tab)
-                    if len(tab[x][y].lista) > 0:
+                    temp = tab[x][y]
+                    tab[x][y] = Vazio(x, y)
+                    if temp.img != '♚':
+                        for i in temp.lista:
+                            cor = tab[i[0]][i[1]].cor
+                            tab[i[0]][i[1]].cor = t[tc][0]
+                            if not verificaXeque(tab, t[tc][3], t[tc][4]):
+                                aux.append(i)
+                            tab[i[0]][i[1]].cor = cor
+                    else:
+                        for i in temp.lista:
+                            cor = tab[i[0]][i[1]].cor
+                            tab[i[0]][i[1]].cor = t[tc][0]
+                            if not verificaXeque(tab, i[0], i[1]):
+                                aux.append(i)
+                            tab[i[0]][i[1]].mudaTipo(0)
+                            tab[i[0]][i[1]].cor = cor
+                    tab[x][y] = temp
+                    if len(aux) > 0:
+                        tab[x][y].lista = aux
                         break
                     print("A peça escolhida não tem como se mover.")
                 tab[x][y].setMove(tab)
                 ImprimeJogo(tab, pts1, pts2)
                 print("Informe a próxima jogada ou digite 'V' para voltar e escolher outra peça")
-                y2, x2 = Posicao2(tab, t[0])
+                y2, x2 = Posicao2(tab, t[tc][0])
                 if x2 == y2 == -1:
                     for i in range(8):
                         for j in range(8):
@@ -725,28 +743,14 @@ def main():
                     pts1[0] += tab[x2][y2].Pts
 
                 if tab[x][y].img == '♚':
-                    if tab[x][y].cor == colors.green:
-                        bx = x2
-                        by = y2
-                    else:
-                        wx = x2
-                        wy = y2
+                    t[tc][3] = x2
+                    t[tc][4] = y2
                 tab[x][y].Movimento(tab, x2, y2)
                 for i in range(8):
                     for j in range(8):
                         tab[i][j].mudaTipo(0)
-                        if tab[i][j].tipo == 'KW':
-                            x = i
-                            y = j
-                        elif tab[i][j].tipo == 'KB':
-                            x2 = i
-                            y2 = j
-                verificaXeque(tab, x, y)
-                verificaXeque(tab, x2, y2)
-                for i in range(8):
-                    for j in range(8):
-                        if tab[i][j].img != '♚':
-                            tab[i][j].mudaTipo(0)
+                verificaXeque(tab, t[0][3], t[0][4])
+                verificaXeque(tab, t[0][3], t[1][4])
                 ImprimeJogo(tab, pts1, pts2)
 
                 if '♚' in pts2:
@@ -756,11 +760,11 @@ def main():
                     print(colors.green + "VITÓRIA DAS VERDES!!" + colors.fim)
                     break
                 else:
-                    if t[0] == colors.green:
-                        t = [colors.red]
+                    if tc == 1:
+                        tc = 0
                         print(colors.red + "VERMELHAS JOGAM" + colors.fim)
                     else:
-                        t = [colors.green]
+                        tc = 1
                         print(colors.green + "VERDES JOGAM" + colors.fim)
         
             print("[1] Jogar Novamente   [2] Sair")
