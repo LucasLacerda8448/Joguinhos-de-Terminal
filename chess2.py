@@ -678,6 +678,12 @@ def main():
                             tab[i].append(Rainha(t[1], t[0], i, j, 1))
                         else:
                             tab[i].append(Rei(t[2], t[0], i, j, 0))
+                            if t[0] == colors.red:
+                                bx = i
+                                by = j
+                            else:
+                                wx = i
+                                wy = j
                     elif i == 1 or i == 6:
                         tab[i].append(Peao(t[1], t[0], i, j, 0))
                     else:
@@ -718,6 +724,13 @@ def main():
                     pts1.append(tab[x2][y2].img)
                     pts1[0] += tab[x2][y2].Pts
 
+                if tab[x][y].img == '♚':
+                    if tab[x][y].cor == colors.green:
+                        bx = x2
+                        by = y2
+                    else:
+                        wx = x2
+                        wy = y2
                 tab[x][y].Movimento(tab, x2, y2)
                 for i in range(8):
                     for j in range(8):
