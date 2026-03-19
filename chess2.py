@@ -550,45 +550,38 @@ def Posicao2(tab, t):
     return col, lin
 
 def verificaXeque(tab, x, y):
-    tab[x][y] = Peao(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
-    tab[x][y].getMove(tab)
-    for i in tab[x][y].lista:
+    verifica = Peao(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica.getMove(tab)
+    for i in verifica.lista:
         if tab[i[0]][i[1]].img != '♜' and tab[i[0]][i[1]].img != '♞' and tab[i[0]][i[1]].cor != colors.purple:
             tab[x][y].mudaTipo(1)
-            tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
             return 0
         
-    tab[x][y] = Cavalo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
-    tab[x][y].getMove(tab)
-    for i in tab[x][y].lista:
+    verifica = Cavalo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica.getMove(tab)
+    for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♞':
             tab[x][y].mudaTipo(1)
-            tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
             return 0
         
-    tab[x][y] = Torre(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
-    tab[x][y].getMove(tab)
-    for i in tab[x][y].lista:
+    verifica = Torre(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica.getMove(tab)
+    for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♜' or tab[i[0]][i[1]].img == '♛' or tab[i[0]][i[1]].img == '♚':
             if tab[i[0]][i[1]].img == '♚' and (abs(i[0]-x) > 1 or abs(i[1]-y) > 1):
-                tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
                 return 1
             tab[x][y].mudaTipo(1)
-            tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
             return 0
         
-    tab[x][y] = Bispo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
-    tab[x][y].getMove(tab)
-    for i in tab[x][y].lista:
+    verifica = Bispo(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
+    verifica.getMove(tab)
+    for i in verifica.lista:
         if tab[i[0]][i[1]].img == '♝' or tab[i[0]][i[1]].img == '♛' or tab[i[0]][i[1]].img == '♚':
             if tab[i[0]][i[1]].img == '♚' and abs(i[0]-x) != abs(i[1]-y) != 1:
-                tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
                 return 1
             tab[x][y].mudaTipo(1)
-            tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
             return 0
 
-    tab[x][y] = Rei(tab[x][y].tipo, tab[x][y].cor, x, y, tab[x][y].mov)
     return 1
 
 def ImprimeJogo(tab, p1, p2):
