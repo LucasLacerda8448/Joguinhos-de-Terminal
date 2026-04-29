@@ -16,6 +16,12 @@ class colors:
     black = '\033[30m'
     fim = '\033[0m'
 
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def Escolha(n):
     e = 0
     l = []
@@ -24,7 +30,6 @@ def Escolha(n):
     while e not in l:
         print("-> ", end="")
         e = input()
-    print()
     return e
 
 def Posicao(jg, f, v):
@@ -77,6 +82,7 @@ def Posicao(jg, f, v):
 def Posicionar(pf):
     lista = [4, 3, 2, 1, 1]
     for r in range(11):
+        limpa()
         c = 0
         print("    A   B   C   D   E   F   G   H   I   J")
         print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
@@ -127,7 +133,6 @@ def Posicionar(pf):
                         print(" [5] %dx Porta-avião [■ ■ ■ ■ ■]" %lista[4])
                 else:
                     print()
-                
         print()
         print("Selecione qual unidade posicionar")
         while True:
@@ -148,6 +153,7 @@ def Posicionar(pf):
             x = lin
             y = col
             c = fe
+            limpa()
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
@@ -188,9 +194,6 @@ def Posicionar(pf):
                     for j in range(10):
                         if pf[i][j] == 'T':
                             pf[i][j] = '░░░'
-
-    for i in range(30):
-        print()
 
 def Posicao_Avançado(jg, f):
     while True:
@@ -273,6 +276,7 @@ def Posicionar2(pf):
             if lista[i] == 0:
                 cores[i][0] = cores[i][1] = colors.grey
         while True:
+            limpa()
             print("    A   B   C   D   E   F   G   H   I   J" + cores[0][0] + "   ─────────────── %dx Submarinos ──────────────" %lista[0])
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + cores[0][1] + "                  [11] ■"  + colors.fim)
             for i in range(10):
@@ -348,7 +352,7 @@ def Posicionar2(pf):
                                     break
                                 lista.append(es)
                                 break
-            print()
+            limpa()
             sum = -1
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
@@ -429,8 +433,8 @@ def Posicionar2(pf):
                     continue
                 lista.remove(es)
                 continue
-
             sum = -1
+            limpa()
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
@@ -476,12 +480,9 @@ def Posicionar2(pf):
                 lista.remove(es)
                 continue
 
-    for i in range(30):
-        print()
-
-def Posicao2(jg):
+def Posicao2(jg, turno):
     while True:
-        print("-> ", end="")
+        print(turno + "-> " + colors.fim, end="")
         p1 = input()
         if len(p1) == 2:
             if 65 <= ord(p1[0]) <= 74 and 48 <= ord(p1[1]) <= 57:
@@ -490,11 +491,11 @@ def Posicao2(jg):
                 if jg[lin][col] == '▒▒▒':
                     break
                 else:
-                    print("A coordenada inserida não pode ser usada.")
+                    print(colors.yellow + "A coordenada inserida não pode ser usada.")
             else:
-                print("Insira uma coordenada dentro do intervalo.") 
+                print(colors.yellow + "Insira uma coordenada dentro do intervalo.") 
         else:
-            print("Insira a coordenada corretamente.")
+            print(colors.yellow + "Insira a coordenada corretamente.")
     print()
 
     return col, lin
@@ -506,11 +507,15 @@ def Verifica(jg):
                 return 'C'
     return 'F'
 
-def Jogar(f_jog, f_ini, jg_ini, v):
-    print("    A   B   C   D   E   F   G   H   I   J")
+def Jogar(f_jog, f_ini, jg_ini, v, alm):
+    if v == 1:
+        turno = colors.green
+    else:
+        turno = colors.red
+    print(turno + "    A   B   C   D   E   F   G   H   I   J")
     print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
     for i in range(10):
-        print("%d " %i + colors.d_blue + "║", end="")
+        print(turno + "%d " %i + colors.d_blue + "║", end="")
         for j in range(10):
             if jg_ini[i][j] == 'X':
                 print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
@@ -520,7 +525,13 @@ def Jogar(f_jog, f_ini, jg_ini, v):
                 print(colors.b_blue + "%s" %jg_ini[i][j], end="")
     
             if j == 9:
-                print(colors.d_blue + "║")
+                print(colors.d_blue + "║    ", end="")
+                if 4 <= i <= 5:
+                    if i == 4:
+                        print(turno + "AGUARDANDO SUAS ORDENS" + colors.d_blue, end="")
+                    else:
+                        print(turno + "ALMIRANTE %s..." %alm + colors.d_blue, end="")
+                print()
             else:
                 print(colors.d_blue + "│", end="")
         if i == 9:
@@ -528,19 +539,19 @@ def Jogar(f_jog, f_ini, jg_ini, v):
         else:
             print("  ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢" + colors.fim)
     print()
-    print("Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
-    y, x = Posicao2(jg_ini)
+    print(turno + "Escolha as coordenadas que deseja atacar: (letra primeiro, depois o número)")
+    y, x = Posicao2(jg_ini, turno)
     
     if f_ini[x][y] == 'O':
         jg_ini[x][y] = 'X'
         f_ini[x][y] = 'X'
     else:
         jg_ini[x][y] = '.'
-
-    print("    A   B   C   D   E   F   G   H   I   J")
+    limpa()
+    print(turno + "    A   B   C   D   E   F   G   H   I   J")
     print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
     for i in range(10):
-        print("%d " %i + colors.d_blue + "║", end="")
+        print(turno + "%d " %i + colors.d_blue + "║", end="")
         for j in range(10):
             if jg_ini[i][j] == 'X':
                 print(colors.RED + colors.b_yellow + "░" + colors.b_yellow + "▒" + colors.b_yellow + "░" + colors.fim, end="")
@@ -564,16 +575,18 @@ def Jogar(f_jog, f_ini, jg_ini, v):
             v = 2
         else:
             v = 1
-        print(colors.yellow + "VEZ DO JOGADOR %d" %v)
-        print("Aperte Enter para continuar..." + colors.fim)
+        print(colors.yellow + "Aperte Enter para continuar..." + colors.fim)
         cont = input()
+        limpa()
     else:
-        print(colors.green + "FIM DE JOGO!!")
-        print("JOGADOR %d VENCEU!" %v + colors.fim)
+        print(turno + "FIM DA BATALHA!!")
+        print("PARABÉNS PELA VITÓRIA")
+        print("ALMIRANTE %s!!" %alm + colors.fim)
         print()
-        print("Deseja ver o mapa completo do jogador %d?" %v)
-        print("     [1] Sim      [2] Não")
+        print(colors.yellow + "Desejam ver o mapa completo do almirante %s?" %(alm.lower()))
+        print("     [1] Sim      [2] Não" + colors.fim)
         if Escolha(2) == '1':
+            print()
             print("    A   B   C   D   E   F   G   H   I   J")
             print(colors.d_blue + "  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗" + colors.fim)
             for i in range(10):
@@ -600,6 +613,7 @@ def Jogar(f_jog, f_ini, jg_ini, v):
     return f_ini, jg_ini, v
 
 def main():
+    limpa()
     print("------ BATALHA NAVAL ------")
     print()
     while True:
@@ -608,9 +622,11 @@ def main():
         print("        [3] Sair")
         e = Escolha(3)
         if e == '3':
+            print()
             print("ENCERRANDO JOGO...")
             break
         elif e == '2':
+            limpa()
             print("========== INSTRUÇÕES ==========")
             print()
             print("- Batalha Naval é um jogo onde ambos os jogadores deverão posicionar suas frotas navais em diferentes")
@@ -640,42 +656,72 @@ def main():
                     f2[i].append('░░░')
                     jg1[i].append('▒▒▒')
                     jg2[i].append('▒▒▒')
-            print("Escolha o tipo de frota que desejam utilizar: ")
-            print("[1] Frota Padrão       [2] Frota Avançada")
-            frota = Escolha(2)
 
-            print(colors.yellow + "JOGADOR 1 POSICIONE SUA FROTA")
-            print("Aperte Enter para continuar..." + colors.fim)
+            limpa()
+            print(colors.yellow + "Saudações almirantes!!")
+            print("Para que possamos dar continuidade aos preparativos da batalha,")
+            print("Por favor nos informe como desejam ser chamados.")
+            print()
+            while True:
+                print(colors.green + "Almirante 01: " + colors.fim, end="")
+                j1 = input().upper()
+                print(colors.yellow + "O nome '" + colors.green + j1 + colors.yellow + "' está correto almirante?")
+                print("     [1] Sim      [2] Não" + colors.fim)
+                if Escolha(2) == '1':
+                    break
+            print()
+            while True:
+                print(colors.red + "Almirante 02: " + colors.fim, end="")
+                j2 = input().upper()
+                print(colors.yellow + "O nome '" + colors.red + j2 + colors.yellow + "' está correto almirante?")
+                print("     [1] Sim      [2] Não" + colors.fim)
+                if Escolha(2) == '1':
+                    break
+            print()
+            print(colors.yellow + "Que tipo de frota desejam utilizar no confronto?")
+            print("[1] Frota Padrão       [2] Frota Avançada" + colors.fim)
+            frota = Escolha(2)
+            limpa()
+
+            print(colors.green + "ALMIRANTE %s POSICIONE SUA FROTA" %j1)
+            print(colors.yellow + "Aperte Enter para continuar..." + colors.fim)
             cont = input()
             if frota == '1':
                 Posicionar(f1)
             else:
                 Posicionar2(f1)
-            print(colors.yellow + "JOGADOR 2 POSICIONE SUA FROTA")
-            print("Aperte Enter para continuar..." + colors.fim)
+            limpa()
+            print(colors.red + "ALMIRANTE %s POSICIONE SUA FROTA" %j2)
+            print(colors.yellow + "Aperte Enter para continuar..." + colors.fim)
             cont = input()
             if frota == '1':
                 Posicionar(f2)
             else:
                 Posicionar2(f2)
+            limpa()
 
-            print(colors.yellow + "PREPARATIVOS ENCERRADOS")
-            print("JOGADOR 1 COMEÇA" + colors.fim)
-            print()
+            print(colors.yellow + "OS PREPARATIVOS FORAM FINALIZADOS!")
+            print("QUE A BATALHA NAVAL SE INICIE!!")
+            print(colors.green + "ALMIRANTE %s, O PRIMEIRO ATAQUE É SEU." %j1 + colors.fim)
+            print(colors.yellow + "Aperte Enter para continuar..." + colors.fim)
+            cont = input()
             v = 1
+            limpa()
             while True:
                 if v == 1:
-                    f2, jg2, v = Jogar(f1, f2, jg2, v)
+                    f2, jg2, v = Jogar(f1, f2, jg2, v, j1)
                 elif v == 2:
-                    f1, jg1, v = Jogar(f2, f1, jg1, v)
+                    f1, jg1, v = Jogar(f2, f1, jg1, v, j2)
                 else:
                     break
 
             print("[1] Jogar Novamente   [2] Sair")
             if Escolha(2) == '2':
+                print()
                 print("ENCERRANDO JOGO...")
                 break
             else:
+                limpa()
                 print("INICIANDO NOVO JOGO...")
                 print()
 
