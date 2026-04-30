@@ -21,6 +21,12 @@ def Escolha(n):
     print()
     return e
 
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 def IniciaJogo():
     j1 = [
         [0,7,0,4,0,5,6,0,0],
@@ -129,6 +135,7 @@ def Posicao(si):
     return col, p1
 
 def ImprimeJogo(sj, si):
+    limpa()
     print("    A   B   C   D   E   F   G   H   I")
     print("  ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗")
     for i in range(9):
@@ -233,6 +240,7 @@ def Verifica(sj, x, y, e):
         return 'E'
 
 def main():
+    limpa()
     print("╔═══╤═══╤════╤═══╤═══╗")
     print("║   │   SUDOKU   │   ║")
     print("╚═══╧═══╧════╧═══╧═══╝")
@@ -255,6 +263,7 @@ def main():
             while True:
                 print("Insira a posição que deseja jogar: (letra primeiro, depois o número)")
                 col, lin = Posicao(si)
+                limpa()
                 print("    A   B   C   D   E   F   G   H   I")
                 print("  ╔═══╤═══╤═══╦═══╤═══╤═══╦═══╤═══╤═══╗")
                 for i in range(9):
@@ -288,8 +297,13 @@ def main():
                 r = 1
                 print("[1] Escrever   [2] Voltar")
                 if Escolha(2) == '1':
-                    print("Informe o número que deseja colocar:")
-                    e2 = int(Escolha(9))
+                    print("Informe o número que deseja colocar (ou '0' para apagar):")
+                    print("-> ", end="")
+                    e2 = input()
+                    while 48 > ord(e2) or ord(e2) > 57:
+                        print("-> ", end="")
+                        e2 = input()
+                    e2 = int(e2)    
                     sj[lin][col] = e2
                     r = Verifica(sj, lin, col, e2)
                 ImprimeJogo(sj, si)
