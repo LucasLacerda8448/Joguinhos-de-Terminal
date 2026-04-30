@@ -1,3 +1,4 @@
+import os
 import random
 
 class colors:
@@ -23,6 +24,12 @@ def Escolha(n):
         e = input()
     print()
     return e
+
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def VerificaLado(pos_x, pos_y, m, tamy, tamx):
     qb = 0
@@ -267,24 +274,21 @@ def Verifica(col, lin, mj, mr, modo):
     return f
 
 def main():
-    print("--------- CAMPO MINADO ---------")
+    limpa()
+    print("───────── CAMPO MINADO ─────────")
     print()
     while True:
-        e = '/'
-        while '1' != e != '2' and e != '3':
-            print("[1] Modo Curto   [2] Modo Longo")
-            print("  (12 bombas)      (40 bombas)")
-            print("         [3] Sair")
-            print("-> ", end="")
-            e = input()
-            print()
-
+        print("[1] Modo Curto   [2] Modo Longo")
+        print("  (12 bombas)      (40 bombas)")
+        print("           [3] Sair")
+        e = Escolha(3)
         if e == '3':
             print("ENCERRANDO JOGO...")
             break
         elif e == '1':
             mj = []
-            print("   A B C D E F G H I J K")
+            print("    A   B   C   D   E   F   G   H   I   J   K")
+            print("  ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗")
             for i in range(9):
                 if i <= 9:
                     print("%d  " %i, end="")
