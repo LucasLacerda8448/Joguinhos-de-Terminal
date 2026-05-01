@@ -1,5 +1,6 @@
 import os
 import random
+os.system('color')
 
 class colors:
     white = '\033[37m'
