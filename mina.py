@@ -1,3 +1,9 @@
+#POSSIVEL SOLUÇÃO PARA A BUSCA INICIAL DE ESPAÇOS VAZIOS:
+#Caso o espaço escolhido seja vazio, chamar uma função X que primeiro chama uma função Y que: revela todos os 
+#8 quadrados laterais e adiciona em uma fila todos os quadrados que forem vazios, em seguida, de volta a função X,
+#ela entra em um while len(fila) != 0 onde ela pega a primeira coordenada armazenada na fila, exclui ela e chama a
+#função Y novamente mas agora usando a primeira coordenada da fila
+
 import os
 import random
 os.system('color')
