@@ -1,9 +1,3 @@
-#POSSIVEL SOLUÇÃO PARA A BUSCA INICIAL DE ESPAÇOS VAZIOS:
-#Caso o espaço escolhido seja vazio, chamar uma função X que primeiro chama uma função Y que: revela todos os 
-#8 quadrados laterais e adiciona em uma fila todos os quadrados que forem vazios, em seguida, de volta a função X,
-#ela entra em um while len(fila) != 0 onde ela pega a primeira coordenada armazenada na fila, exclui ela e chama a
-#função Y novamente mas agora usando a primeira coordenada da fila
-
 import os
 import random
 os.system('color')
@@ -232,37 +226,6 @@ def Bandeira(col, lin, mj):
     else:
         mj[col][lin] = 'B'
 
-def CavaPonto2(lin, col, mj, mr, dir, maxcol, maxlin):
-    mj[lin][col] = mr[lin][col]
-    if mr[lin][col] == '   ':
-        if dir == 1 and col != maxcol:
-            if lin != maxlin:
-                mj[lin + 1][col + 1] = mr[lin + 1][col + 1]
-            if lin != 0:
-                mj[lin - 1][col + 1] = mr[lin - 1][col + 1]
-            CavaPonto2(lin, col + 1, mj, mr, 1, maxcol, maxlin)
-
-        elif dir == -2 and lin != 0:
-            if col != maxcol:
-                mj[lin - 1][col + 1] = mr[lin - 1][col + 1]
-            if col != 0:
-                mj[lin - 1][col - 1] = mr[lin - 1][col - 1]
-            CavaPonto2(lin - 1, col, mj, mr, -2, maxcol, maxlin)
-
-        elif dir == -1 and col != 0:
-            if lin != 0:
-                mj[lin - 1][col - 1] = mr[lin - 1][col - 1]
-            if lin != maxlin:
-                mj[lin + 1][col - 1] = mr[lin + 1][col - 1]
-            CavaPonto2(lin, col - 1, mj, mr, -1, maxcol, maxlin)
-
-        elif dir == 2 and lin != maxlin:
-            if col != maxcol:
-                mj[lin + 1][col + 1] = mr[lin + 1][col + 1]
-            if col != 0:
-                mj[lin + 1][col - 1] = mr[lin + 1][col - 1]
-            CavaPonto2(lin + 1, col, mj, mr, 2, maxcol, maxlin)
-
 def CavaPonto(lin, col, mj, mr, modo):
     if modo == 'L':
         maxcol = 17
@@ -273,23 +236,77 @@ def CavaPonto(lin, col, mj, mr, modo):
 
     mj[lin][col] = mr[lin][col]
     if mr[lin][col] == '   ':
+        fila = []
+        if col != maxcol:
+            mj[lin][col + 1] = mr[lin][col + 1]
+            if mj[lin][col + 1] == '   ':
+                fila.append([lin, col + 1])
+        if lin != 0:
+            mj[lin - 1][col] = mr[lin - 1][col]
+            if mj[lin - 1][col] == '   ':
+                fila.append([lin - 1, col])
+        if col != 0:
+            mj[lin][col - 1] = mr[lin][col - 1]
+            if mj[lin][col - 1] == '   ':
+                fila.append([lin, col - 1])
+        if lin != maxlin:
+            mj[lin + 1][col] = mr[lin + 1][col]
+            if mj[lin + 1][col] == '   ':
+                fila.append([lin + 1, col])
         if col != maxcol and lin != maxlin:
             mj[lin + 1][col + 1] = mr[lin + 1][col + 1]
+            if mj[lin + 1][col + 1] == '   ':
+                fila.append([lin + 1, col + 1])
         if col != maxcol and lin != 0:
             mj[lin - 1][col + 1] = mr[lin - 1][col + 1]
+            if mj[lin - 1][col + 1] == '   ':
+                fila.append([lin - 1, col + 1])
         if col != 0 and lin != 0:
             mj[lin - 1][col - 1] = mr[lin - 1][col - 1]
+            if mj[lin - 1][col - 1] == '   ':
+                fila.append([lin - 1, col - 1])
         if col != 0 and lin != maxlin:
             mj[lin + 1][col - 1] = mr[lin + 1][col - 1]
+            if mj[lin + 1][col - 1] == '   ':
+                fila.append([lin + 1, col - 1])
 
-        if col != maxcol:
-            CavaPonto2(lin, col + 1, mj, mr, 1, maxcol, maxlin)
-        if lin != 0:
-            CavaPonto2(lin - 1, col, mj, mr, -2, maxcol, maxlin)
-        if col != 0:
-            CavaPonto2(lin, col - 1, mj, mr, -1, maxcol, maxlin)
-        if lin != maxlin:
-            CavaPonto2(lin + 1, col, mj, mr, 2, maxcol, maxlin)
+        while len(fila) != 0:
+            lin = fila[0][0]
+            col = fila[0][1]
+            fila.remove(fila[0])
+
+            if col != maxcol and mj[lin][col + 1] == '▐█▌':
+                mj[lin][col + 1] = mr[lin][col + 1]
+                if mj[lin][col + 1] == '   ':
+                    fila.append([lin, col + 1])
+            if lin != 0 and mj[lin - 1][col] == '▐█▌':
+                mj[lin - 1][col] = mr[lin - 1][col]
+                if mj[lin - 1][col] == '   ':
+                    fila.append([lin - 1, col])
+            if col != 0 and mj[lin][col - 1] == '▐█▌':
+                mj[lin][col - 1] = mr[lin][col - 1]
+                if mj[lin][col - 1] == '   ':
+                    fila.append([lin, col - 1])
+            if lin != maxlin and mj[lin + 1][col] == '▐█▌':
+                mj[lin + 1][col] = mr[lin + 1][col]
+                if mj[lin + 1][col] == '   ':
+                    fila.append([lin + 1, col])
+            if col != maxcol and lin != maxlin and mj[lin + 1][col + 1] == '▐█▌':
+                mj[lin + 1][col + 1] = mr[lin + 1][col + 1]
+                if mj[lin + 1][col + 1] == '   ':
+                    fila.append([lin + 1, col + 1])
+            if col != maxcol and lin != 0 and mj[lin - 1][col + 1] == '▐█▌':
+                mj[lin - 1][col + 1] = mr[lin - 1][col + 1]
+                if mj[lin - 1][col + 1] == '   ':
+                    fila.append([lin - 1, col + 1])
+            if col != 0 and lin != 0 and mj[lin - 1][col - 1] == '▐█▌':
+                mj[lin - 1][col - 1] = mr[lin - 1][col - 1]
+                if mj[lin - 1][col - 1] == '   ':
+                    fila.append([lin - 1, col - 1])
+            if col != 0 and lin != maxlin and mj[lin + 1][col - 1] == '▐█▌':
+                mj[lin + 1][col - 1] = mr[lin + 1][col - 1]
+                if mj[lin + 1][col - 1] == '   ':
+                    fila.append([lin + 1, col - 1])
     
 def FimDeJogo(mj, mr, modo):
     if modo == 'L':
