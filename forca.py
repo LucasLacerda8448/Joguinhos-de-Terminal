@@ -1,7 +1,9 @@
 import os
 import time
 import random
-os.system('color')
+import requests
+import re
+#os.system('color')
 
 class colors:
     red = '\033[91m'
@@ -134,7 +136,14 @@ def ImprimeJogo(lj, ld, tema, e):
     print()
     
 def main():
-    print("----------------- JOGO DA FORCA -----------------")
+    response = requests.get("https://api.dicionario-aberto.net/random")
+    palavra = response.json()['word']
+    response2 = requests.get("https://api.dicionario-aberto.net/word/" + palavra + "/1")
+    defi = re.search(r"<def>\n(.*?)\n</def>", response2.json()[0]['xml'], re.DOTALL)
+    print(palavra)
+    if defi:
+        print(defi.group(1))
+    print("----------------- JOGO DA FORCA -----------------") 
     print()
     while True:
         e = '/'
