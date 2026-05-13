@@ -136,7 +136,9 @@ def ImprimeJogo(lj, ld, tema, e):
     print()
     
 def main():
-    response = requests.get("https://api.dicionario-aberto.net/random")
+    #response = requests.get("https://api.dicionario-aberto.net/random")
+    response = requests.get("https://api-dicionario-ptbr.com/cadeira")
+    print(response.json())
     palavra = response.json()['word']
     response2 = requests.get("https://api.dicionario-aberto.net/word/" + palavra + "/1")
     defi = re.search(r"<def>\n(.*?)\n</def>", response2.json()[0]['xml'], re.DOTALL)
@@ -249,4 +251,15 @@ def main():
                 print("INICIANDO NOVO JOGO...")
                 print()
 
-main()
+#main()
+
+teste = requests.get("https://random-word-api.herokuapp.com/word?diff=1")
+print(teste.json()[0])
+dic = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + teste.json()[0])
+print(dic.json()["entries"][0]["senses"][0]["definition"])
+
+
+teste2 = requests.get("https://random-word-api.herokuapp.com/word?diff=5")
+print(teste2.json()[0])
+dic = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + teste2.json()[0])
+print(dic.json()["entries"][0]["senses"][0]["definition"])
