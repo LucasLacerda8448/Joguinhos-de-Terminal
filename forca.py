@@ -1,16 +1,52 @@
+#IMPORTS PADRÕES DO CÓDIGO
 import os
 import time
 import random
-import requests
 import re
+import json
 #os.system('color')
 
 class colors:
+    white = '\033[37m'
     red = '\033[91m'
+    dark_red = '\033[31m'
     green = '\033[92m'
     yellow = '\033[33m'
+    blue = '\033[94m'
+    cyan = '\033[96m'
+    purple = '\033[95m'
+    dark_purple = '\033[35m'
     grey = '\033[90m'
     fim = '\033[0m'
+    RED = '\033[41m'
+    b_yellow = '\033[93m'
+    d_green = '\033[32m'
+
+#INSTALA AS BIBLIOTECAS NECESSÁRIAS PARA EXECUTAR O CÓDIGO
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+import subprocess
+import sys
+import importlib
+
+try:
+    import requests
+    import wonderwords
+    import translate
+except:
+    print(colors.yellow + "PARA INICIAR O JOGO É NECESSÁRIO")
+    print("INSTALAR ALGUMAS BIBLIOTECAS!" + colors.fim)
+    print("Pressione" + colors.blue + " Enter " + colors.fim + "para iniciar a instalação.")
+    confirm = input()
+    install("requests")
+    install("wonderwords")
+    install("translate")
+    requests = importlib.import_module("requests")
+    wonderwords = importlib.import_module("wonderwords")
+    translate = importlib.import_module("translate")
+from wonderwords import RandomWord
+from translate import Translator
 
 def Escolha(n):
     e = 0
@@ -23,243 +59,303 @@ def Escolha(n):
     print()
     return e
 
-def Palavras():
-    aleatorio = ["CASA", "TESOURA", "CARRO", "BALDE", "FACA", "CAVALO", "BANANA", "FOGAO", "PICOLE", "BRANCO", "SERROTE",
-                "CHAPEU", "CADEIRA", "BOLA", "AZUL", "ESCADA", "OCULOS", "CHAVE", "DADO", "MALA", "LAMPADA", "REVOLVER", 
-                "BARRACA", "CINTO", "PERA", "PENA", "PINCEL", "VESTIDO", "CIGARRO", "BOLO", "SAPO", "TORNEIRA", "SACOLA",
-                "PANELA", "COPO", "KILL BILL", "MAZE RUNNER: CORRER OU MORRER", "GRAVATA", "VELA", "VIOLAO", "CABIDE",
-                "FOLHA", "CASTELO", "AMARELO", "AVIAO", "CAMA", "DOCE", "ESTOJO", "GELEIA", "PRETO", "JANELA", "NOITE",
-                "PAO", "UMBIGO", "VERMELHO", "BASQUETE", "CHAMPANHE", "HETEROSSEXUAL", "HOMOSSEXUAL", "AMENDOIM", "BANHEIRO",
-                "ESPARADRAPO", "FORCA", "GALAXIA", "MANJERICAO", "XICARA", "LIVRARIA", "FITA ADESIVA", "PRATO", "SUBMARINO",
-                "COMPUTADOR", "MESA DE JANTAR", "PORTA", "GUARDA-ROUPA", "SOL", "LUA", "MERCURIO", "VENUS", "TERRA", "MARTE",
-                "JUPITER", "SATURNO", "NETUNO", "URANO", "VERDE", "RODO", "LIXO", "TATU", "VACA", "BOTA", "CAFE", "GATO",
-                "BULE", "MOTO", "BOCA", "MEIA", "UVA", "MOLA", "LATA", "ROSA", "VASO", "BICO", "EMA", "TEIA", "FOCA", "LUVA",
-                "TETO", "RATO", "PATO", "LOBO", "OVO", "FOGO", "MATO", "SOPA", "DEDO", "BOI", "FADA", "CIDADE DE DEUS",
-                "VINGADORES: ULTIMATO", "HOMEM-ARANHA", "HANNAH MONTANA", "MENINAS MALVADAS", "VINGADORES: ERA DE ULTRON",
-                "DIVERGENTE", "JOGOS VORAZES", "NARUTO", "POKEMON", "DRAGON BALL", "HARRY POTTER", "MATRIX", "AS BRANQUELAS",
-                "EM RITMO DE FUGA", "CLUBE DA LUTA", "TRUQUE DE MESTRE", "ESQUECERAM DE MIM", "THE OFFICE", "FRIENDS",
-                "BIG BANG: A TEORIA", "AVATAR: O ULTIMO MESTRE DO AR", "CAPITAO AMERICA: GUERRA CIVIL"]
-    midia = ["CIDADE DE DEUS", "VINGADORES: ULTIMATO", "HOMEM-ARANHA", "HANNAH MONTANA", "MENINAS MALVADAS", "KILL BILL",
-            "MAZE RUNNER: CORRER OU MORRER", "DIVERGENTE", "JOGOS VORAZES", "NARUTO", "POKEMON", "DRAGON BALL", "HARRY POTTER",
-            "MATRIX", "AS BRANQUELAS", "EM RITMO DE FUGA", "CLUBE DA LUTA", "TRUQUE DE MESTRE", "ESQUECERAM DE MIM", "THE OFFICE",
-            "FRIENDS", "BIG BANG: A TEORIA", "AVATAR: O ULTIMO MESTRE DO AR", "CAPITAO AMERICA: GUERRA CIVIL", "VINGADORES: ERA DE ULTRON"]
-    animais = ["CAVALO", "SAPO", "TATU", "VACA", "GATO", "EMA", "FOCA", "RATO", "PATO", "LOBO", "BOI"]
-    comidas = ["BANANA", "PICOLE", "PERA", "BOLO", "GELEIA", "PAO", "CHAMPANHE", "AMENDOIM", "MANJERICAO", "CAFE", "UVA",
-                "OVO", "SOPA"]
-    geral = ["CASA", "BRANCO", "AZUL", "CASTELO", "AMARELO", "DOCE", "PRETO", "NOITE", "UMBIGO", "VERMELHO", "BASQUETE",
-            "HETEROSSEXUAL", "HOMOSSEXUAL", "BANHEIRO", "GALAXIA", "LIVRARIA", "SOL", "LUA", "MERCURIO", "VENUS", "TERRA",
-            "MARTE", "JUPITER", "SATURNO", "NETUNO", "URANO", "VERDE", "BOCA", "ROSA", "BICO", "TETO", "FOGO", "MATO",
-            "DEDO", "FADA"]
-    objetos = ["TESOURA", "CARRO", "BALDE", "FACA", "FOGAO", "SERROTE", "CHAPEU", "CADEIRA", "BOLA", "ESCADA", "OCULOS",
-                "CHAVE", "DADO", "MALA", "LAMPADA", "REVOLVER", "BARRACA", "CINTO", "PENA", "PINCEL", "VESTIDO", "CIGARRO",
-                "TORNEIRA", "SACOLA", "PANELA", "COPO", "GRAVATA", "VELA", "VIOLAO", "CABIDE", "FOLHA", "AVIAO", "CAMA",
-                "ESTOJO", "JANELA", "ESPARADRAPO", "FORCA", "XICARA", "FITA ADESIVA", "PRATO", "SUBMARINO", "COMPUTADOR",
-                "MESA DE JANTAR", "PORTA", "GUARDA-ROUPA", "RODO", "LIXO", "BOTA", "BULE", "MOTO", "MEIA", "MOLA", "LATA",
-                "VASO", "TEIA", "LUVA"]
-    l = random.randint(1, 6)
-    if l == 1:
-        e = random.choice(aleatorio)
-        tema = "Aleatório"
-    elif l == 2:
-        e = random.choice(midia)
-        tema = "Mídia"
-    elif l == 3:
-        e = random.choice(animais)
-        tema = "Animais"
-    elif l == 4:
-        e = random.choice(comidas)
-        tema = "Comidas"
-    elif l == 5:
-        e = random.choice(geral)
-        tema = "Geral"
+def limpa():
+    if os.name == 'nt':
+        os.system('cls')
     else:
-        e = random.choice(objetos)
-        tema = "Objetos"
-    return e, tema
+        os.system('clear')
 
-def Compara(letra, lr, lj):
-    r = 0
-    for i in range(len(lr)):
-        if letra == lr[i]:
-            r = 1
-            lj[i] = letra
-    return r
-
-def ImprimeJogo(lj, ld, tema, e):
-    print("Tema: " + colors.yellow + "%s" %tema + colors.fim)
-    print("Palavras Descartadas: ", end="")
-    if len(ld) == 0:
-        print()
-    else:
-        for i in ld:
-            print(colors.red + "%s " %i + colors.fim, end="")
-        print()
-    print("_____")
-    print("|   |")
-    if e >= 1:
-        print("|   O")
-        if e == 1:
-            print("|")
-        elif e == 2:
-            print("|   |")
-        elif e == 3:
-            print("|  /|")
+def Gera_tematica(tema):
+    tradutorPT = Translator(from_lang="en", to_lang="pt")
+    tradutorEN = Translator(from_lang="pt", to_lang="en")
+    with open("palavras.json", encoding='utf-8') as palavras:
+        if tema == "random":
+            tema = random.choice(["Mídia"])
+        palavra = json.load(palavras)
+        pos = random.randrange(0, len(palavra[tema]))
+        word = palavra[tema][pos]
+        if tema == "Objeto" or tema == "Animal":
+            try:
+                desc = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + tradutorEN.translate(word))
+                desc = tradutorPT.translate(desc.json()["entries"][0]["senses"][0]["definition"])
+            except:
+                desc = colors.red + "ERRO: Não foi possível encontrar a definição da palavra" + colors.fim
         else:
-            print("|  /|\\")
-            if e >= 5:
-                print("|  / ", end="")
-                if e >= 6:
-                    if e == 6:
-                        print("\\   ")
-                    else:
-                        print("\\   " + colors.red + "VOCÊ PERDEU" + colors.fim)
-                else:
-                    print()
-            else:
-                print("|")
-    else:
-        print("|")
-        print("|")
-        print("|")
-    print("|")
-    print("|", end="")
-    cont = 0
-    l = 1
-    for i in lj:
-        print("%s " %i, end="")
-        cont += 1
-        if cont >= (15 * l):
-            if i == ' ':
-                print()
-                print(" ", end="")
-                l += 1
-    print()
-    
-def main():
-    #response = requests.get("https://api.dicionario-aberto.net/random")
-    response = requests.get("https://api-dicionario-ptbr.com/cadeira")
-    print(response.json())
-    palavra = response.json()['word']
-    response2 = requests.get("https://api.dicionario-aberto.net/word/" + palavra + "/1")
-    defi = re.search(r"<def>\n(.*?)\n</def>", response2.json()[0]['xml'], re.DOTALL)
-    print(palavra)
-    if defi:
-        print(defi.group(1))
-    print("----------------- JOGO DA FORCA -----------------") 
-    print()
-    while True:
-        e = '/'
-        while '1' != e != '2' and e != '3':
-            print("[1] Palavra pré-gerada   [2] Palavra customizada")
-            print("                   [3] Sair")
-            print("-> ", end="")
-            e = input()
-            print()
+            desc = "O tema escolhido não possui definição de palavras."
+    return word, tema, desc
 
-        if e == '3':
+def Gera_aleatoria(lang):
+    palavra = RandomWord()
+    tradutorPT = Translator(from_lang="en", to_lang="pt")
+    word = palavra.word()
+    desc = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + word)
+    desc = desc.json()["entries"][0]["senses"][0]["definition"]
+    if lang == "PT":
+        word = tradutorPT.translate(word)
+        desc = tradutorPT.translate(desc)
+    return word, desc
+
+def Insere_letra(word, erro, dica):
+    Vogais = [
+        ['A', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å'],
+        ['E', 'È', 'É', 'Ê', 'Ë'],
+        ['I', 'Ì', 'Í', 'Î', 'Ï'],
+        ['O', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö'],
+        ['U', 'Ù', 'Ú', 'Û', 'Ü']
+    ]
+    word2 = []
+    for i in range(len(word)):
+        word2.append(word[i][0])
+    letra = input()
+    letra = letra.upper()
+    if len(erro) >= 3 and letra == '1':
+        dica = 1
+        vogal = 0
+    else:
+        while True:
+            vogal = 0
+            for i in Vogais:
+                if letra in i:
+                    vogal = i
+                    break
+            if letra in word2 or letra in erro:
+                print("A letra inserida já foi usada, informe outra letra por favor")
+                print("-> ", end="")
+                letra = input()
+                letra = letra.upper()
+            elif vogal:
+                for i in vogal:
+                    if i in word2 or i in erro:
+                        print("A letra inserida já foi usada, informe outra letra por favor")
+                        print("-> ", end="")
+                        letra = input()
+                        letra = letra.upper()
+                        vogal = 2
+                        break
+                if vogal != 2:
+                    break
+            else:
+                break
+    return letra, vogal, dica
+
+def Compara(letra, vogal, word, word2):
+    r = 0
+    if vogal:
+        for i in range(len(word)):
+            if word[i] in vogal:
+                r = 1
+                word2[i][0] = word[i]
+    else:
+        for i in range(len(word)):
+            if letra == word[i]:
+                r = 1
+                word2[i][0] = word[i]
+    return r, word2
+
+def ImprimeJogo(word, erro, tema, desc, dica):
+    limpa()
+    tam = len(erro)
+    if tam == 7:
+        cor = colors.dark_purple
+    else:
+        cor = colors.d_green
+    print("Tema: " + colors.yellow + tema + colors.fim)
+    print("Letras Descartadas:")
+    for i in erro:
+        print(colors.red + i + " " + colors.fim, end="")
+    print()
+    print(colors.yellow + " ╔════════╗")
+    print(" ║        " + colors.grey + "│")
+    print(colors.yellow + " ║        ", end="")
+    if tam > 0:
+        print(cor + "☻")
+        print(colors.yellow + " ║       " + cor, end="")
+        if tam == 2:
+            print(" ║", end="")
+        elif tam > 2:
+            print("/║", end="")
+            if tam > 3:
+                print("\\", end="")
+        print(colors.yellow)
+        print(" ║       ", end="")
+        if tam > 4:
+            print(cor + "/ ", end="")
+            if tam > 5:
+                print("\\   ", end="")
+                if tam == 7:
+                    print(colors.red + "ENFORCADO!", end="")
+        print(colors.yellow)
+    else:
+        print()
+        print(" ║")
+        print(" ║")
+    print(" ║")
+    print(" ║  " + colors.fim, end="")
+    for i in range(len(word)):
+        if word[i][0] == 'vazio':
+            print("    ", end="")
+        else:
+            if word[i][1] == ' ':
+                print(word[i][0] + " ", end="")
+            else:
+                print(" %s  " %word[i][0], end="")
+    print()
+    print(colors.yellow + "═╩═ " + colors.fim, end="")
+    for i in range(len(word)):
+        print(word[i][1] + " ", end="")
+    print()
+    if tam >= 3:
+        print("Definição da Palavra: ", end="")
+        if dica:
+            print(desc)
+        else:
+            print(colors.blue + "Digite '1' para revelar a definição." + colors.fim)
+
+def main():
+    while True:
+        limpa()
+        print("╔═══════════╕")
+        print("║     JOGO DA FORCA")
+        print("║")
+        print("║ [1] Jogar   [2] Sair")
+        e = Escolha(2)
+        if e == '2':
             print("ENCERRANDO JOGO...")
             break
         else:
-            if e == '1':
-                word, tema = Palavras()
-            elif e == '2':
-                print("Insira a palavra/frase que deseja utilizar: ", end="")
-                word = input()
-                print()
-                word = word.upper()
-                tema = "Personalizado"
-
-            word2 = []
-            for i in word:
-                if 65 <= ord(i) <= 90:
-                    word2.append('_')
-                else:
-                    word2.append(i)
-            print("INICIANDO JOGO")
-            print()
-            ne = 0
-            erro = []
-            ImprimeJogo(word2, erro, tema, ne)
-            print()
             while True:
-                print("Escolha uma letra para adivinhar, ou arrisque escrever a palavra toda")
-                print("-> ", end="")
-                while True:
-                    letra = input()
-                    letra = letra.upper()
-                    if letra in word2:
-                        print("O símbolo inserido ja foi usado, informe outro símbolo por favor")
-                        print("-> ", end="")
-                    else:
-                        break
-                print()
-                if len(letra) == 1:
-                    r = Compara(letra, word, word2)
-                    if r == 0:
-                        print("O símbolo %s foi descartado" %letra)
-                        erro.append(letra)
-                        ne += 1
-                    else:
-                        print("Símbolo %s adicionado" %letra)
+                limpa()
+                print("╔═══════════════════════════╕")
+                print("║                     MODOS DE JOGO:")
+                print("║")
+                print("║ [1] Palavras Temáticas      [2] Palavras Aleatórias " + colors.yellow + "(Requer Internet)" + colors.fim)
+                print("║ [3] Palavras Customizadas   [4] Voltar ao Menu")
+                e = Escolha(4)
+                if e == '4':
+                    break
+                elif e == '1':
+                    limpa()
+                    print("Escolha o tema da palavra:")
+                    print("[1] Objetos   [2] Comidas")
+                    print("[3] Animais   [4] Mídia")
+                    print("  [5] Tema Aleatório")
+                    e = Escolha(5)
+                    tema = "random"
+                    if e == '1':
+                        tema = "Objeto"
+                    elif e == '2':
+                        tema = "Comida"
+                    elif e == '3':
+                        tema = "Animal"
+                    elif e == '4':
+                        tema = "Mídia"
+                    print("GERANDO A PALAVRA...")
+                    word, tema, desc = Gera_tematica(tema)
+                elif e == '2':
+                    limpa()
+                    print("Escolha o idioma da palavra aleatória:")
+                    print("     [1] Português     [2] Inglês")
+                    e = Escolha(2)
+                    lang = "PT"
+                    if e == '2':
+                        lang = "EN"
+                    print("GERANDO A PALAVRA...")    
+                    word, desc = Gera_aleatoria(lang)
+                    tema = "Aleatório"
                 else:
-                    if letra == word:
-                        print(colors.green + "PALAVRA CORRETA!!" + colors.fim)
+                    print("Insira sua palavra/frase customizada: ", end="")
+                    word = input()
+                    print("Informe o tema da sua palavra/frase: ", end="")
+                    tema = input()
+                    print("Por fim, forneça uma descrição breve da sua palavra: ", end="")
+                    desc = input()
+                word = word.upper()
+                word2 = []
+                j = 0
+                for i in word:
+                    word2.append([])
+                    if 65 <= ord(i) <= 90 or 192 <= ord(i) <= 220:
+                        word2[j].append('vazio')
+                        word2[j].append('───')
+                    else:
+                        word2[j].append(i)
+                        word2[j].append(' ')
+                    j += 1
+                erro = []
+                dica = 0
+                ImprimeJogo(word2, erro, tema, desc, dica)
+                print()
+                while True:
+                    print("Escolha uma letra para adivinhar, ou arrisque escrever a palavra toda")
+                    print("-> ", end="")
+                    letra, vogal, dica = Insere_letra(word2, erro, dica)
+                    if len(letra) <= 1:
+                        if letra != '1':
+                            r, word2 = Compara(letra, vogal, word, word2)
+                            if r == 0:
+                                print("A letra " + colors.blue + letra + colors.fim + " foi descartada")
+                                erro.append(letra)
+                            else:
+                                print("Letra " + colors.blue + letra + colors.fim + " adicionado")
+                    else:
+                        if letra == word:
+                            print()
+                            print(colors.green + "PALAVRA CORRETA!!" + colors.fim)
+                            time.sleep(1)
+                            for i in range(len(word)):
+                                word2[i][0] = word[i]
+                            ImprimeJogo(word2, erro, tema, desc, dica)
+                            print()
+                            time.sleep(0.5)
+                            print("FIM DE JOGO")
+                            print()
+                            time.sleep(0.5)
+                            break
+                        else:
+                            print(colors.red + "PALAVRA ESCRITA ERRADA!!" + colors.fim)
+                            print()
+                            time.sleep(1)
+                            print("Resposta: %s" %word)
+                            print()
+                            time.sleep(0.5)
+                            print("FIM DE JOGO")
+                            print()
+                            time.sleep(0.5)
+                            break
+                    print()
+                    ImprimeJogo(word2, erro, tema, desc, dica)
+                    print()
+                    if len(erro) > 6:
+                        print(colors.red + "PALAVRA NÃO ENCONTRADA!!" + colors.fim)
+                        print()
                         time.sleep(1)
-                        ImprimeJogo(word, erro, tema, ne)
+                        print("Resposta: %s" %word)
                         print()
                         time.sleep(0.5)
                         print("FIM DE JOGO")
                         print()
                         time.sleep(0.5)
                         break
-                    else:
-                        print("A palavra escrita está errada")
+                    errado = 1
+                    for i in range(len(word)):
+                        if word[i] != word2[i][0]:
+                            errado = 0
+                            break
+                    if errado:
+                        print(colors.green + "PALAVRA ENCONTRADA!!" + colors.fim)
+                        print()
+                        time.sleep(1)
+                        print("FIM DE JOGO")
+                        print()
                         time.sleep(0.5)
-                        ne += 1
-                print()
-                ImprimeJogo(word2, erro, tema, ne)
-                print()
-                if ne > 6:
-                    print(colors.red + "PALAVRA NÃO ENCONTRADA!!" + colors.fim)
-                    print()
-                    time.sleep(1)
-                    print("Resposta: %s" %word)
-                    print()
-                    time.sleep(0.5)
-                    print("FIM DE JOGO")
-                    print()
-                    time.sleep(0.5)
+                        break
+
+                print("[1] Jogar Novamente   [2] Sair")
+                if Escolha(2) == '2':
+                    print("ENCERRANDO JOGO...")
                     break
-                errado = 0
-                for i in range(len(word)):
-                    if word[i] != word2[i]:
-                        errado = 1
-                if errado == 0:
-                    print(colors.green + "PALAVRA ENCONTRADA!!" + colors.fim)
+                else:
+                    print("INICIANDO NOVO JOGO...")
                     print()
-                    time.sleep(1)
-                    print("FIM DE JOGO")
-                    print()
-                    time.sleep(0.5)
-                    break
 
-            print("[1] Jogar Novamente   [2] Sair")
-            if Escolha(2) == '2':
-                print("ENCERRANDO JOGO...")
-                break
-            else:
-                print("INICIANDO NOVO JOGO...")
-                print()
-
-#main()
-
-teste = requests.get("https://random-word-api.herokuapp.com/word?diff=1")
-print(teste.json()[0])
-dic = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + teste.json()[0])
-print(dic.json()["entries"][0]["senses"][0]["definition"])
-
-
-teste2 = requests.get("https://random-word-api.herokuapp.com/word?diff=5")
-print(teste2.json()[0])
-dic = requests.get("https://freedictionaryapi.com/api/v1/entries/en/" + teste2.json()[0])
-print(dic.json()["entries"][0]["senses"][0]["definition"])
+main()
